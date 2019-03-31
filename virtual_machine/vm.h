@@ -13,12 +13,12 @@
 #ifndef VM_H
 # define VM_H
 # include "op.h"
+
 /*
 **	Структура t_proccess представляет собой процесс 'каретку'
 **
 **	position - позиция каретки в памяти машины.
-**	carry - флаг, показывающий успешно ли выполнилась предыдущая операция
-**	этот флаг влияет на выполнение zjmp (выполнится если carry=1).
+**	carry - этот флаг влияет на выполнение zjmp (выполнится если carry=1).
 **	player_id - номер игрока, который создал этот процесс.
 **	registers - регистры процесса.
 **	is_live - флаг, обозначающий жив ли процесс.
@@ -40,15 +40,46 @@ typedef struct		s_proccess
 
 /*
 **	champion
+**	name - имя чемпиона
+**	comment - комментарий
+**	size - размер исполняемого кода
+**	code - указатель на начало кода
 */
+
 typedef struct		s_champion
 {
+	char			*filename;
 	char			*name;
 	char			*comment;
 	unsigned int	size;
-	unsigned int	*code;
+	unsigned char	*code;
 	unsigned int	id;
 }					t_champion;
+
+/*
+**	vm Virtual machine
+**	cycles - кол-во выполненных циклов
+**	cycles_to_die - кол-во оставшихся циклов до проверки процессов на live
+**	cycles_to_dump - кол-во циклов до дампа памяти
+**	dump - периодичность дампа памяти в циклах
+**	cycles_die - периодичность проверки на live в циклах
+**	*process - список живых процессов (кареток)
+**	*champion - список чемпионов (пока хз с этим)
+**	memory - область памяти (зона боевых действий)
+*/
+
+typedef struct		vm
+{
+	unsigned int	cycles;
+	unsigned int	cycles_to_die;
+	unsigned int	cycles_to_dump;
+	unsigned int	dump;
+	unsigned int	cycles_die;
+	t_proccess		*process;
+	t_champion		*champion;
+	unsigned char	memory[MEM_SIZE];
+
+}					t_vm;
 
 /*
 **	Декларации опкодов операций
