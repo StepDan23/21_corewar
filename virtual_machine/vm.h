@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/01 22:30:20 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/01 22:54:26 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,8 @@ int						read_4bytes(int fd);
 int						check_null(int fd);
 int						read_code(int fd, t_champion *champ);
 void					print_error_exit(int code);
+
+t_vm					*vm_new(int dump);
+void					vm_load_champ(t_vm *vm, t_champion *champ, int index);
+void					vm_dump_memory(unsigned char *memory);
 #endif
