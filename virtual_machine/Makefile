@@ -1,0 +1,25 @@
+NAME = corewar
+LIB = ../libft/libft.a
+FLAGS = -Werror -Wall -Wextra
+GCC = gcc
+SRC = check_args.c
+OBJ = $(SRC:.c=.o)
+# champions.c core.c 
+all: $(LIB) $(NAME)
+
+$(LIB):
+	@make -C ../libft/ all
+
+$(NAME): $(OBJ)
+	@$(GCC) $(FLAGS) $(OBJ) -L ../libft -lft -o $(NAME)
+
+%.o: %.c
+	@$(GCC) $(FLAGS) -c -g $< -o $@ -I../libft/includes -I..
+
+clean:
+	rm -f *.o
+	make -C ../libft/ clean
+fclean: clean
+	rm -f $(NAME)
+	make -C ../libft/ fclean
+re: fclean all
