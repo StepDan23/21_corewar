@@ -27,16 +27,16 @@
 **	до выполнения операции.
 */
 
-typedef struct		s_proccess
+typedef struct			s_proccess
 {
-	int				position;
-	int				carry;
-	int				player_id;
-	unsigned int	registers[REG_NUMBER];
-	int				is_live;
-	int				command_type;
-	int				cycles_to_wait;
-}					t_proccess;
+	int					position;
+	int					carry;
+	int					player_id;
+	unsigned int		registers[REG_NUMBER];
+	int					is_live;
+	int					command_type;
+	int					cycles_to_wait;
+}						t_proccess;
 
 /*
 **	champion
@@ -46,15 +46,16 @@ typedef struct		s_proccess
 **	code - указатель на начало кода
 */
 
-typedef struct		s_champion
+typedef struct			s_champion
 {
-	char			*filename;
-	char			*name;
-	char			*comment;
-	unsigned int	size;
-	unsigned char	*code;
-	unsigned int	id;
-}					t_champion;
+	char				*filename;
+	char				name[PROG_NAME_LENGTH];
+	char				comment[COMMENT_LENGTH];
+	unsigned int		size;
+	unsigned char		*code;
+	unsigned int		id;
+	struct s_champion	*next;
+}						t_champion;
 
 /*
 **	vm Virtual machine
@@ -68,18 +69,18 @@ typedef struct		s_champion
 **	memory - область памяти (зона боевых действий)
 */
 
-typedef struct		vm
+typedef struct			vm
 {
-	unsigned int	cycles;
-	unsigned int	cycles_to_die;
-	unsigned int	cycles_to_dump;
-	unsigned int	dump;
-	unsigned int	cycles_die;
-	t_proccess		*process;
-	t_champion		*champion;
-	unsigned char	memory[MEM_SIZE];
+	unsigned int		cycles;
+	unsigned int		cycles_to_die;
+	unsigned int		cycles_to_dump;
+	unsigned int		dump;
+	unsigned int		cycles_die;
+	t_proccess			*process;
+	t_champion			*champion;
+	unsigned char		memory[MEM_SIZE];
 
-}					t_vm;
+}						t_vm;
 
 /*
 **	Декларации опкодов операций
@@ -102,4 +103,5 @@ typedef struct		vm
 # define LFORK		15;
 # define AFF		16;
 
+t_champion				*new_champ(int number, char *filename);
 #endif
