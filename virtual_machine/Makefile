@@ -1,10 +1,10 @@
 NAME = corewar
 LIB = ../libft/libft.a
-FLAGS = -Werror -Wall -Wextra
+FLAGS = -Werror -Wall -Wextra -g
 GCC = gcc
-SRC = check_args.c
+SRC = check_args.c champions.c tests.c
 OBJ = $(SRC:.c=.o)
-# champions.c core.c 
+#  core.c 
 all: $(LIB) $(NAME)
 
 $(LIB):

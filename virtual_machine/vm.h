@@ -103,5 +103,9 @@ typedef struct			vm
 # define LFORK		15;
 # define AFF		16;
 
-t_champion				*new_champ(int number, char *filename);
+int						check_filename(char *file);
+int						check_args(int ac, char **av, t_vm *vm);
+
+void					champions_add(char *filename, int num,
+								t_champion **head, t_champion **tmp);
 #endif
