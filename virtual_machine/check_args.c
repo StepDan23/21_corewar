@@ -28,18 +28,3 @@ int		check_filename(char *file)
 	}
 	return (0);
 }
-#include <stdio.h>
-int main(void)
-{
-	if (!check_filename(".cor"))
-		printf("1) %s :			ok\n", ".cor");
-	if (check_filename("1.cor"))
-		printf("2) %s :			ok\n", "1.cor");
-	if (check_filename(".cor.cor"))
-		printf("3) %s :			ok\n", ".cor.cor");
-	if (check_filename("champ.cor"))
-		printf("4) %s :			ok\n", "champ.cor");
-	if (!check_filename("champ.core"))
-		printf("5) %s :			ok\n", "champ.core");
-	return (0);
-}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/03/31 17:02:14 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/01 20:09:12 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct			s_proccess
 typedef struct			s_champion
 {
 	char				*filename;
-	char				name[PROG_NAME_LENGTH];
-	char				comment[COMMENT_LENGTH];
+	char				name[PROG_NAME_LENGTH + 1];
+	char				comment[COMMENT_LENGTH + 1];
 	unsigned int		size;
 	unsigned char		*code;
 	unsigned int		id;
@@ -86,22 +86,38 @@ typedef struct			vm
 **	Декларации опкодов операций
 */
 
-# define LIVE		1;
-# define LD			2;
-# define ST			3;
-# define ADD		4;
-# define SUB		5;
-# define AND		6;
-# define OR			7;
-# define XOR		8;
-# define ZJMP		9;
-# define LDI		10;
-# define STI		11;
-# define FORK		12;
-# define LLD		13;
-# define LLDI		14;
-# define LFORK		15;
-# define AFF		16;
+# define LIVE			1
+# define LD				2
+# define ST				3
+# define ADD			4
+# define SUB			5
+# define AND			6
+# define OR				7
+# define XOR			8
+# define ZJMP			9
+# define LDI			10
+# define STI			11
+# define FORK			12
+# define LLD			13
+# define LLDI			14
+# define LFORK			15
+# define AFF			16
+
+/*
+**	Error codes
+*/
+
+# define MAGIC_ERR		1
+# define COMM_ERR		2
+# define NAME_ERR		3
+# define CODE_ERR		4
+# define CODE_LEN_ERR	5
 
 t_champion				*new_champ(int number, char *filename);
+
+int						read_champ(char *filename, t_champion *champ);
+int						read_4bytes(int fd);
+int						check_null(int fd);
+int						read_code(int fd, t_champion *champ);
+void					print_error_exit(int code);
 #endif
