@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/01 20:09:12 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/01 22:30:20 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct			vm
 
 t_champion				*new_champ(int number, char *filename);
 
-int						read_champ(char *filename, t_champion *champ);
+int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
 int						check_null(int fd);
 int						read_code(int fd, t_champion *champ);

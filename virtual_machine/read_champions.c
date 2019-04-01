@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:58:03 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/01 20:04:40 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/01 22:30:09 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int		read_botsize(int fd, t_champion *champ)
 	return (1);
 }
 
-int		read_champ(char *filename, t_champion *champ)
+int		read_champ(t_champion *champ)
 {
 	int	fd;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(champ->filename, O_RDONLY);
 	if (fd < 0)
 		print_error_exit(0);
 	if (read_magic(fd) != COREWAR_EXEC_MAGIC)
