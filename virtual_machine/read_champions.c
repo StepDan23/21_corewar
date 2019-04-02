@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_champions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:58:03 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:10:17 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 18:49:09 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		read_comment(int fd, t_champion *champ)
 		return (0);
 	else if (ret < 0)
 		print_error_exit(0);
-	champ->name[COMMENT_LENGTH] = '\0';
+	champ->name[PROG_NAME_LENGTH] = '\0';
 	return (1);
 }
 
