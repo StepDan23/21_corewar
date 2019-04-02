@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_champions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:58:03 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 19:37:16 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/03 00:33:40 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ int		read_botsize(int fd, t_champion *champ)
 		return (0);
 	return (1);
 }
+
+/*
+** Считывает бинарный файл чемпиона
+*/
 
 int		read_champ(t_champion *champ)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_load.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 20:02:13 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/03 00:32:39 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include <errno.h>
 #include "vm.h"
 #include "libft.h"
+
+/*
+** Считает кол-во чемпионов
+*/
 
 int		count_champs(t_champion *head)
 {
@@ -30,6 +34,11 @@ int		count_champs(t_champion *head)
 	return (champs_num);
 }
 
+/*
+** Записывает код чемпиона в память (vm->memory)
+** index - адресс куда записать
+*/
+
 void	vm_load_champ(unsigned char *mem, t_champion *champ, int index)
 {
 	unsigned int	i;
@@ -42,6 +51,12 @@ void	vm_load_champ(unsigned char *mem, t_champion *champ, int index)
 	}
 }
 
+/*
+** Рассчитывает адресс для записи
+** total - общее число чемпионов
+** curr - порядковый номер чемпиона
+*/
+
 int		vm_index_to_load(int total, int curr)
 {
 	int	pos;
@@ -50,6 +65,11 @@ int		vm_index_to_load(int total, int curr)
 	pos -= pos % 32;
 	return (pos);
 }
+
+/*
+** Распределяет чемпионов по памяти машины
+** Создает по 1 процессу (каретке) на чемпиона
+*/
 
 void	vm_spread_champs(t_vm *vm, t_champion *champs)
 {
