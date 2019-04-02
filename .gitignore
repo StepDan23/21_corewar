@@ -1,2 +1,7 @@
 .DS_Store
 .vscode
+cmake-build-debug
+.idea
+CMakeLists.txt
+*.o
+*.a

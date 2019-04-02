@@ -1,20 +1,30 @@
 #include "vm.h"
 #include "libft.h"
 
-// int		check_args(int ac, char **av, t_vm *vm)
-// {
-// 	int		count;
-// 	int		j;
+int		check_args(int ac, char **av, t_vm *vm)
+{
+	int			count;
+	int			j;
+	t_champion	*tmp;
 
-// 	j = 1;
-// 	count = 0;
-// 	while (j < ac)
-// 	{
-// 		if (av[j][0] == '-')
-// 			return (0);
-// 		j++;
-// 	}
-// }
+	j = 1;
+	count = 0;
+	tmp = vm->champion;
+	while (j < ac)
+	{
+		if (av[j][0] == '-')
+		{
+			j += 2;
+			continue;
+		}
+		if (check_filename(av[j]))
+			champions_add(av[j], ++count, &vm->champion, &tmp);
+		else
+			return (0);
+		j++;
+	}
+	return (1);
+}
 
 int		check_filename(char *file)
 {
