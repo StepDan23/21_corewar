@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:04:13 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 19:57:32 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	vm_dump_memory(unsigned char *memory)
 {
 	int	i;
 
+	i = -1;
+	while (++i < 32)
+		ft_printf("%02d ", i + 1);
+	ft_printf("\n");
 	i = 0;
 	while (i < MEM_SIZE)
 	{
