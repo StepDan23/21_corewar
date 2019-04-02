@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/02 13:12:38 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:10:46 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,20 @@ typedef struct			vm
 
 t_champion				*new_champ(int number, char *filename);
 
+void					read_all_champs(t_champion *champs);
 int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
+int						read_magic(int fd);
 int						check_null(int fd);
 int						read_code(int fd, t_champion *champ);
 void					print_error_exit(int code);
 
 t_vm					*vm_new(int dump);
-void					vm_load_champ(t_vm *vm, t_champion *champ, int index);
+void					vm_spread_champs(unsigned char *memory, t_champion *chapms);
 void					vm_dump_memory(unsigned char *memory);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
 
-void					champions_add(char *filename, int num,
-								t_champion **head, t_champion **tmp);
+void					champions_add(char *filename, int num, t_champion **head);
 #endif

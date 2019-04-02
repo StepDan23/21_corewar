@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:58:03 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/01 22:30:09 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:10:17 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "vm.h"
-
-int		read_magic(int fd)
-{
-	return (read_4bytes(fd));
-}
 
 int		read_name(int fd, t_champion *champ)
 {
@@ -74,4 +69,13 @@ int		read_champ(t_champion *champ)
 		print_error_exit(CODE_ERR);
 	close(fd);
 	return (1);
+}
+
+void	read_all_champs(t_champion *champs)
+{
+	while (champs)
+	{
+		read_champ(champs);
+		champs = champs->next;
+	}
 }

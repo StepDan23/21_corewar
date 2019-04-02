@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/01 23:00:55 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:04:13 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ t_vm	*vm_new(int dump)
 	return (vm);
 }
 
-void	vm_load_champ(t_vm *vm, t_champion *champ, int index)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < champ->size)
-	{
-		vm->memory[index + i] = champ->code[i];
-		i++;
-	}
-}
-
 void	vm_dump_memory(unsigned char *memory)
 {
 	int	i;
@@ -63,7 +51,11 @@ void	vm_dump_memory(unsigned char *memory)
 	i = 0;
 	while (i < MEM_SIZE)
 	{
+		if (memory[i])
+			ft_printf("\e[32m");
 		ft_printf("%02hhx ", memory[i]);
+		if (memory[i])
+			ft_printf("\e[39m");
 		if ((i + 1) % 32 == 0 && i)
 			ft_printf("\n");
 		i++;

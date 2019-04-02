@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 20:02:16 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/01 20:07:27 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 14:08:15 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int		check_null(int fd)
 
 	total = read_4bytes(fd);
 	return (total == 0);
+}
+
+int		read_magic(int fd)
+{
+	return (read_4bytes(fd));
 }
 
 int		read_code(int fd, t_champion *champ)
