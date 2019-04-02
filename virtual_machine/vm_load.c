@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   vm_load.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:04:35 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 19:50:12 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <errno.h>
 #include "vm.h"
+#include "libft.h"
 
 int		count_champs(t_champion *head)
 {
@@ -48,16 +51,25 @@ int		vm_index_to_load(int total, int curr)
 	return (pos);
 }
 
-void	vm_spread_champs(unsigned char *memory, t_champion *champs)
+void	vm_spread_champs(t_vm *vm, t_champion *champs)
 {
-	int	champs_num;
-	int	i;
+	int			champs_num;
+	int			i;
+	t_proccess	*proccess;
 
 	champs_num = count_champs(champs);
 	i = 0;
 	while (i < champs_num)
 	{
-		vm_load_champ(memory, champs, vm_index_to_load(champs_num, i));
+		ft_printf("%d\n", vm_index_to_load(champs_num, i));
+		vm_load_champ(vm->memory, champs, vm_index_to_load(champs_num, i));
+		proccess = proccess_new(champs->id, vm_index_to_load(champs_num, i));
+		if (!proccess)
+		{
+			ft_printf("Error: %s\n", strerror(errno));
+			exit(0);
+		}
+		proccess_add(&vm->process, proccess);
 		i++;
 		champs = champs->next;
 	}

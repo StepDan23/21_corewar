@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/02 14:10:46 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/02 19:28:11 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_proccess
 	int					is_live;
 	int					command_type;
 	int					cycles_to_wait;
+	struct s_proccess	*next;
 }						t_proccess;
 
 /*
@@ -124,8 +125,11 @@ int						read_code(int fd, t_champion *champ);
 void					print_error_exit(int code);
 
 t_vm					*vm_new(int dump);
-void					vm_spread_champs(unsigned char *memory, t_champion *chapms);
+void					vm_spread_champs(t_vm *vm, t_champion *champs);
 void					vm_dump_memory(unsigned char *memory);
+
+t_proccess				*proccess_new(int player_id, int pos);
+void					proccess_add(t_proccess **head, t_proccess *new_p);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
