@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proccesses.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/02 20:02:25 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/03 23:03:43 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void		proccess_init_reg(unsigned int *reg)
 	}
 }
 
-t_proccess	*proccess_new(int player_id, int pos)
+t_proccess	*proccess_new(int id, int player_id, int pos)
 {
 	t_proccess	*new_p;
 
 	new_p = (t_proccess *)malloc(sizeof(t_proccess));
 	if (!new_p)
 		return (NULL);
+	new_p->id = id;
 	new_p->carry = 0;
 	new_p->is_live = 0;
 	new_p->player_id = player_id;
@@ -48,5 +49,51 @@ void	proccess_add(t_proccess **head, t_proccess *new_p)
 	{
 		new_p->next = *head;
 		*head = new_p;
+	}
+}
+
+void	proccess_kill(t_proccess **head, t_proccess *ps)
+{
+	t_proccess	*prev;
+	t_proccess	*curr;
+
+	if (!head || !ps)
+		return ;
+	curr = *head;
+	if (curr == ps)
+	{
+		(*head) = (*head)->next;
+		free(curr);
+		return ;
+	}
+	while (curr && curr != ps)
+	{
+		prev = curr;
+		curr = curr->next;
+	}
+	if (!curr)
+		return ;
+	prev->next = curr->next;
+	free(curr);
+}
+
+/*
+** Удаляет процессы у которых live = 0
+*/
+
+void	proccess_check_live(t_proccess **head)
+{
+	t_proccess	*curr;
+	
+	if (!head)
+		return ;
+	curr = *head;
+	while (curr)
+	{
+		if (!curr->is_live)
+			proccess_kill(head, curr);
+		else
+			curr->is_live = 0;
+		curr = curr->next;
 	}
 }

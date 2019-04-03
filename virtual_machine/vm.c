@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 19:57:32 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/03 01:07:14 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_vm	*vm_new(int dump)
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->cycles_to_dump = dump;
 	vm->dump = dump;
+	vm->live_exec = 0;
+	vm->checkups = 0;
 	vm_init_memory(vm->memory);
 	return (vm);
 }

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/03 00:32:39 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/03 22:58:17 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		vm_index_to_load(int total, int curr)
 	int	pos;
 
 	pos = curr * (MEM_SIZE / total);
-	pos -= pos % 32;
+	// pos -= pos % 32;
 	return (pos);
 }
 
@@ -82,7 +82,7 @@ void	vm_spread_champs(t_vm *vm, t_champion *champs)
 	while (i < champs_num)
 	{
 		vm_load_champ(vm->memory, champs, vm_index_to_load(champs_num, i));
-		proccess = proccess_new(champs->id, vm_index_to_load(champs_num, i));
+		proccess = proccess_new(i, champs->id, vm_index_to_load(champs_num, i));
 		if (!proccess)
 		{
 			ft_printf("Error: %s\n", strerror(errno));

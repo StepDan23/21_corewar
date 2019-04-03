@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/02 19:28:11 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/03 23:46:38 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct			s_proccess
 	int					position;
 	int					carry;
 	int					player_id;
+	int					id;
 	unsigned int		registers[REG_NUMBER];
 	int					is_live;
 	int					command_type;
@@ -76,12 +77,26 @@ typedef struct			vm
 	unsigned int		cycles_to_die;
 	unsigned int		cycles_to_dump;
 	unsigned int		dump;
-	unsigned int		cycles_die;
+	int					cycles_die;
 	t_proccess			*process;
 	t_champion			*champion;
 	unsigned char		memory[MEM_SIZE];
-
+	unsigned int		live_exec;
+	unsigned int		checkups;
 }						t_vm;
+
+typedef struct			s_op
+{
+	char				*name;
+	int					arg_num;
+	int					arg_types[3];
+	int					opcode;
+	int					cycles_to_wait;
+	char				*description;
+	int					coding_byte;
+	int					is_short_dir;
+}						t_op;
+
 
 /*
 **	Декларации опкодов операций
@@ -128,8 +143,9 @@ t_vm					*vm_new(int dump);
 void					vm_spread_champs(t_vm *vm, t_champion *champs);
 void					vm_dump_memory(unsigned char *memory);
 
-t_proccess				*proccess_new(int player_id, int pos);
+t_proccess				*proccess_new(int id, int player_id, int pos);
 void					proccess_add(t_proccess **head, t_proccess *new_p);
+void					proccess_check_live(t_proccess **head);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
