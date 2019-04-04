@@ -7,11 +7,9 @@ int		check_args(int ac, char **av, t_vm *vm)
 {
 	int			count;
 	int			j;
-	t_champion	*tmp;
 
 	j = 1;
 	count = 0;
-	tmp = vm->champion;
 	while (j < ac)
 	{
 		if (av[j][0] == '-')
@@ -21,7 +19,7 @@ int		check_args(int ac, char **av, t_vm *vm)
 			j += 2;
 		}
 		if (check_filename(av[j]))
-			champions_add(av[j], ++count, &vm->champion, &tmp);
+			champions_add(av[j], ++count, &vm->champion);
 		else
 			return (0);
 		j++;

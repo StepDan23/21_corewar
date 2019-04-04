@@ -2,28 +2,27 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void		champions_add(char *filename, int num, t_champion **head, t_champion **tmp)
+void		champions_add(char *filename, int num, t_champion **head)
 {
-	t_champion	*champion;
+	t_champion	*new_champ;
 
-	champion = (t_champion *)malloc(sizeof(t_champion));
-	if (!champion)
+	new_champ = (t_champion *)malloc(sizeof(t_champion));
+	if (!new_champ)
 	{
 		ft_printf("Malloc champion error! Exit.");
 		exit(2);
 	}
-	champion->filename = filename;
-	champion->id = num;
-	champion->code = NULL;
-	champion->next = NULL;
-	champion->size = 0;
+	new_champ->filename = filename;
+	new_champ->id = num;
+	new_champ->code = NULL;
+	new_champ->next = NULL;
+	new_champ->size = 0;
 
 	if (*head == NULL)
 	{
-		*head = champion;
-		*tmp = *head;
+		*head = new_champ;
 		return ;
 	}
-	(*tmp)->next = champion;
-	*tmp = (*tmp)->next;
+	new_champ->next = *head;
+	*head = new_champ;
 }
