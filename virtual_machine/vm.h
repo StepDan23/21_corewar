@@ -103,6 +103,7 @@ typedef struct			vm
 # define LFORK		15;
 # define AFF		16;
 
+int						is_all_digit(char *str);
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
 
