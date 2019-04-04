@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/03 23:46:38 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/05 01:09:48 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct			s_proccess
 	int					cycles_to_wait;
 	struct s_proccess	*next;
 }						t_proccess;
+
+# define P_POS			(proccess->position)
+# define P_C			(proccess->carry)
+# define P_PI			(proccess->player_id)
+# define P_REG			(proccess->registers)
+# define P_CT			(proccess->command_type)
+# define P_CTW			(proccess->cycles_to_wait)
 
 /*
 **	champion
@@ -85,11 +92,23 @@ typedef struct			vm
 	unsigned int		checkups;
 }						t_vm;
 
+/*
+**	Декларации опкодов операций
+**	arg_num - кол-во аргументов
+**	*name - имя комманды
+**	arg_types[3] - типы аргументов (макс 3 аргумента)
+**	opcode - номер операции
+**	cycles_to_wait - кол-во циклов ожидания перед выполнением
+**	*description - описание команды
+**	coding_byte - есть ли байт кодирования типов аргументов
+**	is_short_dir - размер T_DIR равен 2 (true) иначе 4 (false)
+*/
+
 typedef struct			s_op
 {
 	char				*name;
 	int					arg_num;
-	int					arg_types[3];
+	unsigned char		arg_types[3];
 	int					opcode;
 	int					cycles_to_wait;
 	char				*description;
@@ -151,4 +170,7 @@ int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
 
 void					champions_add(char *filename, int num, t_champion **head);
+
+int						coding_byte_check(unsigned char octet, const t_op op);
+void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
 #endif

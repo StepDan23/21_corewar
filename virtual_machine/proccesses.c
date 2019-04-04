@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/03 23:03:43 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/05 01:15:26 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_proccess	*proccess_new(int id, int player_id, int pos)
 	proccess_init_reg(new_p->registers);
 	new_p->registers[0] = player_id;
 	new_p->next = NULL;
+	new_p->cycles_to_wait = 0;
 	return (new_p);
 }
 
