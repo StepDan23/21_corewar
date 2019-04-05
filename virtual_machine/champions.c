@@ -26,3 +26,10 @@ void		champions_add(char *filename, int num, t_champion **head)
 	new_champ->next = *head;
 	*head = new_champ;
 }
+
+void		champion_free(t_champion *hero)
+{
+	if (hero->code)
+		free(hero->code);
+	free(hero);
+}

@@ -1,27 +1,29 @@
 #include "vm.h"
 #include "libft.h"
+#include <stdlib.h>
 
-// TODO  Manage flags
-// TODO: manage -n flag
 int		check_args(int ac, char **av, t_vm *vm)
 {
 	int			count;
 	int			j;
 
 	j = 1;
-	count = 0;
+	count = 1;
 	while (j < ac)
 	{
 		if (av[j][0] == '-')
 		{
 			if (j + 1 < ac)
-				manage_flag(vm, av[j], ac[j + 1], &count);
+				manage_flag(vm, av[j], av[j + 1], &count);
 			j += 2;
 		}
+		if (j > ac)
+			return (0);
 		if (check_filename(av[j]))
-			champions_add(av[j], ++count, &vm->champion);
+			champions_add(av[j], count, &vm->champion);
 		else
 			return (0);
+		count = count_avaliable(vm);
 		j++;
 	}
 	return (1);
@@ -31,6 +33,8 @@ int		check_filename(char *file)
 {
 	int		len;
 
+	if (!file)
+		return (0);
 	len = ft_strlen(file);
 	if (len > 4)
 	{
@@ -39,15 +43,15 @@ int		check_filename(char *file)
 	}
 	return (0);
 }
-// TODO 1. Test check_dump
-int		check_dump(t_vm *vm, char param)
+
+int		check_dump(t_vm *vm, char *param)
 {
 	int		i;
 
 	i = 0;
 	if (!is_all_digit(param))
 	{
-		ft_printf("Dump cycles isn't number.\n");
+		ft_printf("Dump cycles isn't correct number.\n");
 		exit(1);
 	}
 	ft_atoi(param) > 0 ? vm->dump = ft_atoi(param) : exit(1);
@@ -63,15 +67,15 @@ int		check_n(t_vm *vm, char *param, int *next_number)
 	n = 0;
 	if (!is_all_digit(param))
 	{
-		ft_printf("-n parametr isn't number.\n");
+		ft_printf("-n parametr isn't number. %s\n", param);
 		exit(1);
 	}
 	n = ft_atoi(param);
-	n > 0 ? n *= -1 : n;
+	// n > 0 ? n *= -1 : n;
 	champ = vm->champion;
 	while (champ)
 	{
-		if (champ->id = n)
+		if (champ->id == (unsigned int)n)
 		{
 			ft_printf("There is champion with same number.\n");
 			exit(1);

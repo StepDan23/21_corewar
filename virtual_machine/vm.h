@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/02 14:10:46 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/05 21:25:43 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ typedef struct			vm
 {
 	unsigned int		cycles;
 	unsigned int		cycles_to_die;
-	unsigned int		cycles_to_dump;
-	unsigned int		dump;
+	int					cycles_to_dump;
+	int					dump;
 	unsigned int		cycles_die;
 	t_proccess			*process;
 	t_champion			*champion;
@@ -114,6 +114,7 @@ typedef struct			vm
 # define CODE_LEN_ERR	5
 
 t_champion				*new_champ(int number, char *filename);
+void					champion_free(t_champion *hero);
 
 void					read_all_champs(t_champion *champs);
 int						read_champ(t_champion *champ);
@@ -123,13 +124,15 @@ int						check_null(int fd);
 int						read_code(int fd, t_champion *champ);
 void					print_error_exit(int code);
 
-t_vm					*vm_new(int dump);
+t_vm					*vm_new(void);
 void					vm_spread_champs(unsigned char *memory, t_champion *chapms);
 void					vm_dump_memory(unsigned char *memory);
 
 int						is_all_digit(char *str);
+int						count_avaliable(t_vm *vm);
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
+int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
 
 void					champions_add(char *filename, int num, t_champion **head);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:04:13 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/05 21:25:17 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	vm_init_memory(unsigned char *memory)
 	}
 }
 
-t_vm	*vm_new(int dump)
+t_vm	*vm_new(void)
 {
 	t_vm	*vm;
 
@@ -38,8 +38,8 @@ t_vm	*vm_new(int dump)
 	vm->process = NULL;
 	vm->cycles_die = CYCLE_TO_DIE;
 	vm->cycles_to_die = CYCLE_TO_DIE;
-	vm->cycles_to_dump = dump;
-	vm->dump = dump;
+	vm->cycles_to_dump = -1;
+	vm->dump = -1;
 	vm_init_memory(vm->memory);
 	return (vm);
 }
