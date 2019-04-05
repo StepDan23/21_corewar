@@ -3,82 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   proc_performe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/05 01:27:08 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/05 20:19:23 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
-
-int		bit_extracted(int number, int k, int p) 
-{ 
-	return (((1 << k) - 1) & (number >> (p - 1))); 
-} 
-
-int		has_register(unsigned char octet)
-{
-	if (bit_extracted(octet, 2, 7) == T_REG)
-		return (1);
-	if (bit_extracted(octet, 2, 5) == T_REG)
-		return (1);
-	if (bit_extracted(octet, 2, 3) == T_REG)
-		return (1);
-	return (0);
-}
-
-int		coding_byte_check(unsigned char octet, const t_op op)
-{
-	int				i;
-	unsigned char	arg;
-
-	i = 0;
-	while (i < op.arg_num)
-	{
-		arg = bit_extracted(octet, 2, 7 - i * 2);
-		if (!(arg & op.arg_types[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int		get_arg_size(int arg_type, t_op op)
-{
-	if (arg_type == T_REG)
-		return (1);
-	else if (arg_type == T_IND)
-		return (2);
-	else if (arg_type == T_DIR)
-		return (op.is_short_dir ? 2 : 4);
-	else
-		return (0);
-}
-
-int		valid_reg(unsigned char octet, unsigned char *memory, int pos, t_op op)
-{
-	int	i;
-	int	tmp_pos;
-	int	arg_type;
-
-	i = 0;
-	tmp_pos = (pos + 1) % MEM_SIZE;
-	while (i < op.arg_num)
-	{
-		arg_type = bit_extracted(octet, 2, 7 - i * 2);
-		if (arg_type == T_REG)
-		{
-			if (memory[tmp_pos] < 1 || memory[tmp_pos] > 16)
-				return (0);
-		}
-		tmp_pos = (tmp_pos + get_arg_size(arg_type, op)) % MEM_SIZE;
-		i++;
-	}
-	return (1);
-}
 
 int		get_new_pos(int pos, t_op op, unsigned int octet)
 {
@@ -136,7 +70,7 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 	proccess = head;
 	while (proccess)
 	{
-		ft_printf("Running %d\n", proccess->id);
+		// ft_printf("Proccess %d now on %d\n", proccess->id, proccess->position);
 		if (!P_CTW)
 			set_new_op(vm, proccess, op_tab);
 		if (P_CTW > 0)

@@ -2,7 +2,7 @@ NAME = corewar
 LIB = ../libft/libft.a
 FLAGS = -Werror -Wall -Wextra -g
 GCC = gcc
-SRC = check_args.c core.c champions.c read_champions.c read_champions2.c vm.c vm_load.c proccesses.c proc_performe.c
+SRC = check_args.c core.c champions.c read_champions.c read_champions2.c vm.c vm_load.c proccesses.c proc_performe.c proc_utils.c
 OBJ = $(SRC:.c=.o)
 #  core.c 
 all: $(LIB) $(NAME)
