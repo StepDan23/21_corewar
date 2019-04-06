@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ld.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:19:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/06 02:42:32 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/06 16:33:24 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int		get_2bytes(unsigned char *memory, int pos)
 	int				total;
 	unsigned char	octets[2];
 
-	octets[0] = memory[pos] << 8;
+	octets[0] = memory[pos];
 	octets[1] = memory[(pos + 1) % MEM_SIZE];
-	total = octets[0] | octets[1];
+	total = (octets[0] << 4) | octets[1];
 	return ((short)total);
 }
-#include "libft.h"
+
 void	ld(t_vm *vm, t_proccess *proccess)
 {
 	unsigned char	arg_octet;

@@ -23,3 +23,9 @@ fclean: clean
 	rm -f $(NAME)
 	make -C ../libft/ fclean
 re: fclean all
+
+test: $(LIB) $(OBJ) operations_tests.c
+	$(GCC) $(FLAGS) -c operations_tests.c -o operations_tests.o -I../libft/includes -I..
+	$(GCC) $(FLAGS) check_args.o champions.o read_champions.o read_champions2.o vm.c vm_load.o \
+	proccesses.o proc_performe.o proc_utils.o ld.o ldi.o st.o add_sub.o fork_live.o logic.o operations_tests.o \
+	-I../libft/includes -I.. -L ../libft -lft -o test

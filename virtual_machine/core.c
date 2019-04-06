@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/06 02:45:02 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/06 15:50:49 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		main(int argc, char *argv[])
 	vm_dump_memory(vm->memory);
 	introduce_players(vm->champion);
 	init_optab(op_tab);
-	// exit(0);
 	while (vm->cycles_die > 0 && vm->process)
 	{
 		// ft_printf("%d\n", vm->cycles);
