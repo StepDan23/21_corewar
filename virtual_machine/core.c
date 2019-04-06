@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 01:11:03 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/06 02:45:02 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		main(int argc, char *argv[])
 		champions_add(argv[argc - 1], 1, &vm->champion);
 		argc--;
 	}
+	vm->winner = vm->champion;
 	read_all_champs(vm->champion);
 	vm_spread_champs(vm, vm->champion);
 	vm_dump_memory(vm->memory);
@@ -70,11 +71,8 @@ int		main(int argc, char *argv[])
 	// exit(0);
 	while (vm->cycles_die > 0 && vm->process)
 	{
-		ft_printf("%d\n", vm->cycles);
-		// тут мы выполняем операции, двигаем каретки
-		// TODO
+		// ft_printf("%d\n", vm->cycles);
 		performe_proc(vm, vm->process, op_tab);
-		// Обновление состояния машины, проверка процессов на выживание
 		if (!vm->cycles_to_die)
 		{
 			proccess_check_live(&vm->process);
@@ -90,6 +88,7 @@ int		main(int argc, char *argv[])
 		vm->cycles++;
 		vm->cycles_to_die--;
 	}
+	ft_printf("Winner is %s!\n", vm->winner->name);
 	free(vm);
 	return (0);
 }

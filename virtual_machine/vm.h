@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 22:36:23 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/06 02:35:22 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct			s_champion
 	char				comment[COMMENT_LENGTH + 1];
 	unsigned int		size;
 	unsigned char		*code;
-	unsigned int		id;
+	int					id;
 	struct s_champion	*next;
 }						t_champion;
 
@@ -87,6 +87,7 @@ typedef struct			vm
 	int					cycles_die;
 	t_proccess			*process;
 	t_champion			*champion;
+	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
 	unsigned int		live_exec;
 	unsigned int		checkups;
@@ -180,4 +181,20 @@ int						has_register(unsigned char octet);
 int						bit_extracted(int number, int k, int p) ;
 int						get_4bytes(unsigned char *memory, int pos);
 int						get_2bytes(unsigned char *memory, int pos);
+
+void					and(t_vm *vm, t_proccess *proccess);
+void					or(t_vm *vm, t_proccess *proccess);
+void					xor(t_vm *vm, t_proccess *proccess);
+void					zjmp(t_vm *vm, t_proccess *proccess);
+void					ft_fork(t_vm *vm, t_proccess *proccess);
+void					lfork(t_vm *vm, t_proccess *proccess);
+void					st(t_vm *vm, t_proccess *proccess);
+void					sti(t_vm *vm, t_proccess *proccess);
+void					ld(t_vm *vm, t_proccess *proccess);
+void					lld(t_vm *vm, t_proccess *proccess);
+void					ldi(t_vm *vm, t_proccess *proccess);
+void					lldi(t_vm *vm, t_proccess *proccess);
+void					add(t_vm *vm, t_proccess *proccess);
+void					sub(t_vm *vm, t_proccess *proccess);
+void					live(t_vm *vm, t_proccess *proccess);
 #endif

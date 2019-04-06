@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:26:41 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 23:02:30 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/06 02:34:03 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	st(t_vm *vm, t_proccess *proccess)
 
 void	sti(t_vm *vm, t_proccess *proccess)
 {
-	int		index;
 	int		arg_type[3];
 	int		args[3];
 	int		i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_performe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/05 20:19:23 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/06 02:47:16 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,31 @@ void	set_new_op(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 		P_CTW = op_tab[P_CT].cycles_to_wait;
 }
 
+void	init_f(void (*f[17])(t_vm *, t_proccess *))
+{
+	f[1] = &live;
+	f[2] = &ld;
+	f[3] = &st;
+	f[4] = &add;
+	f[5] = &sub;
+	f[6] = &and;
+	f[7] = &or;
+	f[8] = &xor;
+	f[9] = &zjmp;
+	f[10] = &ldi;
+	f[11] = &sti;
+	f[12] = &ft_fork;
+	f[13] = &lld;
+	f[14] = &lldi;
+	f[15] = &lfork;
+}
+
 void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 {
+	void (*f[17])(t_vm *, t_proccess *);
+
+	init_f(f);
+	ft_printf("Execute %s\n", op_tab[P_CT].name);
 	if (op_tab[P_CT].coding_byte)
 	{
 		if (coding_byte_check(vm->memory[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
@@ -50,17 +73,16 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 				!valid_reg(vm->memory[(P_POS + 1) % MEM_SIZE], vm->memory, P_POS + 1, op_tab[P_CT]))
 				P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
 			else
-				//Если все необходимые проверки были успешно пройдены, нужно выполнить операцию 
+			{
+				f[P_CT](vm, proccess);
 				P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
+			}
 		}
 		else
 			P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
-		// exit(0);
 	}
 	else
-		//выполнить операцию и передвинуть каретку на следующую позицию.
-		P_POS = get_new_pos(P_POS, op_tab[P_CT], 0);
-		// exit(0);
+		f[P_CT](vm, proccess);
 }
 
 void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
