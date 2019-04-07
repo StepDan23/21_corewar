@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/01 18:33:16 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/07 17:57:19 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_window		*visu_init_win(void)
 		return (NULL);
 	}
 	WIN_WIN = SDL_CreateWindow("Vizualizer", SDL_WINDOWPOS_UNDEFINED,\
-	SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+	SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 	if (WIN_WIN == NULL)
 	{
 		ft_printf("Init_Window_Error: %s\n", SDL_GetError());

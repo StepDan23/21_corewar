@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/01 18:37:19 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/07 18:40:05 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ typedef struct		s_window
 
 t_window		*visu_init_win(void);
 void			win_events(t_window *window);
+int				load_files(t_window *window);
 #endif
