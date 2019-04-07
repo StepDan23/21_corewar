@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/06 15:50:49 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/07 21:47:16 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		main(int argc, char *argv[])
 	init_optab(op_tab);
 	while (vm->cycles_die > 0 && vm->process)
 	{
-		// ft_printf("%d\n", vm->cycles);
+		ft_printf("%d\n", vm->cycles);
 		performe_proc(vm, vm->process, op_tab);
 		if (!vm->cycles_to_die)
 		{

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/06 02:35:22 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:59:24 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,9 @@ int						has_register(unsigned char octet);
 int						bit_extracted(int number, int k, int p) ;
 int						get_4bytes(unsigned char *memory, int pos);
 int						get_2bytes(unsigned char *memory, int pos);
+int						get_realtive_addr(int from, int to);
+int						get_indirect_addr(t_vm *vm, int pos, int from);
+int						get_indirect_laddr(t_vm *vm, int pos, int from);
 
 void					and(t_vm *vm, t_proccess *proccess);
 void					or(t_vm *vm, t_proccess *proccess);

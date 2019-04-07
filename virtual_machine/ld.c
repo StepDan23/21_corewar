@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:19:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/07 21:35:33 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/08 01:58:53 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,28 @@ int		get_2bytes(unsigned char *memory, int pos)
 	return ((short)total);
 }
 
+int		get_realtive_addr(int from, int to)
+{
+	if (from + to < 0)
+		return ((MEM_SIZE + (from + to) % MEM_SIZE));
+	else
+		return ((from + to) % MEM_SIZE);
+}
+
 int		get_indirect_addr(t_vm *vm, int pos, int from)
 {
 	int	ind;
 
 	ind = get_2bytes(vm->memory, pos) % IDX_MOD;
-	if (from + ind < 0)
-		return ((MEM_SIZE + (from + ind)) % MEM_SIZE);
-	else
-		return ((from + ind) % MEM_SIZE);
+	return (get_realtive_addr(from, ind));
+}
+
+int		get_indirect_laddr(t_vm *vm, int pos, int from)
+{
+	int	ind;
+
+	ind = get_2bytes(vm->memory, pos);
+	return (get_realtive_addr(from, ind));
 }
 
 void	ld(t_vm *vm, t_proccess *proccess)
@@ -66,6 +79,8 @@ void	ld(t_vm *vm, t_proccess *proccess)
 		P_REG[vm->memory[(P_POS + 2 + 2) % MEM_SIZE] - 1] = number;
 }
 
+#include "libft.h"
+
 void	lld(t_vm *vm, t_proccess *proccess)
 {
 	unsigned char	arg_octet;
@@ -78,11 +93,11 @@ void	lld(t_vm *vm, t_proccess *proccess)
 	if (arg_type == T_DIR)
 		index = (P_POS + 2) % MEM_SIZE;
 	else
-		index = (P_POS + get_2bytes(vm->memory, (P_POS + 2) % MEM_SIZE)) % MEM_SIZE;
-	number = get_4bytes(vm->memory, index % MEM_SIZE);
+		index = get_indirect_laddr(vm, (P_POS + 2) % MEM_SIZE, P_POS);
+	number = get_4bytes(vm->memory, index);
 	P_C = (number == 0 ? 1 : 0);
 	if (arg_type == T_DIR)
-		P_REG[vm->memory[(P_POS + 2 + 4) % MEM_SIZE]] = number;
+		P_REG[vm->memory[(P_POS + 2 + 4) % MEM_SIZE] - 1] = number;
 	else
-		P_REG[vm->memory[(P_POS + 2 + 4) % MEM_SIZE]] = number;
+		P_REG[vm->memory[(P_POS + 2 + 2) % MEM_SIZE] - 1] = number;
 }
