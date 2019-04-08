@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/08 15:22:15 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:47:50 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_window		*visu_init_win(void)
 
 	window = (t_window*)malloc(sizeof(t_window));
 	WIN_QUIT = 0;
+	WIN_STATUS = 0;
+	FONT_COLOR = (SDL_Color){255, 255, 255, 255};
 	if (SDL_Init(SDL_INIT_VIDEO) < 0 || SDL_Init(SDL_INIT_AUDIO) < 0  || TTF_Init() < 0)
 	{
 		ft_printf("Init_Error: %s\n", SDL_GetError());
@@ -36,6 +38,5 @@ t_window		*visu_init_win(void)
 		ft_printf("Init_Renderer_Error: %s\n", SDL_GetError());
 		return (NULL);
 	}
-	FONT_COLOR = (SDL_Color){255, 255, 255, 255};
 	return (window);
 }
