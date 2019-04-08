@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/07 17:57:19 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/08 15:22:15 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ t_window		*visu_init_win(void)
 		ft_printf("Init_Renderer_Error: %s\n", SDL_GetError());
 		return (NULL);
 	}
+	FONT_COLOR = (SDL_Color){255, 255, 255, 255};
 	return (window);
 }
