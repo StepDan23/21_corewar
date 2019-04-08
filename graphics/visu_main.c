@@ -6,13 +6,13 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/07 17:12:43 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:47:25 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
 
-static void	visu_close(t_window *window)
+static void		visu_close(t_window *window)
 {
 	if (WIN_REND != NULL)
 		SDL_DestroyRenderer(WIN_REND);
@@ -30,7 +30,16 @@ static void	visu_close(t_window *window)
 	// exit(1);
 }
 
-int			main(void)
+static void		render_pause(t_window *window)
+{
+	SDL_RenderCopy(WIN_REND, BACK_PAUSE, NULL, NULL);
+	if (WIN_STATUS == 0)
+		print_str(window, "Press SPACE to start", 100, 100);
+	if (WIN_STATUS == 2)
+		print_str(window, "Press SPACE to continue", 100, 100);
+}
+
+int				main(void)
 {
 	t_window	*window;
 
@@ -43,6 +52,8 @@ int			main(void)
 		win_events(window);
 		SDL_RenderClear(WIN_REND);
 		SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
+		if (WIN_STATUS == 0 || WIN_STATUS == 2)
+			render_pause(window);
 		SDL_RenderPresent(WIN_REND);
 		SDL_Delay(10);
 	}

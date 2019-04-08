@@ -6,11 +6,23 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:36:11 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/07 18:26:04 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:37:53 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
+
+static void		event_space(t_window *window)
+{
+	if (WIN_STATUS == 0)
+		WIN_STATUS = 1;
+	else if (WIN_STATUS == 1)
+		WIN_STATUS = 2;
+	else if (WIN_STATUS == 2)
+		WIN_STATUS = 1;
+	else if (WIN_STATUS == 3)
+		WIN_QUIT = 1;
+}
 
 void			win_events(t_window *window)
 {
@@ -24,6 +36,8 @@ void			win_events(t_window *window)
 		{
 			if (e.key.keysym.sym == SDLK_ESCAPE)
 				WIN_QUIT = 1;
+			if (e.key.keysym.sym == SDLK_SPACE)
+				event_space(window);
 		}
 	}
 }
