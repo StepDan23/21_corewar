@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:26:41 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/08 02:11:29 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:37:59 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	st(t_vm *vm, t_proccess *proccess)
 		write_reg(vm->memory, index, number);
 	}
 }
-
+#include "libft.h"
 void	sti(t_vm *vm, t_proccess *proccess)
 {
 	int		arg_type[3];
@@ -58,8 +58,10 @@ void	sti(t_vm *vm, t_proccess *proccess)
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
 		ofs += arg_type[i] == T_REG ? 1 : 2;
 		i++;
 	}

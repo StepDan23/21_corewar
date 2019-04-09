@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/08 02:12:33 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/09 14:37:55 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,7 +393,7 @@ int		sti_test(t_vm *vm, t_proccess *proccess)
 	P_POS = 1000;
 	P_REG[9] = 424242;
 	P_REG[14] = 100;
-	vm->memory[1001] = 0x58; // Байт аргументов 01010100 (REG + REG + DIR)
+	vm->memory[1001] = 0x58; // Байт аргументов 01011000 (REG + REG + DIR)
 	vm->memory[1002] = 0x0A; //00001010
 	vm->memory[1003] = 0x0F; //00001111
 	vm->memory[1004] = 0x00; //00000000
@@ -436,7 +436,45 @@ int		sti_test(t_vm *vm, t_proccess *proccess)
 		ft_printf("sti_test [04] \x1b[32mOK\x1b[0m\n");
 	else
 		ft_printf("sti_test [04] \x1b[31mFAIL\x1b[0m\n");
-	// vm_dump_memory(vm->memory);
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 100;
+	P_REG[1] = 424242;
+	vm->memory[101] = 0x78; // Байт аргументов 01111000 (REG + IND + DIR)
+	vm->memory[102] = 0x02; //00000010 (reg[1] = 424242)
+	vm->memory[103] = 0x00; //00000000
+	vm->memory[104] = 0x64; //01100100 (100)
+	vm->memory[105] = 0x00; //00000000
+	vm->memory[106] = 0x64; //01100100 (100)
+	vm->memory[200] = 0x00; //00000000
+	vm->memory[201] = 0x00; //00000000
+	vm->memory[202] = 0x00; //00000000
+	vm->memory[203] = 0x0a; //00001010 (10)
+	sti(vm, proccess);
+	if (vm->memory[210] == 0 && vm->memory[211] == 6 && vm->memory[212] == 121 &&\
+		vm->memory[213] == 50)
+		ft_printf("sti_test [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("sti_test [05] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 10;
+	P_REG[1] = 424242;
+	P_REG[2] = 1233141;
+	vm->memory[11] = 0x64; // Байт аргументов 01010100 (REG + DIR + REG)
+	vm->memory[12] = 0x02; //00000010
+	vm->memory[13] = 0xFF; //11111111
+	vm->memory[14] = 0x9C; //10011100 (-100)
+	vm->memory[15] = 0x03; //00000011 ((-100) + 1233141) % IDX_MOD = 504
+	sti(vm, proccess);
+	if (vm->memory[155] == 0 && vm->memory[156] == 6 && vm->memory[157] == 121 &&\
+		vm->memory[158] == 50)
+		ft_printf("sti_test [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("sti_test [06] \x1b[31mFAIL\x1b[0m\n");
+	vm_dump_memory(vm->memory);
 	ft_printf("--------------------------\n");
 	return (1);
 }
