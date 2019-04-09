@@ -6,30 +6,11 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 11:00:25 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:42:39 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
-
-void		print_str(t_window *window, char *str, int x, int y)
-{
-	SDL_Surface		*text_surf;
-	SDL_Texture		*text;
-	SDL_Rect		dst;
-	TTF_Font		*font;
-
-	if (x < 1000 || y < 100)
-		font = FONT_PAUSE;
-	else
-		font = FONT_STAT;
-	text_surf = TTF_RenderText_Blended(font, str, FONT_COLOR);
-	text = SDL_CreateTextureFromSurface(WIN_REND, text_surf);
-	dst = (SDL_Rect){x, y, text_surf->w, text_surf->h};
-	SDL_RenderCopy(WIN_REND, text, NULL, &dst);
-	SDL_FreeSurface(text_surf);
-	SDL_DestroyTexture(text);
-}
 
 static void		print_players(t_window *window, int players)
 {
@@ -61,7 +42,6 @@ static void		print_players(t_window *window, int players)
 
 static void		make_text(t_window *window, int players)
 {
-	SDL_Rect	*dst;
 	int			height;
 
 	height = 80;

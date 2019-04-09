@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 13:10:22 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/09 19:06:01 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct		s_window
 
 typedef struct		s_run
 {
-	int				cycle;
+	float			cycle;
 	int				tmp;
 	int				speed;
 	int				processes;
@@ -69,8 +69,19 @@ typedef struct		s_run
 # define NBR_LIVE	(running->nbr_live)
 # define MAX_CHECKS	(running->max_checks)
 
-t_window		*init_win(void);
-void			win_events(t_window *window);
-int				load_files(t_window *window);
-void			print_str(t_window *window, char *str, int x, int y);
+typedef struct		s_player
+{
+	char			*name;
+	int				last_live;
+	int				lives_in_period;
+}					t_player;
+
+t_window			*init_win(void);
+void				win_events(t_window *window, t_run *running);
+int					load_files(t_window *window);
+void				print_str(t_window *window, char *str, int x, int y);
+void				render_image(t_window *window, t_run *running);
+
+void				print_nbr(t_window *window, int nbr, int x, int y);
+void				print_str(t_window *window, char *str, int x, int y);
 #endif
