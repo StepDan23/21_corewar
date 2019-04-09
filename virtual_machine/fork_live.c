@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/09 16:36:03 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 01:27:44 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 
 void	ft_fork(t_vm *vm, t_proccess *proccess)
 {
-	int	index;
+	int	value;
 	int	i;
 
-	index = get_2bytes(vm->memory,(P_POS + 1) % MEM_SIZE) % IDX_MOD;
+	value = get_2bytes(vm->memory,(P_POS + 1) % MEM_SIZE) % IDX_MOD;
 	proccess_add(&vm->process,\
-	proccess_new(vm->process->id + 1, P_PI, (P_POS + index) % MEM_SIZE));
+	proccess_new(vm->process->id + 1, P_PI, get_realtive_addr(P_POS, value)));
 	i = 0;
 	while (i < REG_NUMBER)
 	{

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:30:26 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 17:13:01 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:31:29 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 /*
 **	ldi
-** Данная операция записывает значение в регистр, 
-** который был ей передан как третий параметр. 
-** Значением, которая она записывает, являются 4 байта. 
+** Данная операция записывает значение в регистр, который был ей передан
+** как третий параметр. Значением, которая она записывает, являются 4 байта.
 ** Эти 4 байта она считывает по адресу, который формируется 
 ** по следующему принципу:текущая позиция + (<ЗНАЧЕНИЕ_ПЕРВОГО_АРГУМЕНТА> +
 **  									<ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА>) % IDX_MOD.
@@ -45,19 +44,22 @@ void	ldi(t_vm *vm, t_proccess *proccess)
 
 	i = 0;
 	ofs = 0;
-	while (i < 3)
+	while (i < 2)
 	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 7 - 2 * i, 2);
+		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
 		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE]];
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
-		ofs += arg_type[i] == T_REG ? 1 : 2;
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
+		ofs += (arg_type[i] == T_REG ? 1 : 2);
 		i++;
 	}
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
 	num = get_4bytes(vm->memory, (P_POS + (args[0] + args[1]) % IDX_MOD) % MEM_SIZE);
 	P_REG[args[2]] = num;
 }
@@ -86,20 +88,23 @@ void	lldi(t_vm *vm, t_proccess *proccess)
 
 	i = 0;
 	ofs = 0;
-	while (i < 3)
+	while (i < 2)
 	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 7 - 2 * i, 2);
+		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
 		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE]];
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
 		ofs += arg_type[i] == T_REG ? 1 : 2;
 		i++;
 	}
-	num = get_4bytes(vm->memory, (P_POS + (args[0] + args[1]) % IDX_MOD) % MEM_SIZE);
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+	num = get_4bytes(vm->memory, (P_POS + (args[0] + args[1])) % MEM_SIZE);
 	P_REG[args[2]] = num;
 	P_C = num ? 0 : 1;
 }

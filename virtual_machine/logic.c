@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 00:26:22 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/09 18:43:48 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 01:33:03 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		logic_arg_size(int arg_type)
 		return (4);
 	else if (arg_type == T_REG)
 		return (1);
-	else if (arg_type == T_IND)
+	else
 		return (2);
 	return (0);
 }
@@ -51,7 +51,6 @@ int		logic_arg_size(int arg_type)
 **	Аргумент #1 / Аргумент #2 — T_IND
 **	Если тип аргумента T_IND, то необходимо установить адрес,
 **	с которого будет считано 4 байта.
-**	
 **	Адрес определяется следующим образом 
 **	текущая позиция + <АРГУМЕНТ> % IDX_MOD.
 **	Считанное по этому адресу 4-байтовое число и будет требуемым значением.
@@ -59,7 +58,6 @@ int		logic_arg_size(int arg_type)
 
 void	and(t_vm *vm, t_proccess *proccess)
 {
-	int		res;
 	int		arg_type[3];
 	int		args[3];
 	int		i;
@@ -67,22 +65,24 @@ void	and(t_vm *vm, t_proccess *proccess)
 
 	i = 0;
 	ofs = 0;
-	while (i < 3)
+	while (i < 2)
 	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 7 - 2 * i, 2);
+		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
 		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE]];
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_4bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
 		ofs += logic_arg_size(arg_type[i]);
 		i++;
 	}
-	res = args[0] & args[1];
-	P_REG[args[2]] = res;
-	P_C = res ? 0 : 1;
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+	P_REG[args[2]] = args[0] & args[1];
+	P_C = P_REG[args[2]] ? 0 : 1;
 }
 
 /*
@@ -93,7 +93,6 @@ void	and(t_vm *vm, t_proccess *proccess)
 
 void	or(t_vm *vm, t_proccess *proccess)
 {
-	int		res;
 	int		arg_type[3];
 	int		args[3];
 	int		i;
@@ -101,22 +100,26 @@ void	or(t_vm *vm, t_proccess *proccess)
 
 	i = 0;
 	ofs = 0;
-	while (i < 3)
+	while (i < 2)
 	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 7 - 2 * i, 2);
+		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
 		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE]];
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_4bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
+			// args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,
+						// (P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
 		ofs += logic_arg_size(arg_type[i]);
 		i++;
 	}
-	res = args[0] | args[1];
-	P_REG[args[2]] = res;
-	P_C = res ? 0 : 1;
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+	P_REG[args[2]] = args[0] | args[1];
+	P_C = P_REG[args[2]] ? 0 : 1;
 }
 
 /*
@@ -128,7 +131,6 @@ void	or(t_vm *vm, t_proccess *proccess)
 
 void	xor(t_vm *vm, t_proccess *proccess)
 {
-	int		res;
 	int		arg_type[3];
 	int		args[3];
 	int		i;
@@ -136,22 +138,24 @@ void	xor(t_vm *vm, t_proccess *proccess)
 
 	i = 0;
 	ofs = 0;
-	while (i < 3)
+	while (i < 2)
 	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 7 - 2 * i, 2);
+		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
 		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE]];
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
 		else if (arg_type[i] == T_DIR)
 			args[i] = get_4bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
 		else
-			args[i] = get_4bytes(vm->memory, (P_POS + get_2bytes(vm->memory,\
-						(P_POS + 2 + ofs) % MEM_SIZE) % IDX_MOD) % MEM_SIZE);
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
 		ofs += logic_arg_size(arg_type[i]);
 		i++;
 	}
-	res = args[0] ^ args[1];
-	P_REG[args[2]] = res;
-	P_C = res ? 0 : 1;
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+	P_REG[args[2]] = args[0] ^ args[1];
+	P_C = P_REG[args[2]] ? 0 : 1;
 }
 
 /*
@@ -170,14 +174,14 @@ void	xor(t_vm *vm, t_proccess *proccess)
 
 void	zjmp(t_vm *vm, t_proccess *proccess)
 {
-	int		index;
+	int	value;
 
 	if (P_C)
 	{
-		index = get_2bytes(vm->memory, (P_POS + 1) % MEM_SIZE) % IDX_MOD;
-		P_POS = index;
+		value = get_2bytes(vm->memory, (P_POS + 1) % MEM_SIZE) % IDX_MOD;
+		P_POS = get_realtive_addr(P_POS, value);
 	}
 	else
-		P_POS = (P_POS + 2) % MEM_SIZE;
+		P_POS = (P_POS + 3) % MEM_SIZE;
 }
 

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:19:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 17:09:14 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/09 23:41:40 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int		get_4bytes(unsigned char *memory, int pos)
 
 int		get_2bytes(unsigned char *memory, int pos)
 {
-	int	total;
-	int	octets[2];
+	short	total;
+	int		octets[2];
 
 	octets[0] = memory[pos];
 	octets[1] = memory[(pos + 1) % MEM_SIZE];
@@ -73,10 +73,10 @@ int		get_realtive_addr(int from, int to)
 
 int		get_indirect_addr(t_vm *vm, int pos, int from)
 {
-	int	ind;
+	int	index;
 
-	ind = get_2bytes(vm->memory, pos) % IDX_MOD;
-	return (get_realtive_addr(from, ind));
+	index = get_2bytes(vm->memory, pos) % IDX_MOD;
+	return (get_realtive_addr(from, index));
 }
 
 /*

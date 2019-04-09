@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 16:25:13 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 01:31:37 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,6 +478,531 @@ int		sti_test(t_vm *vm, t_proccess *proccess)
 	return (1);
 }
 
+int		lldi_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 0;
+	P_REG[9] = 10;
+	P_REG[10] = 10;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x0A; //00001010
+	vm->memory[3] = 0x0B; //00001011
+	vm->memory[4] = 0x0C; //00001100
+	vm->memory[20] = 0x0C; //00001100
+	vm->memory[21] = 0x0C; //00001100
+	vm->memory[22] = 0x0C; //00001100
+	vm->memory[23] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[11] == 202116108)
+		ft_printf("lldi_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [01] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 10;
+	vm->memory[1] = 0x64; // Байт аргументов 01100100 (REG + DIR + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x0B; //00001011
+	vm->memory[4] = 0x0C; //00001100
+	vm->memory[5] = 0x10; //00001100
+	vm->memory[2838] = 0x0C; //00001100
+	vm->memory[2839] = 0x0C; //00001100
+	vm->memory[2840] = 0x0C; //00001100
+	vm->memory[2841] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("lldi_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [02] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 10;
+	vm->memory[1] = 0x94; // Байт аргументов 01100100 (DIR + REG + REG)
+	vm->memory[2] = 0x0B; //00001011
+	vm->memory[3] = 0x0C; //00001100
+	vm->memory[4] = 0x02; //00001010
+	vm->memory[5] = 0x10; //00001100
+	vm->memory[2838] = 0x0C; //00001100
+	vm->memory[2839] = 0x0C; //00001100
+	vm->memory[2840] = 0x0C; //00001100
+	vm->memory[2841] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("lldi_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [03] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xA4; // Байт аргументов 01100100 (DIR + DIR + REG)
+	vm->memory[2] = 0x0B; //00001011
+	vm->memory[3] = 0x0C; //00001100
+	vm->memory[4] = 0x00; //00000000
+	vm->memory[5] = 0x0A; //00001010
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[2838] = 0x0C; //00001100
+	vm->memory[2839] = 0x0C; //00001100
+	vm->memory[2840] = 0x0C; //00001100
+	vm->memory[2841] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("lldi_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [04] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xE4; // Байт аргументов 01100100 (IND + DIR + REG)
+	vm->memory[2] = 0x00; //00000000
+	vm->memory[3] = 0x0A; //00001010
+	vm->memory[4] = 0x0B; //00001011
+	vm->memory[5] = 0x0C; //00001100
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[10] = 0x00;//00000000
+	vm->memory[11] = 0x00;//00000000
+	vm->memory[12] = 0x00;//00000000
+	vm->memory[13] = 0x0A;//00001010
+	vm->memory[2838] = 0x0C; //00001100
+	vm->memory[2839] = 0x0C; //00001100
+	vm->memory[2840] = 0x0C; //00001100
+	vm->memory[2841] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("lldi_test [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [05] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xE4; // Байт аргументов 01100100 (IND + DIR + REG)
+	vm->memory[2] = 0xFF; //00001011
+	vm->memory[3] = 0x01; //00001100
+	vm->memory[4] = 0x00; //00000000
+	vm->memory[5] = 0x00; //00001010 (0)
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[3841] = 0x7F;//01111111
+	vm->memory[3842] = 0xFF;//11111111
+	vm->memory[3843] = 0xFF;//11111111
+	vm->memory[3844] = 0xD0;//11010000 (2147483600)
+	vm->memory[4048] = 0x0C; //00001100
+	vm->memory[4049] = 0x0C; //00001100
+	vm->memory[4050] = 0x0C; //00001100
+	vm->memory[4051] = 0x0C; //00001100
+	lldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("lldi_test [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lldi_test [06] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	// vm_dump_memory(vm->memory);
+	return (1);
+}
+
+
+int		ldi_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 0;
+	P_REG[9] = 10;
+	P_REG[10] = 10;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x0A; //00001010
+	vm->memory[3] = 0x0B; //00001011
+	vm->memory[4] = 0x0C; //00001100
+	vm->memory[20] = 0x0C; //00001100
+	vm->memory[21] = 0x0C; //00001100
+	vm->memory[22] = 0x0C; //00001100
+	vm->memory[23] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[11] == 202116108)
+		ft_printf("ldi_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [01] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 10;
+	vm->memory[1] = 0x64; // Байт аргументов 01100100 (REG + DIR + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x0B; //00001011
+	vm->memory[4] = 0x0C; //00001100
+	vm->memory[5] = 0x10; //00001100
+	vm->memory[2838 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2839 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2840 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2841 % IDX_MOD] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("ldi_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [02] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 10;
+	vm->memory[1] = 0x94; // Байт аргументов 01100100 (DIR + REG + REG)
+	vm->memory[2] = 0x0B; //00001011
+	vm->memory[3] = 0x0C; //00001100
+	vm->memory[4] = 0x02; //00001010
+	vm->memory[5] = 0x10; //00001100
+	vm->memory[2838 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2839 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2840 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2841 % IDX_MOD] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("ldi_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [03] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xA4; // Байт аргументов 01100100 (DIR + DIR + REG)
+	vm->memory[2] = 0x0B; //00001011
+	vm->memory[3] = 0x0C; //00001100
+	vm->memory[4] = 0x00; //00000000
+	vm->memory[5] = 0x0A; //00001010
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[2838 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2839 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2840 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2841 % IDX_MOD] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("ldi_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [04] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xE4; // Байт аргументов 01100100 (IND + DIR + REG)
+	vm->memory[2] = 0x00; //00000000
+	vm->memory[3] = 0x0A; //00001010
+	vm->memory[4] = 0x0B; //00001011
+	vm->memory[5] = 0x0C; //00001100
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[10] = 0x00;//00000000
+	vm->memory[11] = 0x00;//00000000
+	vm->memory[12] = 0x00;//00000000
+	vm->memory[13] = 0x0A;//00001010
+	vm->memory[2838 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2839 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2840 % IDX_MOD] = 0x0C; //00001100
+	vm->memory[2841 % IDX_MOD] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("ldi_test [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [05] \x1b[31mFAIL\x1b[0m\n");
+	
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xE4; // Байт аргументов 01100100 (IND + DIR + REG)
+	vm->memory[2] = 0xFF; //00001011
+	vm->memory[3] = 0x01; //00001100
+	vm->memory[4] = 0x00; //00000000
+	vm->memory[5] = 0x00; //00001010 (0)
+	vm->memory[6] = 0x10; //00010000
+	vm->memory[3841] = 0x7F;//01111111
+	vm->memory[3842] = 0xFF;//11111111
+	vm->memory[3843] = 0xFF;//11111111
+	vm->memory[3844] = 0xFF;//11111111 (2147483647)
+	vm->memory[511] = 0x0C; //00001100
+	vm->memory[512] = 0x0C; //00001100
+	vm->memory[513] = 0x0C; //00001100
+	vm->memory[514] = 0x0C; //00001100
+	ldi(vm, proccess);
+	if (P_REG[15] == 202116108)
+		ft_printf("ldi_test [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("ldi_test [06] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	// vm_dump_memory(vm->memory);
+	return (1);
+}
+
+int		logic_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 0;
+	P_REG[1] = 0;
+	P_REG[2] = 0;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x04; //00001100
+	and(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("and_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [01] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("or_test  [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [01] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("xor_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [01] \x1b[31mFAIL\x1b[0m\n");
+	P_REG[1] = 1;
+	P_REG[2] = 3;
+	and(vm, proccess);
+	if (P_REG[3] == 1 && P_C == 0)
+		ft_printf("and_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [02] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[3] == 3 && P_C == 0)
+		ft_printf("or_test  [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [02] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[3] == 2 && P_C == 0)
+		ft_printf("xor_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [02] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 0;
+	vm->memory[1] = 0x64; // Байт аргументов 01100100 (REG + DIR + REG)
+	vm->memory[2] = 0x02;
+	vm->memory[3] = 0x00;
+	vm->memory[4] = 0x00;
+	vm->memory[5] = 0x00;
+	vm->memory[6] = 0x01;
+	vm->memory[7] = 0x05;
+	and(vm, proccess);
+	if (P_REG[4] == 0 && P_C == 1)
+		ft_printf("and_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [03] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[4] == 1 && P_C == 0)
+		ft_printf("or_test  [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [03] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[4] == 1 && P_C == 0)
+		ft_printf("xor_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [03] \x1b[31mFAIL\x1b[0m\n");
+	P_REG[1] = 3;
+	and(vm, proccess);
+	if (P_REG[4] == 1 && P_C == 0)
+		ft_printf("and_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [04] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[4] == 3 && P_C == 0)
+		ft_printf("or_test  [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [04] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 0;
+	vm->memory[1] = 0xA4; // Байт аргументов 10100100 (DIR + DIR + REG)
+	vm->memory[2] = 0x00;
+	vm->memory[3] = 0x00;
+	vm->memory[4] = 0x00;
+	vm->memory[5] = 0x01;
+	vm->memory[6] = 0x00;
+	vm->memory[7] = 0x00;
+	vm->memory[8] = 0x00;
+	vm->memory[9] = 0x02;
+	vm->memory[10] = 0x02;
+	and(vm, proccess);
+	if (P_REG[4] == 0 && P_C == 1)
+		ft_printf("and_test [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [05] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[1] == 3 && P_C == 0)
+		ft_printf("or_test  [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [05] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[1] == 3 && P_C == 0)
+		ft_printf("xor_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [04] \x1b[31mFAIL\x1b[0m\n");
+	vm->memory[2] = 0x00;
+	vm->memory[3] = 0x00;
+	vm->memory[4] = 0x00;
+	vm->memory[5] = 0x03;
+	vm->memory[6] = 0x00;
+	vm->memory[7] = 0x00;
+	vm->memory[8] = 0x00;
+	vm->memory[9] = 0x02;
+	and(vm, proccess);
+	if (P_REG[1] == 2 && P_C == 0)
+		ft_printf("and_test [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [06] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	P_REG[1] = 0;
+	vm->memory[1] = 0x74; // Байт аргументов 01110100 (REG + IND + REG)
+	vm->memory[2] = 0x02;
+	vm->memory[3] = 0x03;
+	vm->memory[4] = 0xE8; //(1000)
+	vm->memory[5] = 0x03;
+	vm->memory[488] = 0x00;
+	vm->memory[489] = 0x00;
+	vm->memory[490] = 0x00;
+	vm->memory[491] = 0x01;
+	and(vm, proccess);
+	if (P_REG[2] == 0 && P_C == 1)
+		ft_printf("and_test [07] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [07] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[2] == 1 && P_C == 0)
+		ft_printf("or_test  [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [06] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[2] == 1 && P_C == 0)
+		ft_printf("xor_test [05] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [05] \x1b[31mFAIL\x1b[0m\n");
+	P_REG[1] = 17385;
+	vm->memory[488] = 0x00;
+	vm->memory[489] = 0x99;
+	vm->memory[490] = 0x15;
+	vm->memory[491] = 0x05;
+	and(vm, proccess);
+	if (P_REG[2] && P_C == 0)
+		ft_printf("and_test [08] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [08] \x1b[31mFAIL\x1b[0m\n");
+	// Байт аргументов 11110100 (IND + IND + REG)
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	P_POS = 0;
+	vm->memory[1] = 0xF4; // Байт аргументов 11110100 (IND + IND + REG)
+	vm->memory[2] = 0x03;
+	vm->memory[3] = 0xE8; //(1000)
+	vm->memory[4] = 0xFC; //11111100
+	vm->memory[5] = 0x18; //00011000 (-1000)
+	vm->memory[6] = 0x03;
+	vm->memory[488] = 0x00;
+	vm->memory[489] = 0x00;
+	vm->memory[490] = 0x00;
+	vm->memory[491] = 0x20;
+	vm->memory[3608] = 0x00;
+	vm->memory[3609] = 0x00;
+	vm->memory[3610] = 0x00;
+	vm->memory[3611] = 0x01;
+	// vm_dump_memory(vm->memory);
+	and(vm, proccess);
+	if (P_REG[2] == 0 && P_C == 1)
+		ft_printf("and_test [09] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [09] \x1b[31mFAIL\x1b[0m\n");
+	or(vm, proccess);
+	if (P_REG[2] == 33 && P_C == 0)
+		ft_printf("or_test  [07] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("or_test  [07] \x1b[31mFAIL\x1b[0m\n");
+	xor(vm, proccess);
+	if (P_REG[2] == 33 && P_C == 0)
+		ft_printf("xor_test [06] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("xor_test [06] \x1b[31mFAIL\x1b[0m\n");
+	vm->memory[491] = 0x21;
+	and(vm, proccess);
+	if (P_REG[2] == 1 && P_C == 0)
+		ft_printf("and_test [10] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("and_test [10] \x1b[31mFAIL\x1b[0m\n");
+	// Байт аргументов 10110100 (DIR + IND + REG)
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
+int		zjmp_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 100;
+	P_C = 1;
+	vm->memory[101] = 0x01;
+	vm->memory[102] = 0xF4;
+	zjmp(vm, proccess);
+	if (P_POS == 600)
+		ft_printf("zjmp_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("zjmp_test [01] \x1b[31mFAIL\x1b[0m\n");
+	P_POS = 100;
+	P_C = 0;
+	zjmp(vm, proccess);
+	if (P_POS == 103)
+		ft_printf("zjmp_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("zjmp_test [02] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
+int		fork_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 100;
+	vm->memory[101] = 0x01;
+	vm->memory[102] = 0xF4;
+	P_REG[15] = 89173;
+	P_REG[7] = -2786426;
+	P_REG[0] = 3;
+	ft_fork(vm, proccess);
+	if (vm->process->id == proccess->id + 1 && vm->process->position == 600 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("fork_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("fork_test [01] \x1b[31mFAIL\x1b[0m\n");
+	P_POS = 100;
+	vm->memory[101] = 0xFF;
+	vm->memory[102] = 0xFF;
+	ft_fork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 99 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("fork_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("fork_test [02] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
 int		main(void)
 {
 	t_vm *vm = vm_new(0);
@@ -485,6 +1010,7 @@ int		main(void)
 	proccess_add(&vm->process, proccess);
 	vm_init_memory(vm->memory);
 
+	ft_printf("Unit tests:\n\n");
 	bit_extracted_test();
 	get_2bytes_test(vm->memory);
 	get_4bytes_test(vm->memory);
@@ -492,5 +1018,10 @@ int		main(void)
 	lld_test(vm, proccess);
 	st_test(vm, proccess);
 	sti_test(vm, proccess);
+	ldi_test(vm, proccess);
+	lldi_test(vm, proccess);
+	logic_test(vm, proccess);
+	zjmp_test(vm, proccess);
+	fork_test(vm, proccess);
 	return (0);
 }
