@@ -3,19 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   proc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 20:15:34 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/09 18:54:38 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+/*
+**	bit_extracted
+**	Достает k бит с позиции p
+**	Например bit_extracted(01101100, 2, 7) вернет 0b01 (1)
+**	bit_extracted(01101100, 2, 5) вернет 0b10 (2)
+*/
+
 int		bit_extracted(int number, int k, int p) 
 { 
 	return (((1 << k) - 1) & (number >> (p - 1))); 
 } 
+
+/*
+**	has_register
+**	Проверяет байт кодирования аргументов на наличие регистра
+**	octet - байт кодирования аргументов
+*/
 
 int		has_register(unsigned char octet)
 {
@@ -27,6 +40,14 @@ int		has_register(unsigned char octet)
 		return (1);
 	return (0);
 }
+
+/*
+**	coding_byte_check
+**	Проверяет байт кодирования аргументов на соответствие разрешенным
+**	типам аргументов для данной операции
+**	octet - байт кодирования аргументов
+**	op - структура операции
+*/
 
 int		coding_byte_check(unsigned char octet, const t_op op)
 {
@@ -44,6 +65,11 @@ int		coding_byte_check(unsigned char octet, const t_op op)
 	return (1);
 }
 
+/*
+**	get_arg_size
+**	Возвращает размер аргумента в в соответствии с типом операции
+*/
+
 int		get_arg_size(int arg_type, t_op op)
 {
 	if (arg_type == T_REG)
@@ -55,6 +81,15 @@ int		get_arg_size(int arg_type, t_op op)
 	else
 		return (0);
 }
+
+/*
+**	valid_reg
+**	Проверяет номер регистра, если номер > 16 или номер < 1
+**	вернет 0.
+**	octet - байт кодирования аргументов
+**	memory - память виртуальной машины
+**	op - структура операции
+*/
 
 int		valid_reg(unsigned char octet, unsigned char *memory, int pos, t_op op)
 {

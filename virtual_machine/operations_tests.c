@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 14:37:55 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/09 16:25:13 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,7 +474,6 @@ int		sti_test(t_vm *vm, t_proccess *proccess)
 		ft_printf("sti_test [06] \x1b[32mOK\x1b[0m\n");
 	else
 		ft_printf("sti_test [06] \x1b[31mFAIL\x1b[0m\n");
-	vm_dump_memory(vm->memory);
 	ft_printf("--------------------------\n");
 	return (1);
 }

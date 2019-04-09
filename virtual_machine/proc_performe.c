@@ -6,13 +6,19 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/06 02:47:16 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/09 19:04:41 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
+
+/*
+**	get_new_pos
+**	Вызывается для процесса после выполнения операции
+**	Перемещает каретку на новую позицию
+*/
 
 int		get_new_pos(int pos, t_op op, unsigned int octet)
 {
@@ -33,12 +39,23 @@ int		get_new_pos(int pos, t_op op, unsigned int octet)
 	return (new_pos % MEM_SIZE);
 }
 
+/*
+**	set_new_op
+**	Вызывается для процесса, если cyrcles_to_wait = 0
+**	Устанавливает процессу номер операции
+*/
+
 void	set_new_op(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 {
 	P_CT = vm->memory[P_POS];
 	if (P_CT < 17 && P_CT > 0)
 		P_CTW = op_tab[P_CT].cycles_to_wait;
 }
+
+/*
+**	init_f
+**	Инициализация массива функций-опрераций
+*/
 
 void	init_f(void (*f[17])(t_vm *, t_proccess *))
 {
@@ -58,6 +75,13 @@ void	init_f(void (*f[17])(t_vm *, t_proccess *))
 	f[14] = &lldi;
 	f[15] = &lfork;
 }
+
+/*
+**	performe_action
+**	Вызывается для процесса, если cyrcles_to_wait = 0 и номер операции корректный.
+**	Проверяет правильность байта кодирования аргументов (если есть)
+**	Выполняет операцию и перемещает каретку на новую позицию
+*/
 
 void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 {
@@ -85,6 +109,12 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 		f[P_CT](vm, proccess);
 }
 
+/*
+**	performe_proc
+**	Вызывается каждый цикл.
+**	Итерируется по всем живым процессам и выполняет необходимые действия
+*/
+
 void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 {
 	t_proccess	*proccess;
@@ -107,3 +137,4 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 		proccess = proccess->next;
 	}
 }
+
