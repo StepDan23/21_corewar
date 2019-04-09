@@ -2,13 +2,36 @@
 #include "libft.h"
 #include <stdlib.h>
 
+int		champion_count(int ac, char **av)
+{
+	int		i;
+	int		count;
+
+	count = 0;
+	i = 1;
+	while (i < ac)
+	{
+		if (av[i][0] != '-' && !is_all_digit(av[i]) && check_filename(av[i]))
+			count++;
+		else if (av[i][0] != '-' && !is_all_digit(av[i]) && !check_filename(av[i]))
+		{
+			ft_printf("arg filename %s invalid\n", av[i]);
+			exit(1);
+		}
+		i++;
+	}
+	return (count);
+}
+
 int		check_args(int ac, char **av, t_vm *vm)
 {
+	int			number;
 	int			count;
 	int			j;
 
 	j = 1;
-	count = 1;
+	vm->champion_count = champion_count(ac, av);
+	number = 1;
 	while (j < ac)
 	{
 		if (av[j][0] == '-')
@@ -70,7 +93,11 @@ int		check_n(t_vm *vm, char *param, int *next_number)
 		ft_printf("-n parametr isn't number. %s\n", param);
 		exit(1);
 	}
-	n = ft_atoi(param);
+	if ((n = ft_atoi(param)) > vm->champion_count)
+	{
+		ft_printf("-n parametr is more than the number of champions. %s\n", param);
+		exit(1);
+	}
 	// n > 0 ? n *= -1 : n;
 	champ = vm->champion;
 	while (champ)

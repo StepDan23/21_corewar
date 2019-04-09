@@ -6,7 +6,7 @@
 /*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 21:25:43 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:25:25 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct			vm
 	unsigned int		cycles_die;
 	t_proccess			*process;
 	t_champion			*champion;
+	int					champion_count;
 	unsigned char		memory[MEM_SIZE];
 
 }						t_vm;
