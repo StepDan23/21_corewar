@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 19:06:01 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:04:02 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct		s_window
 	SDL_Renderer	*window_render;
 	SDL_Texture		*background;
 	SDL_Texture		*back_pause;
+	SDL_Texture		*back_finish;
+	SDL_Texture		*back_running;
 	TTF_Font		*f_pause;
 	TTF_Font		*f_status;
 	SDL_Color		color;
@@ -40,6 +42,8 @@ typedef struct		s_window
 # define WIN_REND	(window->window_render)
 # define WIN_BACK	(window->background)
 # define BACK_PAUSE	(window->back_pause)
+# define BACK_FIN	(window->back_finish)
+# define BACK_RUN	(window->back_running)
 # define FONT_PAUSE	(window->f_pause)
 # define FONT_STAT	(window->f_status)
 # define FONT_COLOR	(window->color)
@@ -50,6 +54,7 @@ typedef struct		s_window
 
 typedef struct		s_run
 {
+	int				players_count;
 	float			cycle;
 	int				tmp;
 	int				speed;
@@ -60,6 +65,7 @@ typedef struct		s_run
 	int				max_checks;
 }					t_run;
 
+# define PLA_COUNT	(running->players_count)
 # define RUN_CYCLE	(running->cycle)
 # define RUN_TMP	(running->tmp)
 # define RUN_SPEED	(running->speed)
@@ -74,13 +80,14 @@ typedef struct		s_player
 	char			*name;
 	int				last_live;
 	int				lives_in_period;
+	unsigned char	*mem;
 }					t_player;
 
 t_window			*init_win(void);
 void				win_events(t_window *window, t_run *running);
-int					load_files(t_window *window);
+int					load_files(t_window *window, t_player **players, t_run *running);
 void				print_str(t_window *window, char *str, int x, int y);
-void				render_image(t_window *window, t_run *running);
+void				render_image(t_window *window, t_run *running, t_player **players);
 
 void				print_nbr(t_window *window, int nbr, int x, int y);
 void				print_str(t_window *window, char *str, int x, int y);

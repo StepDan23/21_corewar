@@ -6,17 +6,16 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 18:42:39 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:00:20 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
 
-static void		print_players(t_window *window, int players)
+static void		print_players(t_window *window, t_player **players)
 {
 	int			i;
 	int			height;
-	char		*str;
 	SDL_Color	colors[4];
 
 	i = 0;
@@ -25,22 +24,21 @@ static void		print_players(t_window *window, int players)
 	colors[1] = (SDL_Color){0, 0, 255, 255};
 	colors[2] = (SDL_Color){255, 0, 0, 255};
 	colors[3] = (SDL_Color){255, 255, 0, 255};
-	while (++i <= players)
+	while (players[i] != NULL)
 	{
 		print_str(window, "Player - ", 1235, height += 35);
-		str = ft_itoa(i);
-		print_str(window, str, 1300, height);
+		print_nbr(window, i, 1300, height);
 		print_str(window, ":", 1312, height);
-		ft_strdel(&str);
-		FONT_COLOR = colors[i - 1];
-		print_str(window, "TEST_NAME", 1320, height);
+		FONT_COLOR = colors[i];
+		print_str(window, players[i]->name, 1324, height);
 		FONT_COLOR = (SDL_Color){255, 255, 255, 255};
 		print_str(window, "Last live:", 1250, height += 35);
 		print_str(window, "Lives in current period:", 1250, height += 35);
+		i++;
 	}
 }
 
-static void		make_text(t_window *window, int players)
+static void		make_text(t_window *window, t_player **players)
 {
 	int			height;
 
@@ -55,7 +53,7 @@ static void		make_text(t_window *window, int players)
 	print_players(window, players);
 }
 
-static int		make_background(t_window *window)
+static int		make_background(t_window *window, t_player **players)
 {
 	SDL_Rect		rects[3];
 
@@ -69,7 +67,7 @@ static int		make_background(t_window *window)
 	rects[2] = (SDL_Rect){SCREEN_WIDTH * 0.75 + 18, SCREEN_HEIGHT * 0.4 + 30,
 							SCREEN_WIDTH * 0.25 - 27, SCREEN_HEIGHT * 0.6 - 45};
 	SDL_RenderFillRects(WIN_REND, rects, 3);
-	make_text(window, 4);
+	make_text(window, players);
 	SDL_SetRenderTarget(WIN_REND, NULL);
 	return (1);
 }
@@ -85,27 +83,48 @@ SDL_Texture		*load_back_pause(t_window *window, SDL_Surface *surf_back)
 	return (back_pause);
 }
 
-int				load_files(t_window *window)
+static	void	make_textures(t_window *window, t_player **players, int players_count)
 {
-	SDL_Surface		*surf_back;
-	int players = 2;
+	
+}
 
-	if (players == 2)
-		surf_back = IMG_Load("graphics/imgs/vs2.jpg");
-	else if (players == 3)
-		surf_back = IMG_Load("graphics/imgs/vs2.jpg");
-	else if (players == 4)
-		surf_back = IMG_Load("graphics/imgs/vs2.jpg");
+static SDL_Surface		*load_pause_back(int players_count)
+{
+	SDL_Surface		*surf_pause;
+
+	if (players_count == 2)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	else if (players_count == 3)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	else if (players_count == 4)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
 	else
-		surf_back = IMG_Load("graphics/imgs/vs2.jpg");
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	return (surf_pause);
+}
+
+int						load_files(t_window *window, t_player **players, t_run *running)
+{
+	SDL_Surface		*surf_pause;
+
+	if (PLA_COUNT == 2)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	else if (PLA_COUNT == 3)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	else if (PLA_COUNT == 4)
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
+	else
+		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
 	FONT_PAUSE = TTF_OpenFont("graphics/fonts/Aller_BdIt.ttf", 50);
 	FONT_STAT = TTF_OpenFont("graphics/fonts/OpenSans-Regular.ttf", 17);
-	if (!surf_back || !FONT_PAUSE || !FONT_STAT)
+	if (!surf_pause || !FONT_PAUSE || !FONT_STAT)
 		return (ft_printf("Load_Error: %s\n", SDL_GetError()));
 	WIN_BACK = SDL_CreateTexture(WIN_REND, SDL_PIXELFORMAT_RGBA8888,
 					SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
-	BACK_PAUSE = load_back_pause(window, surf_back);
-	if (!WIN_BACK || !BACK_PAUSE || !make_background(window))
+	BACK_RUN = SDL_CreateTexture(WIN_REND, SDL_PIXELFORMAT_RGBA8888,
+					SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
+	BACK_PAUSE = load_back_pause(window, surf_pause);
+	if (!WIN_BACK || !BACK_PAUSE || !BACK_RUN || !make_background(window, players))
 		return (ft_printf("Texture_Error: %s\n", SDL_GetError()));
 	return (0);
 }
