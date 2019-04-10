@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/07 21:47:16 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:53:26 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ void	introduce_players(t_champion *players)
 		players->id, players->size, players->name, players->comment);
 }
 
+void	do_cyrcle(t_vm *vm, t_op op_tab[17])
+{
+	performe_proc(vm, vm->process, op_tab);
+	if (!vm->cycles_to_die)
+	{
+		proccess_check_live(vm, &vm->process);
+		if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
+		{
+			vm->cycles_die -= CYCLE_DELTA;
+			vm->checkups = 0;
+		}
+		else
+			vm->checkups++;
+		vm->cycles_to_die = vm->cycles_die;
+	}
+	vm->cycles++;
+	vm->cycles_to_die--;
+}
+
 int		main(int argc, char *argv[])
 {
 	t_vm		*vm;
@@ -61,32 +80,19 @@ int		main(int argc, char *argv[])
 	{
 		champions_add(argv[argc - 1], 1, &vm->champion);
 		argc--;
+		vm->p_total++;
+		vm->p_num[vm->champion->id]++;
 	}
 	vm->winner = vm->champion;
 	read_all_champs(vm->champion);
 	vm_spread_champs(vm, vm->champion);
-	vm_dump_memory(vm->memory);
 	introduce_players(vm->champion);
 	init_optab(op_tab);
 	while (vm->cycles_die > 0 && vm->process)
 	{
-		ft_printf("%d\n", vm->cycles);
-		performe_proc(vm, vm->process, op_tab);
-		if (!vm->cycles_to_die)
-		{
-			proccess_check_live(&vm->process);
-			if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
-			{
-				vm->cycles_die -= CYCLE_DELTA;
-				vm->checkups = 0;
-			}
-			else
-				vm->checkups++;
-			vm->cycles_to_die = vm->cycles_die;
-		}
-		vm->cycles++;
-		vm->cycles_to_die--;
+		do_cyrcle(vm, op_tab);
 	}
+	ft_printf("%d!\n", vm->cycles);
 	ft_printf("Winner is %s!\n", vm->winner->name);
 	free(vm);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/10 01:27:44 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:40:39 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_fork(t_vm *vm, t_proccess *proccess)
 	}
 	vm->process->carry = P_C;
 	P_POS = (P_POS + 2) % MEM_SIZE;
+	vm->p_total++;
+	vm->p_num[P_PI]++;
 }
 
 /*
@@ -61,6 +63,8 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 	}
 	vm->process->carry = P_C;
 	P_POS = (P_POS + 2) % MEM_SIZE;
+	vm->p_total++;
+	vm->p_num[P_PI]++;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/08 01:59:24 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:51:58 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct			s_proccess
 	int					command_type;
 	int					cycles_to_wait;
 	struct s_proccess	*next;
+	int					value_written;
+	int					pos_written;
 }						t_proccess;
 
 # define P_POS			(proccess->position)
@@ -76,6 +78,9 @@ typedef struct			s_champion
 **	*process - список живых процессов (кареток)
 **	*champion - список чемпионов (пока хз с этим)
 **	memory - область памяти (зона боевых действий)
+**	lives[4] - кол-во жизней каждого чемпиона
+**	p_num[4] - кол-во кареток каждого чемпиона
+**	p_total - общее число кареток
 */
 
 typedef struct			vm
@@ -91,6 +96,9 @@ typedef struct			vm
 	unsigned char		memory[MEM_SIZE];
 	unsigned int		live_exec;
 	unsigned int		checkups;
+	int					lives[4];
+	int					p_num[4];
+	int					p_total;
 }						t_vm;
 
 /*
@@ -116,7 +124,6 @@ typedef struct			s_op
 	int					coding_byte;
 	int					is_short_dir;
 }						t_op;
-
 
 /*
 **	Декларации опкодов операций
@@ -165,7 +172,7 @@ void					vm_dump_memory(unsigned char *memory);
 
 t_proccess				*proccess_new(int id, int player_id, int pos);
 void					proccess_add(t_proccess **head, t_proccess *new_p);
-void					proccess_check_live(t_proccess **head);
+void					proccess_check_live(t_vm *vm, t_proccess **head);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);

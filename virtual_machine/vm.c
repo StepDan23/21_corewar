@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/03 01:07:14 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:36:56 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ void	vm_init_memory(unsigned char *memory)
 	while (i < MEM_SIZE)
 	{
 		memory[i] = 0;
+		i++;
+	}
+}
+
+void	vm_init_arrays(t_vm *vm)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		vm->lives[i] = 0;
+		vm->p_num[i] = 0;
 		i++;
 	}
 }
@@ -42,7 +55,9 @@ t_vm	*vm_new(int dump)
 	vm->dump = dump;
 	vm->live_exec = 0;
 	vm->checkups = 0;
+	vm->p_total = 0;
 	vm_init_memory(vm->memory);
+	vm_init_arrays(vm);
 	return (vm);
 }
 
@@ -67,4 +82,5 @@ void	vm_dump_memory(unsigned char *memory)
 		i++;
 	}
 	ft_printf("\n");
+	exit(0);
 }

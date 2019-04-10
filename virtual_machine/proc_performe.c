@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/09 19:04:41 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:29:01 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 	void (*f[17])(t_vm *, t_proccess *);
 
 	init_f(f);
-	ft_printf("Execute %s\n", op_tab[P_CT].name);
 	if (op_tab[P_CT].coding_byte)
 	{
 		if (coding_byte_check(vm->memory[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
@@ -122,7 +121,6 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 	proccess = head;
 	while (proccess)
 	{
-		// ft_printf("Proccess %d now on %d\n", proccess->id, proccess->position);
 		if (!P_CTW)
 			set_new_op(vm, proccess, op_tab);
 		if (P_CTW > 0)
@@ -130,7 +128,14 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 		if (!P_CTW)
 		{
 			if (P_CT < 17 && P_CT > 0)
+			{
 				performe_action(vm, proccess, op_tab);
+				if (P_CT != 3 && P_CT != 13)
+				{
+					proccess->value_written = 0;
+					proccess->pos_written = -1;
+				}
+			}
 			else
 				P_POS = (P_POS + 1) % MEM_SIZE;	
 		}

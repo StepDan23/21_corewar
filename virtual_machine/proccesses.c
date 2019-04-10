@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/05 01:15:26 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:42:02 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_proccess	*proccess_new(int id, int player_id, int pos)
 	new_p->registers[0] = player_id;
 	new_p->next = NULL;
 	new_p->cycles_to_wait = 0;
+	new_p->value_written = -1;
+	new_p->pos_written = -1;
 	return (new_p);
 }
 
@@ -82,7 +84,7 @@ void	proccess_kill(t_proccess **head, t_proccess *ps)
 ** Удаляет процессы у которых live = 0
 */
 
-void	proccess_check_live(t_proccess **head)
+void	proccess_check_live(t_vm *vm, t_proccess **head)
 {
 	t_proccess	*curr;
 	
@@ -92,7 +94,11 @@ void	proccess_check_live(t_proccess **head)
 	while (curr)
 	{
 		if (!curr->is_live)
+		{
+			vm->p_total--;
+			vm->p_num[curr->player_id]--;
 			proccess_kill(head, curr);
+		}
 		else
 			curr->is_live = 0;
 		curr = curr->next;

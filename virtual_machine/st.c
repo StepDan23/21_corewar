@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:26:41 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 17:19:25 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:25:19 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	st(t_vm *vm, t_proccess *proccess)
 		index = get_indirect_addr(vm, (P_POS + 3) % MEM_SIZE, P_POS);
 		write_reg(vm->memory, index, number);
 	}
+	proccess->value_written = number;
+	proccess->pos_written = index;
 }
 
 /*
@@ -73,6 +75,7 @@ void	st(t_vm *vm, t_proccess *proccess)
 **	в качестве первого параметра, по адресу — текущая позиция + 
 **	(<ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА> + <ЗНАЧЕНИЕ_ТРЕТЕГО_АРГУМЕНТА>) % IDX_MOD.
 */
+
 void	sti(t_vm *vm, t_proccess *proccess)
 {
 	int		arg_type[3];
@@ -98,4 +101,6 @@ void	sti(t_vm *vm, t_proccess *proccess)
 		i++;
 	}
 	write_reg(vm->memory, get_realtive_addr(P_POS, (args[1] + args[2]) % IDX_MOD), args[0]);
+	proccess->value_written = args[0];
+	proccess->pos_written = get_realtive_addr(P_POS, (args[1] + args[2]) % IDX_MOD);
 }
