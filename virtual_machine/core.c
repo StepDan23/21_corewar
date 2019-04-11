@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 17:35:28 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/11 19:06:50 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		main(int argc, char *argv[])
 	while (vm->cycles_die > 0 && vm->process)
 	{
 		do_cyrcle(vm, op_tab);
+		ft_printf("%dc %d\n", vm->cycles, vm->cycles_die);
 	}
 	vm_dump_memory(vm->memory);
 	ft_printf("%d!\n", vm->cycles);

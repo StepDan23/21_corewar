@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 18:56:21 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/11 19:08:22 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ typedef struct			s_champion
 
 typedef struct			vm
 {
-	unsigned int		cycles;
-	unsigned int		cycles_to_die;
+	int					cycles;
+	int					cycles_to_die;
 	int					cycles_to_dump;
 	int					dump;
-	unsigned int		cycles_die;
+	int					cycles_die;
 	t_proccess			*process;
 	t_champion			*champion;
 	int					champion_count;
