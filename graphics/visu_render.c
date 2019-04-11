@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/10 17:22:14 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:10:21 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ static void		render_pause(t_window *window, t_player **players)
 	}
 }
 
-static void		render_status(t_window *window, t_run *running)
+static void		render_status(t_window *window, t_run *running, t_player **players)
 {
 	int			height;
+	int			i;
 
+	i = 0;
 	height = 80;
 	print_nbr(window, RUN_SPEED, 1459, height += 35);
 	print_nbr(window, (int)RUN_CYCLE, 1287, height += 35);
@@ -49,6 +51,14 @@ static void		render_status(t_window *window, t_run *running)
 	print_nbr(window, CYC_DELTA, 1352, height += 35);
 	print_nbr(window, NBR_LIVE, 1322, height += 35);
 	print_nbr(window, MAX_CHECKS, 1352, height += 35);
+	height = 380;
+	while (players[i] != NULL)
+	{
+		print_nbr(window, players[i]->last_live, 1325, height += 60);
+		print_nbr(window, players[i]->lives_in_period, 1435, height += 30);
+		height += 30;
+		i++;
+	}
 }
 
 static void		change_run(t_window *window, t_run *running)
@@ -69,28 +79,15 @@ static void		change_run(t_window *window, t_run *running)
 	}
 }
 
-static void			render_players(t_window *window, t_player **players)
-{
-	int			height;
-	int			i;
-
-	i = 0;
-	height = 405;
-	while (players[i] != NULL)
-	{
-		print_nbr(window, players[i]->last_live, 1325, height += 35);
-		print_nbr(window, players[i]->lives_in_period, 1435, height += 35);
-		height += 35;
-		i++;
-	}
-}
 void			render_image(t_window *window, t_run *running, t_player **players)
 {
+
 	SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
 									(WIN_HEIG / (float)SCREEN_HEIGHT));
-	render_players(window, players);
-	render_status(window, running);
+	FONT_CURR = FONT_STAT;
+	render_status(window, running, players);
+	FONT_CURR = FONT_PAUSE;
 	if (WIN_STATUS == 0 || WIN_STATUS == 2 || WIN_STATUS == 3)
 		render_pause(window, players);
 	else

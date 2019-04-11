@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/10 19:00:20 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:28:48 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ static void		print_players(t_window *window, t_player **players)
 	SDL_Color	colors[4];
 
 	i = 0;
-	height = 370;
-	colors[0] = (SDL_Color){0, 255, 0, 255};
-	colors[1] = (SDL_Color){0, 0, 255, 255};
-	colors[2] = (SDL_Color){255, 0, 0, 255};
-	colors[3] = (SDL_Color){255, 255, 0, 255};
+	height = 350;
+	colors[0] = COL_GREEN;
+	colors[1] = COL_BLUE;
+	colors[2] = COL_RED;
+	colors[3] = COL_YELOW;
 	while (players[i] != NULL)
 	{
-		print_str(window, "Player - ", 1235, height += 35);
+		print_str(window, "Player - ", 1235, height += 60);
 		print_nbr(window, i, 1300, height);
 		print_str(window, ":", 1312, height);
 		FONT_COLOR = colors[i];
 		print_str(window, players[i]->name, 1324, height);
 		FONT_COLOR = (SDL_Color){255, 255, 255, 255};
-		print_str(window, "Last live:", 1250, height += 35);
-		print_str(window, "Lives in current period:", 1250, height += 35);
+		print_str(window, "Last live:", 1250, height += 30);
+		print_str(window, "Lives in current period:", 1250, height += 30);
 		i++;
 	}
 }
@@ -72,25 +72,10 @@ static int		make_background(t_window *window, t_player **players)
 	return (1);
 }
 
-SDL_Texture		*load_back_pause(t_window *window, SDL_Surface *surf_back)
-{
-	SDL_Texture		*back_pause;
-
-	back_pause = SDL_CreateTextureFromSurface(WIN_REND, surf_back);
-	SDL_SetTextureBlendMode(back_pause, SDL_BLENDMODE_BLEND);
-	SDL_SetTextureAlphaMod(back_pause, 150);
-	SDL_FreeSurface(surf_back);
-	return (back_pause);
-}
-
-static	void	make_textures(t_window *window, t_player **players, int players_count)
-{
-	
-}
-
-static SDL_Surface		*load_pause_back(int players_count)
+static SDL_Texture		*load_texture_pause(t_window *window, int players_count)
 {
 	SDL_Surface		*surf_pause;
+	SDL_Texture		*text_pause;
 
 	if (players_count == 2)
 		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
@@ -100,31 +85,29 @@ static SDL_Surface		*load_pause_back(int players_count)
 		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
 	else
 		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
-	return (surf_pause);
+	if (!surf_pause)
+		return (NULL);
+	text_pause = SDL_CreateTextureFromSurface(WIN_REND, surf_pause);
+	SDL_SetTextureBlendMode(text_pause, SDL_BLENDMODE_BLEND);
+	SDL_SetTextureAlphaMod(text_pause, 150);
+	SDL_FreeSurface(surf_pause);
+	return (text_pause);
 }
 
 int						load_files(t_window *window, t_player **players, t_run *running)
 {
-	SDL_Surface		*surf_pause;
-
-	if (PLA_COUNT == 2)
-		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
-	else if (PLA_COUNT == 3)
-		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
-	else if (PLA_COUNT == 4)
-		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
-	else
-		surf_pause = IMG_Load("graphics/imgs/vs2.jpg");
 	FONT_PAUSE = TTF_OpenFont("graphics/fonts/Aller_BdIt.ttf", 50);
 	FONT_STAT = TTF_OpenFont("graphics/fonts/OpenSans-Regular.ttf", 17);
-	if (!surf_pause || !FONT_PAUSE || !FONT_STAT)
+	FONT_ARENA = TTF_OpenFont("graphics/fonts/OpenSans-Regular.ttf", 13);
+	BACK_PAUSE = load_texture_pause(window, PLA_COUNT);
+	if (!FONT_PAUSE || !FONT_STAT || !FONT_ARENA || !BACK_PAUSE)
 		return (ft_printf("Load_Error: %s\n", SDL_GetError()));
+	FONT_CURR = FONT_STAT;
 	WIN_BACK = SDL_CreateTexture(WIN_REND, SDL_PIXELFORMAT_RGBA8888,
 					SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
-	BACK_RUN = SDL_CreateTexture(WIN_REND, SDL_PIXELFORMAT_RGBA8888,
-					SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
-	BACK_PAUSE = load_back_pause(window, surf_pause);
-	if (!WIN_BACK || !BACK_PAUSE || !BACK_RUN || !make_background(window, players))
+	if (!WIN_BACK)
 		return (ft_printf("Texture_Error: %s\n", SDL_GetError()));
+	make_background(window, players);
+
 	return (0);
 }

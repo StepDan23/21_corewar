@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/10 18:59:31 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:27:44 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_run	*init_running(void)
 	t_run		*running;
 
 	running = (t_run*)malloc(sizeof(t_run));
-	PLA_COUNT = 3;
+	PLA_COUNT = 4;
 	RUN_SPEED = 50;
 	RUN_CYCLE = 0;
 	RUN_TMP = 0;
@@ -64,6 +64,49 @@ static t_player		**init_players(int num_players)
 	return (players);
 }
 
+static void			get_player_color(t_window	*window, t_run *running, int i)
+{
+	if (i >= 0 && i < 23)
+		FONT_COLOR = COL_GREEN;
+	else if (i >= 4096 / PLA_COUNT && i < 4096 / PLA_COUNT + 23 && PLA_COUNT > 1)
+		FONT_COLOR = COL_BLUE;
+	else if (i >= 2 * 4096 / PLA_COUNT && i < 2 * 4096 / PLA_COUNT + 23 && PLA_COUNT > 2)
+		FONT_COLOR = COL_RED;
+	else if (i >= 3 * 4096 / PLA_COUNT && i < 3 * 4096 / PLA_COUNT + 23 && PLA_COUNT > 3)
+		FONT_COLOR = COL_YELOW;
+	else
+		FONT_COLOR = (SDL_Color){0x64, 0x64, 0x64, 0xFF};
+}
+
+static void			init_back_arena(t_window	*window, t_run *running, unsigned char *first_state)
+{
+	int			i;
+	int			j;
+	char		*hex;
+	char		str[3];
+
+	hex = "0123456789abcdef";
+	FONT_CURR = FONT_ARENA;
+	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
+	j = 0;
+	while (j < 64)
+	{
+		i = 0;
+		while (i < 64)
+		{
+			get_player_color(window, running, j * 64 + i);
+			str[0] = hex[(first_state[j * 64 + i] / 16)];
+			str[1] = hex[(first_state[j * 64 + i] % 16)];
+			str[2] = '\0';
+			print_str(window, str, 13 + 18.7 * i , 15 + 13.5 * j);
+			i++;
+		}
+		j++;
+	}
+	SDL_SetRenderTarget(WIN_REND, NULL);
+	FONT_COLOR = (SDL_Color){0xFF, 0xFF, 0xFF, 0xFF};
+}
+
 int				main(void)
 {
 	t_window	*window;
@@ -72,6 +115,7 @@ int				main(void)
 	unsigned char *first_state;
 
 	first_state = (unsigned char*)ft_strnew(4 * 1024);
+	ft_strcpy((char*)first_state, "LOL KEK");
 	if (!(window = init_win()))
 		return (0);
 	if (!(running = init_running()))
@@ -80,13 +124,14 @@ int				main(void)
 		WIN_QUIT = 1;
 	if (load_files(window, players, running) != 0)
 		WIN_QUIT = 1;
+	init_back_arena(window, running, first_state);
 	while (!WIN_QUIT)
 	{
-		SDL_RenderClear(WIN_REND);
+		// SDL_RenderClear(WIN_REND);
 		win_events(window, running);
 		render_image(window, running, players);
 		SDL_RenderPresent(WIN_REND);
-		SDL_Delay(20);
+		// SDL_Delay(1);
 	}
 	visu_close(window);
 }

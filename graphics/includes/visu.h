@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/10 19:04:02 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:27:01 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define VISU_H
 # define SCREEN_WIDTH 1600
 # define SCREEN_HEIGHT 900
+# define COL_GREEN ((SDL_Color){84, 190, 56, 0xFF})
+# define COL_BLUE ((SDL_Color){4, 46, 191, 0xFF})
+# define COL_RED ((SDL_Color){186, 48, 27, 0xFF})
+# define COL_YELOW ((SDL_Color){0xFF, 0xFF, 0, 0xFF})
 
 # include "../../libft/includes/libft.h"
 # include <SDL2_gfxPrimitives.h>
@@ -28,9 +32,10 @@ typedef struct		s_window
 	SDL_Texture		*background;
 	SDL_Texture		*back_pause;
 	SDL_Texture		*back_finish;
-	SDL_Texture		*back_running;
+	TTF_Font		*f_current;
 	TTF_Font		*f_pause;
 	TTF_Font		*f_status;
+	TTF_Font		*f_arena;
 	SDL_Color		color;
 	Sint32			width;
 	Sint32			height;
@@ -43,9 +48,10 @@ typedef struct		s_window
 # define WIN_BACK	(window->background)
 # define BACK_PAUSE	(window->back_pause)
 # define BACK_FIN	(window->back_finish)
-# define BACK_RUN	(window->back_running)
+# define FONT_CURR	(window->f_current)
 # define FONT_PAUSE	(window->f_pause)
 # define FONT_STAT	(window->f_status)
+# define FONT_ARENA	(window->f_arena)
 # define FONT_COLOR	(window->color)
 # define WIN_WID	(window->width)
 # define WIN_HEIG	(window->height)
@@ -80,7 +86,6 @@ typedef struct		s_player
 	char			*name;
 	int				last_live;
 	int				lives_in_period;
-	unsigned char	*mem;
 }					t_player;
 
 t_window			*init_win(void);

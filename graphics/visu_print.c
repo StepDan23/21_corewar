@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 18:43:24 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:22:47 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,8 @@ void		print_str(t_window *window, char *str, int x, int y)
 	SDL_Surface		*text_surf;
 	SDL_Texture		*text;
 	SDL_Rect		dst;
-	TTF_Font		*font;
 
-	if (x < 1000 || y < 100)
-		font = FONT_PAUSE;
-	else
-		font = FONT_STAT;
-	text_surf = TTF_RenderText_Blended(font, str, FONT_COLOR);
+	text_surf = TTF_RenderText_Blended(FONT_CURR, str, FONT_COLOR);
 	text = SDL_CreateTextureFromSurface(WIN_REND, text_surf);
 	dst = (SDL_Rect){x, y, text_surf->w, text_surf->h};
 	SDL_RenderCopy(WIN_REND, text, NULL, &dst);
@@ -32,6 +27,15 @@ void		print_str(t_window *window, char *str, int x, int y)
 }
 
 void		print_nbr(t_window *window, int nbr, int x, int y)
+{
+	char	*nbr_text;
+
+	nbr_text = ft_itoa(nbr);
+	print_str(window, nbr_text, x, y);
+	ft_strdel(&nbr_text);
+}
+
+void		print_nbr_hex(t_window *window, int nbr, int x, int y)
 {
 	char	*nbr_text;
 
