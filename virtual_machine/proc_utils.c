@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 18:54:38 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/11 18:51:44 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		get_arg_size(int arg_type, t_op op)
 {
 	if (arg_type == T_REG)
 		return (1);
-	else if (arg_type == T_IND)
+	else if (arg_type == 3)
 		return (2);
 	else if (arg_type == T_DIR)
 		return (op.is_short_dir ? 2 : 4);
