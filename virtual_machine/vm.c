@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/10 21:36:56 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 23:08:34 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	vm_dump_memory(unsigned char *memory)
 		i++;
 	}
 	ft_printf("\n");
-	exit(0);
+	// exit(0);
 }

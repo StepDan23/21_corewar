@@ -6,10 +6,11 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/10 21:40:39 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/11 16:52:56 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "vm.h"
 
 /*
@@ -54,7 +55,7 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 
 	index = get_2bytes(vm->memory,(P_POS + 1) % MEM_SIZE);
 	proccess_add(&vm->process,\
-	proccess_new(vm->process->id + 1, P_PI, (P_POS + index) % MEM_SIZE));
+	proccess_new(vm->process->id + 1, P_PI, get_realtive_addr(P_POS, index)));
 	i = 0;
 	while (i < REG_NUMBER)
 	{
@@ -88,9 +89,20 @@ void	live(t_vm *vm, t_proccess *proccess)
 	while (player)
 	{
 		if (player->id == -number)
+		{
 			vm->winner = player;
+			vm->lives[player->id]++;
+		}
 		player = player->next;
 	}
 	P_POS = (P_POS + 4) % MEM_SIZE;
+}
+
+void	aff(t_vm *vm, t_proccess *proccess)
+{
+	char	ch;
+
+	ch = (char)P_REG[get_4bytes(vm->memory, (P_POS + 2) % MEM_SIZE) - 1];
+	ft_printf("%c", ch);
 }
 

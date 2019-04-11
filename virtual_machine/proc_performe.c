@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/10 21:29:01 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 23:03:18 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	init_f(void (*f[17])(t_vm *, t_proccess *))
 	f[13] = &lld;
 	f[14] = &lldi;
 	f[15] = &lfork;
+	f[16] = &aff;
 }
 
 /*
@@ -125,19 +126,20 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 			set_new_op(vm, proccess, op_tab);
 		if (P_CTW > 0)
 			P_CTW--;
-		if (!P_CTW)
+		if (!P_CTW && P_CT < 17 && P_CT > 0)
 		{
-			if (P_CT < 17 && P_CT > 0)
+			performe_action(vm, proccess, op_tab);
+			if (P_CT != 3 && P_CT != 13)
 			{
-				performe_action(vm, proccess, op_tab);
-				if (P_CT != 3 && P_CT != 13)
-				{
-					proccess->value_written = 0;
-					proccess->pos_written = -1;
-				}
+				proccess->value_written = 0;
+				proccess->pos_written = -1;
 			}
-			else
-				P_POS = (P_POS + 1) % MEM_SIZE;	
+		}
+		else if (!P_CTW)
+		{
+			proccess->value_written = 0;
+			proccess->pos_written = -1;
+			P_POS = (P_POS + 1) % MEM_SIZE;	
 		}
 		proccess = proccess->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/10 21:51:58 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/10 23:03:35 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,5 @@ void					lldi(t_vm *vm, t_proccess *proccess);
 void					add(t_vm *vm, t_proccess *proccess);
 void					sub(t_vm *vm, t_proccess *proccess);
 void					live(t_vm *vm, t_proccess *proccess);
+void					aff(t_vm *vm, t_proccess *proccess);
 #endif
