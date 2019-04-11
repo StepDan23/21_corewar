@@ -6,11 +6,18 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:04:35 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/03 22:58:17 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <errno.h>
 #include "vm.h"
+#include "libft.h"
+
+/*
+** Считает кол-во чемпионов
+*/
 
 int		count_champs(t_champion *head)
 {
@@ -27,6 +34,11 @@ int		count_champs(t_champion *head)
 	return (champs_num);
 }
 
+/*
+** Записывает код чемпиона в память (vm->memory)
+** index - адресс куда записать
+*/
+
 void	vm_load_champ(unsigned char *mem, t_champion *champ, int index)
 {
 	unsigned int	i;
@@ -39,25 +51,44 @@ void	vm_load_champ(unsigned char *mem, t_champion *champ, int index)
 	}
 }
 
+/*
+** Рассчитывает адресс для записи
+** total - общее число чемпионов
+** curr - порядковый номер чемпиона
+*/
+
 int		vm_index_to_load(int total, int curr)
 {
 	int	pos;
 
 	pos = curr * (MEM_SIZE / total);
-	pos -= pos % 32;
+	// pos -= pos % 32;
 	return (pos);
 }
 
-void	vm_spread_champs(unsigned char *memory, t_champion *champs)
+/*
+** Распределяет чемпионов по памяти машины
+** Создает по 1 процессу (каретке) на чемпиона
+*/
+
+void	vm_spread_champs(t_vm *vm, t_champion *champs)
 {
-	int	champs_num;
-	int	i;
+	int			champs_num;
+	int			i;
+	t_proccess	*proccess;
 
 	champs_num = count_champs(champs);
 	i = 0;
 	while (i < champs_num)
 	{
-		vm_load_champ(memory, champs, vm_index_to_load(champs_num, i));
+		vm_load_champ(vm->memory, champs, vm_index_to_load(champs_num, i));
+		proccess = proccess_new(i, champs->id, vm_index_to_load(champs_num, i));
+		if (!proccess)
+		{
+			ft_printf("Error: %s\n", strerror(errno));
+			exit(0);
+		}
+		proccess_add(&vm->process, proccess);
 		i++;
 		champs = champs->next;
 	}

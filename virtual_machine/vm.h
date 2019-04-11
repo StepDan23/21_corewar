@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/09 14:25:25 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:56:21 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,22 @@ typedef struct			s_proccess
 	int					position;
 	int					carry;
 	int					player_id;
+	int					id;
 	unsigned int		registers[REG_NUMBER];
 	int					is_live;
 	int					command_type;
 	int					cycles_to_wait;
+	struct s_proccess	*next;
+	int					value_written;
+	int					pos_written;
 }						t_proccess;
+
+# define P_POS			(proccess->position)
+# define P_C			(proccess->carry)
+# define P_PI			(proccess->player_id)
+# define P_REG			(proccess->registers)
+# define P_CT			(proccess->command_type)
+# define P_CTW			(proccess->cycles_to_wait)
 
 /*
 **	champion
@@ -53,7 +64,7 @@ typedef struct			s_champion
 	char				comment[COMMENT_LENGTH + 1];
 	unsigned int		size;
 	unsigned char		*code;
-	unsigned int		id;
+	int					id;
 	struct s_champion	*next;
 }						t_champion;
 
@@ -67,6 +78,9 @@ typedef struct			s_champion
 **	*process - список живых процессов (кареток)
 **	*champion - список чемпионов (пока хз с этим)
 **	memory - область памяти (зона боевых действий)
+**	lives[4] - кол-во жизней каждого чемпиона
+**	p_num[4] - кол-во кареток каждого чемпиона
+**	p_total - общее число кареток
 */
 
 typedef struct			vm
@@ -79,9 +93,38 @@ typedef struct			vm
 	t_proccess			*process;
 	t_champion			*champion;
 	int					champion_count;
+	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
-
+	unsigned int		live_exec;
+	unsigned int		checkups;
+	int					lives[4];
+	int					p_num[4];
+	int					p_total;
 }						t_vm;
+
+/*
+**	Декларации опкодов операций
+**	arg_num - кол-во аргументов
+**	*name - имя комманды
+**	arg_types[3] - типы аргументов (макс 3 аргумента)
+**	opcode - номер операции
+**	cycles_to_wait - кол-во циклов ожидания перед выполнением
+**	*description - описание команды
+**	coding_byte - есть ли байт кодирования типов аргументов
+**	is_short_dir - размер T_DIR равен 2 (true) иначе 4 (false)
+*/
+
+typedef struct			s_op
+{
+	char				*name;
+	int					arg_num;
+	unsigned char		arg_types[3];
+	int					opcode;
+	int					cycles_to_wait;
+	char				*description;
+	int					coding_byte;
+	int					is_short_dir;
+}						t_op;
 
 /*
 **	Декларации опкодов операций
@@ -125,15 +168,50 @@ int						check_null(int fd);
 int						read_code(int fd, t_champion *champ);
 void					print_error_exit(int code);
 
-t_vm					*vm_new(void);
-void					vm_spread_champs(unsigned char *memory, t_champion *chapms);
-void					vm_dump_memory(unsigned char *memory);
-
 int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
+
+t_vm					*vm_new(int dump);
+void					vm_spread_champs(t_vm *vm, t_champion *champs);
+void					vm_dump_memory(unsigned char *memory);
+
+t_proccess				*proccess_new(int id, int player_id, int pos);
+void					proccess_add(t_proccess **head, t_proccess *new_p);
+void					proccess_check_live(t_vm *vm, t_proccess **head);
+
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
 int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
 
 void					champions_add(char *filename, int num, t_champion **head);
+
+int						coding_byte_check(unsigned char octet, const t_op op);
+void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
+int						valid_reg(unsigned char octet, unsigned char *memory, int pos, t_op op);
+int						get_arg_size(int arg_type, t_op op);
+int						coding_byte_check(unsigned char octet, const t_op op);
+int						has_register(unsigned char octet);
+int						bit_extracted(int number, int k, int p) ;
+int						get_4bytes(unsigned char *memory, int pos);
+int						get_2bytes(unsigned char *memory, int pos);
+int						get_realtive_addr(int from, int to);
+int						get_indirect_addr(t_vm *vm, int pos, int from);
+int						get_indirect_laddr(t_vm *vm, int pos, int from);
+
+void					and(t_vm *vm, t_proccess *proccess);
+void					or(t_vm *vm, t_proccess *proccess);
+void					xor(t_vm *vm, t_proccess *proccess);
+void					zjmp(t_vm *vm, t_proccess *proccess);
+void					ft_fork(t_vm *vm, t_proccess *proccess);
+void					lfork(t_vm *vm, t_proccess *proccess);
+void					st(t_vm *vm, t_proccess *proccess);
+void					sti(t_vm *vm, t_proccess *proccess);
+void					ld(t_vm *vm, t_proccess *proccess);
+void					lld(t_vm *vm, t_proccess *proccess);
+void					ldi(t_vm *vm, t_proccess *proccess);
+void					lldi(t_vm *vm, t_proccess *proccess);
+void					add(t_vm *vm, t_proccess *proccess);
+void					sub(t_vm *vm, t_proccess *proccess);
+void					live(t_vm *vm, t_proccess *proccess);
+void					aff(t_vm *vm, t_proccess *proccess);
 #endif
