@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 23:10:57 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/11 23:02:37 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/12 12:52:51 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_asm			*ft_asm_init()
 	asm_data = (t_asm *)malloc(sizeof(t_asm));
 	if (!asm_data)
 		exit(1);
+	asm_data->string_with_data = 0;
+	asm_data->string_current = 0;
 	asm_data->champ_data = ft_champ_data_init();
 	asm_data->marks = NULL;
 	asm_data->lex_tree = ft_rbtree_root_init();

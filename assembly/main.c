@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/12 12:31:38 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/12 13:02:55 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,27 @@
 // проблема - а что если имя внутри скобок
 // проблема - как обрабатывать ошибки
 // что такое ошибки в именах - текст перед именем/комментом
+//.name "dsjkfdjsf"dg, .name "djfh"dsf", .name 'dhu"gds"fdsf'
+//.name
+//
+//
+//"ab.name"
+//
+// какую-нибудь парашу в начале подам
+// комментарий в имени/комментарии
 
 void	ft_search_camp_name_or_comment_cmd(t_asm *asm_data, char *line, int len)
 {
 	int		i;
 	int		j;
-	int		count_of_quotes;
 
 	i = 0;
 	j = 0;
-	count_of_quotes = 0;
 	while (line[i])
 	{
-
-
+		// * обработка комментария
+		if (line[i] == COMMENT_CHAR)
+			return ;
 		i++;
 	}
 }
@@ -59,19 +66,12 @@ void	ft_lexer_champ_data(t_asm *asm_data, char *line)
 	{
 		ft_putendl(line);
 		ft_search_camp_name_or_comment_cmd(asm_data, line, len);
-		if (asm_data->status_flag == 0)
-			asm_data->status_flag = 1;
+
+
+		if (STATUS_FLAG == 0)
+			STATUS_FLAG = 1;
 		else
-			asm_data->status_flag = 0;
-
-
-		//.name "dsjkfdjsf"dg, .name "djfh"dsf", .name 'dhu"gds"fdsf'
-		//.name
-		//
-		//
-		//"ab.name"
-		//
-		//
+			STATUS_FLAG = 0;
 
 	}
 
@@ -87,8 +87,10 @@ void	ft_read_file(int fd, char *file_name)
 	asm_data = ft_asm_init();
 	while (get_next_line(fd, &line) > 0)
 	{
+
 		ft_lexer_champ_data(asm_data, ft_strtrim(line));
 		free(line);
+		STR_NUM++;
 		i++;
 	}
 	ft_putstr("===========================\n");

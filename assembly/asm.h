@@ -68,6 +68,8 @@ typedef struct	s_lex_str
 
 /*
 ** основная структура содержит:
+** текущий номер строки в файле
+** порядковый номер строки содержащий данные
 ** структуру для записи имени и комментария чемпиона
 ** связанный список для хранения меток
 ** корень дерева для записи и хранения токенов лексического анализа
@@ -75,6 +77,8 @@ typedef struct	s_lex_str
 */
 typedef struct		s_asm
 {
+	int				string_with_data;
+	int				string_current;
 	t_champ_data	*champ_data;
 	t_list			*marks;
 	t_rbroot		*lex_tree;
@@ -89,6 +93,8 @@ t_token			*ft_token_init();
 t_marks			*ft_marks_init();
 t_asm			*ft_asm_init();
 
+# define STR_DATA_NUM (asm_data->string_with_data)
+# define STR_NUM (asm_data->string_current)
 # define CHAMP_DATA (asm_data->champ_data)
 # define MARKS (asm_data->marks)
 # define LEX_TREE (asm_data->lex_tree)
