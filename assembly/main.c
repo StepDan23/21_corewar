@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/12 11:47:33 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/12 12:31:38 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,28 @@
 //	TODO подумать как фиксировать последнюю строку!!
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
+
+// проблема - а что если на другой строке продолжение комментария
+// проблема - а что если имя внутри скобок
+// проблема - как обрабатывать ошибки
+// что такое ошибки в именах - текст перед именем/комментом
+
+void	ft_search_camp_name_or_comment_cmd(t_asm *asm_data, char *line, int len)
+{
+	int		i;
+	int		j;
+	int		count_of_quotes;
+
+	i = 0;
+	j = 0;
+	count_of_quotes = 0;
+	while (line[i])
+	{
+
+
+		i++;
+	}
+}
 
 
 void	ft_lexer_champ_data(t_asm *asm_data, char *line)
@@ -36,6 +58,7 @@ void	ft_lexer_champ_data(t_asm *asm_data, char *line)
 	line[0] == COMMENT_CMD_STRING[0]) || (STATUS_FLAG > 0 && STATUS_FLAG < 3))
 	{
 		ft_putendl(line);
+		ft_search_camp_name_or_comment_cmd(asm_data, line, len);
 		if (asm_data->status_flag == 0)
 			asm_data->status_flag = 1;
 		else

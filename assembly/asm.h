@@ -42,11 +42,16 @@ typedef struct	s_token
 	int			error;
 }				t_token;
 
+/*
+** if flag == 0, then no name and comment found. if flag == 1, then no comment.
+*/
 typedef struct	s_champ_data
 {
 	t_token		*name;
 	t_token		*comment;
 	int			flag;
+	int			open_brackets;
+	int			close_brackets;
 }				t_champ_data;
 
 typedef struct	s_lex_str
