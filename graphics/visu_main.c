@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/11 17:27:44 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/12 17:38:17 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,55 +30,24 @@ static void		visu_close(t_window *window)
 	exit(1);
 }
 
-static t_run	*init_running(void)
+static void			get_player_color(t_window *window, t_vm *vm, int i)
 {
-	t_run		*running;
-
-	running = (t_run*)malloc(sizeof(t_run));
-	PLA_COUNT = 4;
-	RUN_SPEED = 50;
-	RUN_CYCLE = 0;
-	RUN_TMP = 0;
-	RUN_PROC = 2;
-	CYC_DIE = 100;
-	CYC_DELTA = 50;
-	NBR_LIVE = 21;
-	MAX_CHECKS = 10;
-	return (running);
-}
-
-static t_player		**init_players(int num_players)
-{
-	t_player		**players;
-
-	players = (t_player**)malloc(sizeof(t_player) * (num_players + 1));
-	players[num_players] = NULL;
-	while (--num_players >= 0)
-	{
-		players[num_players] = (t_player*)malloc(sizeof(t_player));
-		players[num_players]->name = ft_strnew(10);
-		ft_strcpy(players[num_players]->name, "Test_player ;)");
-		players[num_players]->last_live = 0;
-		players[num_players]->lives_in_period = 0;
-	}
-	return (players);
-}
-
-static void			get_player_color(t_window	*window, t_run *running, int i)
-{
-	if (i >= 0 && i < 23)
+	if (i >= 0 && i < VM_CHAMPS[0]->size)
 		FONT_COLOR = COL_GREEN;
-	else if (i >= 4096 / PLA_COUNT && i < 4096 / PLA_COUNT + 23 && PLA_COUNT > 1)
+	else if (i >= (4096 / VM_CHAMP_COUNT) &&
+			i < (4096 / VM_CHAMP_COUNT + VM_CHAMPS[1]->size) && VM_CHAMP_COUNT > 1)
 		FONT_COLOR = COL_BLUE;
-	else if (i >= 2 * 4096 / PLA_COUNT && i < 2 * 4096 / PLA_COUNT + 23 && PLA_COUNT > 2)
+	else if (i >= (2 * 4096 / VM_CHAMP_COUNT) &&
+			i < (2 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[2]->size) && VM_CHAMP_COUNT > 2)
 		FONT_COLOR = COL_RED;
-	else if (i >= 3 * 4096 / PLA_COUNT && i < 3 * 4096 / PLA_COUNT + 23 && PLA_COUNT > 3)
+	else if (i >= (3 * 4096 / VM_CHAMP_COUNT) &&
+			i < (3 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[3]->size) && VM_CHAMP_COUNT > 3)
 		FONT_COLOR = COL_YELOW;
 	else
 		FONT_COLOR = (SDL_Color){0x64, 0x64, 0x64, 0xFF};
 }
 
-static void			init_back_arena(t_window	*window, t_run *running, unsigned char *first_state)
+static void			init_back_arena(t_window *window, t_vm *vm)
 {
 	int			i;
 	int			j;
@@ -94,42 +63,76 @@ static void			init_back_arena(t_window	*window, t_run *running, unsigned char *f
 		i = 0;
 		while (i < 64)
 		{
-			get_player_color(window, running, j * 64 + i);
-			str[0] = hex[(first_state[j * 64 + i] / 16)];
-			str[1] = hex[(first_state[j * 64 + i] % 16)];
+			get_player_color(window, vm, j * 64 + i);
+			str[0] = hex[VM_MEMORY[j * 64 + i] / 16];
+			str[1] = hex[VM_MEMORY[j * 64 + i] % 16];
 			str[2] = '\0';
-			print_str(window, str, 13 + 18.7 * i , 15 + 13.5 * j);
+			print_str(window, str, 13 + 18.7 * i, 15 + 13.5 * j);
 			i++;
 		}
 		j++;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);
-	FONT_COLOR = (SDL_Color){0xFF, 0xFF, 0xFF, 0xFF};
+	FONT_COLOR = COL_WHITE;
+}
+
+static t_champion			**init_champs(unsigned char	*first_state, int players_count)
+{
+	t_champion		**champ;
+	int				i;
+
+	champ = (t_champion**)malloc(sizeof(t_champion*) * (players_count + 1));
+	i = 0;
+	while (i < players_count)
+	{
+		champ[i] = (t_champion*)malloc(sizeof(t_champion));
+		champ[i]->id = i;
+		champ[i]->size = 23 + i * 23;
+		champ[i]->name = ft_strnew(10);
+		champ[i]->last_live = 0;
+		champ[i]->lives_in_period = 0;
+		i++;
+	}
+	champ[i] = NULL;
+	ft_strcpy(champ[0]->name, "ONE_A");
+	ft_strcpy(champ[1]->name, "TWO_B");
+	ft_strcpy(champ[2]->name, "THREE_C");
+	ft_strcpy(champ[3]->name, "FOUR_D");
+	return(champ);
+}
+
+static t_vm				*init_virtual_machine(void)
+{
+	t_vm			*vm;
+
+	vm = (t_vm*)malloc(sizeof(t_vm));
+	VM_CHAMP_COUNT = 4;
+	ft_strcpy((char*)VM_MEMORY, "LOL KEK");
+	VM_CHAMPS = init_champs(VM_MEMORY, VM_CHAMP_COUNT);
+	VM_CYCLE = 0;
+	VM_CYCLE_TO_DIE = 100;
+	VM_P_TOTAL = 0;
+	return (vm);
 }
 
 int				main(void)
 {
-	t_window	*window;
-	t_run		*running;
-	t_player	**players;
-	unsigned char *first_state;
+	t_window		*window;
+	t_vm			*vm;
 
-	first_state = (unsigned char*)ft_strnew(4 * 1024);
-	ft_strcpy((char*)first_state, "LOL KEK");
+
 	if (!(window = init_win()))
 		return (0);
-	if (!(running = init_running()))
+	if (!(vm = init_virtual_machine()))
 		WIN_QUIT = 1;
-	if (!(players = init_players(PLA_COUNT)))
+	if (load_files(window, vm) != 0)
 		WIN_QUIT = 1;
-	if (load_files(window, players, running) != 0)
-		WIN_QUIT = 1;
-	init_back_arena(window, running, first_state);
+	init_back_arena(window, vm);
 	while (!WIN_QUIT)
 	{
 		// SDL_RenderClear(WIN_REND);
-		win_events(window, running);
-		render_image(window, running, players);
+		win_events(window);
+		render_image(window,vm);
 		SDL_RenderPresent(WIN_REND);
 		// SDL_Delay(1);
 	}

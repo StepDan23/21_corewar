@@ -6,7 +6,7 @@
 #    By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 18:31:12 by mmcclure          #+#    #+#              #
-#    Updated: 2019/04/07 18:42:00 by mmcclure         ###   ########.fr        #
+#    Updated: 2019/04/12 16:05:50 by mmcclure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ all: $(LIB) $(LIB_GFX)
 	gcc $(GRAPH_SRCS) $(LIB) $(LIB_GFX) $(HEADERS) $(FRAMEWORKS)
 
 $(LIB):
-	make -C ../libft/
+	make -C ./libft/
 
 $(LIB_GFX):
 	gcc -c ~/SDL_gfx/*.c -F ~/Library/Frameworks/

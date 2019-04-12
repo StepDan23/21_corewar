@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 12:54:38 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/12 17:37:27 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ t_window		*init_win(void)
 
 	window = (t_window*)malloc(sizeof(t_window));
 	WIN_QUIT = 0;
-	WIN_STATUS = 0;
+	WIN_STATUS = STAT_START;
 	WIN_WID = SCREEN_WIDTH;
 	WIN_HEIG = SCREEN_HEIGHT;
+	WIN_SPEED = 50;
 	FONT_COLOR = (SDL_Color){255, 255, 255, 255};
 	if (SDL_Init(SDL_INIT_VIDEO) < 0 || SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
