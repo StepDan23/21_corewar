@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/03/23 14:44:48 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/11 10:44:42 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,10 @@ void				ft_btree_insert(t_btree **r, void *item, int \
 (*cmpf)(void *, void *));
 void				*ft_btree_search(t_btree *root, void *data_ref);
 
+/*
+** функции красно-черного дерева
+*/
+
 int					is_red(t_rbnode *node);
 t_rbnode			*rb_single(t_rbnode *root, int dir);
 t_rbnode			*rb_double(t_rbnode *root, int dir);
@@ -222,7 +226,12 @@ void				ft_relationships(t_rbnode *parent);
 int					ft_rbtree_max(t_rbnode *node);
 int					ft_rbtree_min(t_rbnode *node);
 void				ft_rb_freetree(t_rbnode *node);
+t_rbroot			*ft_rbtree_root_init(void);
 
+
+/*
+** функции принтф
+*/
 int					ft_printf(const char *a, ...);
 int					ft_sprintf(char *a, const char *b, ...);
 int					ft_fprintf(int a, const char *b, ...);
@@ -304,5 +313,7 @@ void				ft_quicksort_lomuto_des(int *arr, int start, int end);
 void				ft_bubble_sort(int *arr, int len);
 int					ft_arr_mediana(int *arr, int start, int len, int flag);
 void				ft_print_int_arr(int *arr, int len);
+char				ft_get_last_letter_in_str(char *str);
+int					ft_get_type_of_file(char *file_name, char *needle);
 
 #endif

@@ -1,9 +1,4 @@
-
-
-
 .name "dsfdsf"
-
-
 .comment "just a basic living prog"
 
 l2:
