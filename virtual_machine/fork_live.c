@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/11 16:52:56 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:45:45 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,23 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 void	live(t_vm *vm, t_proccess *proccess)
 {
 	int			number;
-	t_champion	*player;
+	t_champion	**players;
+	int			i;
 
 	number = get_4bytes(vm->memory, (P_POS + 1) % MEM_SIZE);
 	proccess->is_live = 1;
 	vm->live_exec++;
-	player = vm->champion;
-	while (player)
+	players = vm->champion;
+	i = 0;
+	while (players[i])
 	{
-		if (player->id == -number)
+		if (players[i]->id == -number)
 		{
-			vm->winner = player;
-			vm->lives[player->id]++;
+			vm->winner = players[i];
+			players[i]->lives_in_period++;
+			players[i]->last_live = vm->cycles;
 		}
-		player = player->next;
+		i++;
 	}
 	P_POS = (P_POS + 4) % MEM_SIZE;
 }

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/11 18:55:03 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:41:09 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "vm.h"
 #include "libft.h"
 
-void	vm_init_memory(unsigned char *memory)
+static void	vm_init_memory(unsigned char *memory)
 {
 	unsigned int	i;
 
@@ -26,14 +26,13 @@ void	vm_init_memory(unsigned char *memory)
 	}
 }
 
-void	vm_init_arrays(t_vm *vm)
+static void	vm_init_proccess_counter(t_vm *vm)
 {
 	int	i;
 
 	i = 0;
 	while (i < 4)
 	{
-		vm->lives[i] = 0;
 		vm->p_num[i] = 0;
 		i++;
 	}
@@ -57,11 +56,11 @@ t_vm	*vm_new(int dump)
 	vm->checkups = 0;
 	vm->p_total = 0;
 	vm_init_memory(vm->memory);
-	vm_init_arrays(vm);
+	vm_init_proccess_counter(vm);
 	return (vm);
 }
 
-void	vm_dump_memory(unsigned char *memory)
+void		vm_dump_memory(unsigned char *memory)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 19:08:22 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:55:30 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ typedef struct			s_champion
 	unsigned int		size;
 	unsigned char		*code;
 	int					id;
-	struct s_champion	*next;
+	int					last_live;
+	int					lives_in_period;
 }						t_champion;
 
 /*
@@ -91,13 +92,12 @@ typedef struct			vm
 	int					dump;
 	int					cycles_die;
 	t_proccess			*process;
-	t_champion			*champion;
+	t_champion			**champion;
 	int					champion_count;
 	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
 	unsigned int		live_exec;
 	unsigned int		checkups;
-	int					lives[4];
 	int					p_num[4];
 	int					p_total;
 }						t_vm;
@@ -160,7 +160,7 @@ typedef struct			s_op
 t_champion				*new_champ(int number, char *filename);
 void					champion_free(t_champion *hero);
 
-void					read_all_champs(t_champion *champs);
+void					read_all_champs(t_champion **champs);
 int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
 int						read_magic(int fd);
@@ -172,7 +172,7 @@ int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
 
 t_vm					*vm_new(int dump);
-void					vm_spread_champs(t_vm *vm, t_champion *champs);
+void					vm_spread_champs(t_vm *vm, t_champion **champs);
 void					vm_dump_memory(unsigned char *memory);
 
 t_proccess				*proccess_new(int id, int player_id, int pos);

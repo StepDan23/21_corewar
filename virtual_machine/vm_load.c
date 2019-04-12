@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/03 22:58:17 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:42:13 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,13 @@
 ** Считает кол-во чемпионов
 */
 
-int		count_champs(t_champion *head)
+int		count_champs(t_champion **head)
 {
 	int			champs_num;
-	t_champion	*ch;
 
 	champs_num = 0;
-	ch = head;
-	while (ch)
-	{
+	while (head[champs_num])
 		champs_num++;
-		ch = ch->next;
-	}
 	return (champs_num);
 }
 
@@ -71,18 +66,18 @@ int		vm_index_to_load(int total, int curr)
 ** Создает по 1 процессу (каретке) на чемпиона
 */
 
-void	vm_spread_champs(t_vm *vm, t_champion *champs)
+void	vm_spread_champs(t_vm *vm, t_champion **champs)
 {
-	int			champs_num;
 	int			i;
+	int			champs_num;
 	t_proccess	*proccess;
 
 	champs_num = count_champs(champs);
 	i = 0;
-	while (i < champs_num)
+	while (champs[i])
 	{
-		vm_load_champ(vm->memory, champs, vm_index_to_load(champs_num, i));
-		proccess = proccess_new(i, champs->id, vm_index_to_load(champs_num, i));
+		vm_load_champ(vm->memory, champs[i], vm_index_to_load(champs_num, i));
+		proccess = proccess_new(i, champs[i]->id, vm_index_to_load(champs_num, i));
 		if (!proccess)
 		{
 			ft_printf("Error: %s\n", strerror(errno));
@@ -90,6 +85,5 @@ void	vm_spread_champs(t_vm *vm, t_champion *champs)
 		}
 		proccess_add(&vm->process, proccess);
 		i++;
-		champs = champs->next;
 	}
 }

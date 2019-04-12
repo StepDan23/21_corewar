@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:58:03 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/03 00:33:40 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 19:24:53 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,14 @@ int		read_champ(t_champion *champ)
 	return (1);
 }
 
-void	read_all_champs(t_champion *champs)
+void	read_all_champs(t_champion **champs)
 {
-	while (champs)
+	int		i;
+
+	i = 0;
+	while (champs[i])
 	{
-		read_champ(champs);
-		champs = champs->next;
+		read_champ(champs[i]);
+		i++;
 	}
 }

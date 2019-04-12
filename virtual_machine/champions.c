@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void		champions_add(char *filename, int num, t_champion **head)
+void		champions_add(char *filename, int id, t_champion **head)
 {
 	t_champion	*new_champ;
 
@@ -13,18 +13,19 @@ void		champions_add(char *filename, int num, t_champion **head)
 		exit(2);
 	}
 	new_champ->filename = filename;
-	new_champ->id = num;
+	new_champ->id = id;
 	new_champ->code = NULL;
-	new_champ->next = NULL;
 	new_champ->size = 0;
-
-	if (*head == NULL)
-	{
-		*head = new_champ;
-		return ;
-	}
-	new_champ->next = *head;
-	*head = new_champ;
+	new_champ->last_live = 0;
+	new_champ->last_live = 0;
+	head[id - 1] = new_champ;
+	// if (*head == NULL)
+	// {
+		// *head = new_champ;
+		// return ;
+	// }
+	// new_champ->next = *head;
+	// *head = new_champ;
 }
 
 void		champion_free(t_champion *hero)

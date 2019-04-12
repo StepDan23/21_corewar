@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 18:51:44 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:18:56 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		coding_byte_check(unsigned char octet, const t_op op)
 	while (i < op.arg_num)
 	{
 		arg = bit_extracted(octet, 2, 7 - i * 2);
-		if (!(arg & op.arg_types[i]))
+		if (arg != op.arg_types[i])
 			return (0);
 		i++;
 	}
