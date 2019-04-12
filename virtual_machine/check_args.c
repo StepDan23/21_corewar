@@ -25,13 +25,11 @@ int		champion_count(int ac, char **av)
 
 int		check_args(int ac, char **av, t_vm *vm)
 {
-	int			number;
 	int			count;
 	int			j;
 
 	j = 1;
 	vm->champion_count = champion_count(ac, av);
-	number = 1;
 	while (j < ac)
 	{
 		if (av[j][0] == '-')
@@ -69,9 +67,6 @@ int		check_filename(char *file)
 
 int		check_dump(t_vm *vm, char *param)
 {
-	int		i;
-
-	i = 0;
 	if (!is_all_digit(param))
 	{
 		ft_printf("Dump cycles isn't correct number.\n");
@@ -102,7 +97,7 @@ int		check_n(t_vm *vm, char *param, int *next_number)
 	champ = vm->champion;
 	while (champ)
 	{
-		if (champ->id == (unsigned int)n)
+		if (champ->id == n)
 		{
 			ft_printf("There is champion with same number.\n");
 			exit(1);
