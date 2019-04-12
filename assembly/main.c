@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/11 23:05:08 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/12 11:47:33 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
 
 
-void	ft_lexer_parse(t_asm *asm_data, char *line)
+void	ft_lexer_champ_data(t_asm *asm_data, char *line)
 {
 	t_rbnode	*node;
 	char		*temp_line;
@@ -31,20 +31,27 @@ void	ft_lexer_parse(t_asm *asm_data, char *line)
 		free(line);
 		return ;
 	}
-	ft_putendl(line);
 	i = 0;
-	if (line[0] == CHAMP_DATA->flag < 3 && (line[0] == NAME_CMD_STRING[0] ||\
-	line[0] == COMMENT_CMD_STRING[0]))
+	if (CHAMP_DATA->flag < 3 && (line[0] == NAME_CMD_STRING[0] ||\
+	line[0] == COMMENT_CMD_STRING[0]) || (STATUS_FLAG > 0 && STATUS_FLAG < 3))
 	{
-		while (line[i] && line[i] != '"')
-			i++;
+		ft_putendl(line);
+		if (asm_data->status_flag == 0)
+			asm_data->status_flag = 1;
+		else
+			asm_data->status_flag = 0;
+
+
 		//.name "dsjkfdjsf"dg, .name "djfh"dsf", .name 'dhu"gds"fdsf'
 		//.name
 		//
 		//
-		//".name"
+		//"ab.name"
+		//
+		//
 
 	}
+
 }
 
 void	ft_read_file(int fd, char *file_name)
@@ -57,7 +64,7 @@ void	ft_read_file(int fd, char *file_name)
 	asm_data = ft_asm_init();
 	while (get_next_line(fd, &line) > 0)
 	{
-		ft_lexer_parse(asm_data, ft_strtrim(line));
+		ft_lexer_champ_data(asm_data, ft_strtrim(line));
 		free(line);
 		i++;
 	}
