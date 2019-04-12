@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:36:11 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/09 18:48:20 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/12 17:21:43 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,43 @@
 
 static void		event_space(t_window *window)
 {
-	if (WIN_STATUS == 0)
-		WIN_STATUS = 1;
-	else if (WIN_STATUS == 1)
-		WIN_STATUS = 2;
-	else if (WIN_STATUS == 2)
-		WIN_STATUS = 1;
+	if (WIN_STATUS == STAT_START)
+		WIN_STATUS = STAT_RUNN;
+	else if (WIN_STATUS == STAT_RUNN)
+		WIN_STATUS = STAT_PAUSE;
+	else if (WIN_STATUS == STAT_PAUSE)
+		WIN_STATUS = STAT_RUNN;
 }
 
-static void		event_speed(t_window *window, t_run *running, SDL_Keycode key)
+static void		event_speed(t_window *window, SDL_Keycode key)
 {
-	if (key == SDLK_UP && RUN_SPEED < 1000)
+	if (key == SDLK_UP && WIN_SPEED < 1000)
 	{
-		RUN_SPEED += 1;
-		if (RUN_SPEED > 1000)
-			RUN_SPEED = 1000;
+		WIN_SPEED += 1;
+		if (WIN_SPEED > 1000)
+			WIN_SPEED = 1000;
 	}
-	else if (key == SDLK_RIGHT && RUN_SPEED < 1000)
+	else if (key == SDLK_RIGHT && WIN_SPEED < 1000)
 	{
-		RUN_SPEED += 10;
-		if (RUN_SPEED > 1000)
-			RUN_SPEED = 1000;
+		WIN_SPEED += 10;
+		if (WIN_SPEED > 1000)
+			WIN_SPEED = 1000;
 	}
-	else if (key == SDLK_DOWN && RUN_SPEED > 1)
+	else if (key == SDLK_DOWN && WIN_SPEED > 1)
 	{
-		RUN_SPEED -= 1;
-		if (RUN_SPEED < 1)
-			RUN_SPEED = 1;
+		WIN_SPEED -= 1;
+		if (WIN_SPEED < 1)
+			WIN_SPEED = 1;
 	}
-	else if (key == SDLK_LEFT && RUN_SPEED > 1)
+	else if (key == SDLK_LEFT && WIN_SPEED > 1)
 	{
-		RUN_SPEED -= 10;
-		if (RUN_SPEED < 1)
-			RUN_SPEED = 1;
+		WIN_SPEED -= 10;
+		if (WIN_SPEED < 1)
+			WIN_SPEED = 1;
 	}
 }
 
-void			win_events(t_window *window, t_run *running)
+void			win_events(t_window *window)
 {
 	SDL_Event	e;
 
@@ -66,8 +66,8 @@ void			win_events(t_window *window, t_run *running)
 				event_space(window);
 			if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_DOWN ||
 				e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT)
-				event_speed(window, running, e.key.keysym.sym);
-			if (WIN_STATUS == 3)
+				event_speed(window, e.key.keysym.sym);
+			if (WIN_STATUS == STAT_END)
 				WIN_QUIT = 1;
 		}
 		if (e.type == SDL_WINDOWEVENT &&

@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/11 17:27:01 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/12 17:35:07 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # define COL_BLUE ((SDL_Color){4, 46, 191, 0xFF})
 # define COL_RED ((SDL_Color){186, 48, 27, 0xFF})
 # define COL_YELOW ((SDL_Color){0xFF, 0xFF, 0, 0xFF})
+# define COL_WHITE ((SDL_Color){0xFF, 0xFF, 0xFF, 0xFF})
+# define STAT_START 0
+# define STAT_RUNN 1
+# define STAT_PAUSE 2
+# define STAT_END 3
 
 # include "../../libft/includes/libft.h"
 # include <SDL2_gfxPrimitives.h>
@@ -41,6 +46,7 @@ typedef struct		s_window
 	Sint32			height;
 	char			quit;
 	char			status;
+	int				speed;
 }					t_window;
 
 # define WIN_WIN	(window->window)
@@ -57,43 +63,82 @@ typedef struct		s_window
 # define WIN_HEIG	(window->height)
 # define WIN_QUIT	(window->quit)
 # define WIN_STATUS	(window->status)
+# define WIN_SPEED	(window->speed)
 
-typedef struct		s_run
+
+/*
+** Merge
+*/
+
+typedef struct			s_champion
 {
-	int				players_count;
-	float			cycle;
-	int				tmp;
-	int				speed;
-	int				processes;
-	int				cyc_die;
-	int				cyc_delta;
-	int				nbr_live;
-	int				max_checks;
-}					t_run;
+	char				*filename;
+	char				*name;
+	char				*comment[2048 + 1];
+	unsigned int		size;
+	unsigned char		*code; //usseles
+	int					id; //usseles
+	int					last_live;
+	int					lives_in_period;
+}						t_champion;
 
-# define PLA_COUNT	(running->players_count)
-# define RUN_CYCLE	(running->cycle)
-# define RUN_TMP	(running->tmp)
-# define RUN_SPEED	(running->speed)
-# define RUN_PROC	(running->processes)
-# define CYC_DIE	(running->cyc_die)
-# define CYC_DELTA	(running->cyc_delta)
-# define NBR_LIVE	(running->nbr_live)
-# define MAX_CHECKS	(running->max_checks)
-
-typedef struct		s_player
+typedef struct			s_proccess
 {
-	char			*name;
-	int				last_live;
-	int				lives_in_period;
-}					t_player;
+	int					position;
+	int					carry;
+	int					player_id;
+	int					id;
+	unsigned int		registers[100];
+	int					is_live;
+	int					command_type;
+	int					cycles_to_wait;
+	struct s_proccess	*next;
+	int					value_written;
+	int					pos_written;
+}						t_proccess;
+
+
+
+typedef struct			vm
+{
+	int					cycles;
+	int					cycles_to_die;
+	int					cycles_to_dump;
+	int					dump;
+	int					cycles_die;
+	t_proccess			*process;
+	t_champion			**champion;
+	int					champion_count;
+	t_champion			*winner;
+	unsigned char		memory[4096];
+	unsigned int		live_exec;
+	unsigned int		checkups;
+	int					lives[4];
+	int					p_num[4];
+	int					p_total;
+}						t_vm;
+
+# define VM_CYCLE			(vm->cycles)
+# define VM_CYCLE_TO_DIE	(vm->cycles_to_die)
+# define VM_MEMORY			(vm->memory)
+# define VM_CHAMP_COUNT		(vm->champion_count)
+# define VM_CHAMPS			(vm->champion)
+# define VM_P_TOTAL			(vm->p_total)
+# define VM_WINNER			(vm->winner)
+# define CYC_DELTA			50 //
+# define NBR_LIVE			21 //
+# define MAX_CHECKS			21 //
+
 
 t_window			*init_win(void);
-void				win_events(t_window *window, t_run *running);
-int					load_files(t_window *window, t_player **players, t_run *running);
+void				win_events(t_window *window);
+int					load_files(t_window *window, t_vm *vm);
 void				print_str(t_window *window, char *str, int x, int y);
-void				render_image(t_window *window, t_run *running, t_player **players);
+void				render_image(t_window *window, t_vm *vm);
 
 void				print_nbr(t_window *window, int nbr, int x, int y);
 void				print_str(t_window *window, char *str, int x, int y);
+
+
+
 #endif
