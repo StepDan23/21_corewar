@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 16:12:24 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/02/08 15:42:02 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/12 20:35:08 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 		free(new_elem);
 		return (0);
 	}
-	if (content == NULL)
+	if (content == NULL && content_size == 0)
 	{
 		new_elem->content = NULL;
 		new_elem->content_size = 0;
 	}
-	else
+	else if (content != NULL)
 	{
 		new_elem->content = ft_memcpy(new_elem->content, content,\
 		content_size);

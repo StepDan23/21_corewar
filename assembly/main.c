@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/12 13:02:55 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:41:12 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-//	TODO подумать как фиксировать последнюю строку!!
+//	TODO: подумать как фиксировать последнюю строку!!
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
 
@@ -30,23 +30,41 @@
 //
 // какую-нибудь парашу в начале подам
 // комментарий в имени/комментарии
+//
+//.name #.name "name"
+// несколько .name 
+// #hjdsfbbdfs
+// .name
 
 void	ft_search_camp_name_or_comment_cmd(t_asm *asm_data, char *line, int len)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
+	NAME_COLUMN = ft_d_strstr(line, NAME_CMD_STRING, COMMENT_CHAR);
+	if (NAME_COLUMN == -1)
+		COMMENT_COLUM = ft_d_strstr(line, COMMENT_CMD_STRING, COMMENT_CHAR);
+
 	while (line[i])
 	{
+
+
+		// сейчас добавляю проверку на корректный текст в нулевой строке, и добавление ошибки
+		ft_printf("%d %d %d\n", STR_DATA_NUM, NAME_COLUMN, COMMENT_COLUM);
+
+		if (!STR_DATA_NUM && (NAME_COLUMN && COMMENT_COLUM))
+		{
+			ft_error_add(asm_data, line, i, 1);
+			break ;
+		}
+
+
 		// * обработка комментария
-		if (line[i] == COMMENT_CHAR)
-			return ;
+
 		i++;
 	}
+	STR_DATA_NUM++;
 }
-
 
 void	ft_lexer_champ_data(t_asm *asm_data, char *line)
 {
@@ -61,20 +79,19 @@ void	ft_lexer_champ_data(t_asm *asm_data, char *line)
 		return ;
 	}
 	i = 0;
-	if (CHAMP_DATA->flag < 3 && (line[0] == NAME_CMD_STRING[0] ||\
-	line[0] == COMMENT_CMD_STRING[0]) || (STATUS_FLAG > 0 && STATUS_FLAG < 3))
+	if (CHAMP_DATA->flag < 3)
 	{
+		// * пока не считал имя и коммент, или не появился знак ':' флаг будет меньше трёх
+
 		ft_putendl(line);
+		if (line[0] == COMMENT_CHAR)
+			return ;
 		ft_search_camp_name_or_comment_cmd(asm_data, line, len);
-
-
 		if (STATUS_FLAG == 0)
 			STATUS_FLAG = 1;
 		else
 			STATUS_FLAG = 0;
-
 	}
-
 }
 
 void	ft_read_file(int fd, char *file_name)
