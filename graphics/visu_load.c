@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/12 17:24:18 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/13 18:44:08 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void		print_players(t_window *window, t_vm *vm)
 
 	i = 0;
 	height = 350;
-	colors[0] = COL_GREEN;
-	colors[1] = COL_BLUE;
-	colors[2] = COL_RED;
-	colors[3] = COL_YELOW;
+	colors[0] = (SDL_Color){COL_GREEN};
+	colors[1] = (SDL_Color){COL_BLUE};
+	colors[2] = (SDL_Color){COL_RED};
+	colors[3] = (SDL_Color){COL_YELOW};
 	while (VM_CHAMPS[i] != NULL)
 	{
 		print_str(window, "Player - ", 1235, height += 60);
@@ -97,7 +97,7 @@ int						load_files(t_window *window, t_vm *vm)
 {
 	FONT_PAUSE = TTF_OpenFont("graphics/fonts/Aller_BdIt.ttf", 50);
 	FONT_STAT = TTF_OpenFont("graphics/fonts/OpenSans-Regular.ttf", 17);
-	FONT_ARENA = TTF_OpenFont("graphics/fonts/OpenSans-Regular.ttf", 13);
+	FONT_ARENA = TTF_OpenFont("graphics/fonts/DroidSansMono.ttf", 12);
 	FONT_CURR = FONT_STAT;
 	if (!FONT_PAUSE || !FONT_STAT || !FONT_ARENA)
 		return (ft_printf("Load_Error: %s\n",  TTF_GetError()));

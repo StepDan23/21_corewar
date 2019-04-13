@@ -6,19 +6,22 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/12 17:35:07 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/13 19:19:18 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISU_H
 # define VISU_H
-# define SCREEN_WIDTH 1600
-# define SCREEN_HEIGHT 900
-# define COL_GREEN ((SDL_Color){84, 190, 56, 0xFF})
-# define COL_BLUE ((SDL_Color){4, 46, 191, 0xFF})
-# define COL_RED ((SDL_Color){186, 48, 27, 0xFF})
-# define COL_YELOW ((SDL_Color){0xFF, 0xFF, 0, 0xFF})
-# define COL_WHITE ((SDL_Color){0xFF, 0xFF, 0xFF, 0xFF})
+# define SCREEN_WIDTH	1600
+# define SCREEN_HEIGHT	900
+# define COL_GREEN		84, 190, 56, 0xFF
+# define COL_BLUE		4, 46, 191, 0xFF
+# define COL_RED		186, 48, 27, 0xFF
+# define COL_YELOW		0xFF, 0xFF, 0, 0xFF
+# define COL_WHITE		0xFF, 0xFF, 0xFF, 0xFF
+# define COL_BLACK		0x00, 0x00, 0x00, 0xFF
+# define COL_GREY		0x30, 0x30, 0x30, 0xFF
+# define COL_L_GREY		0x64, 0x64, 0x64, 0xFF
 # define STAT_START 0
 # define STAT_RUNN 1
 # define STAT_PAUSE 2
@@ -93,8 +96,8 @@ typedef struct			s_proccess
 	int					command_type;
 	int					cycles_to_wait;
 	struct s_proccess	*next;
-	int					value_written;
-	int					pos_written;
+	int					value_written; //useles
+	int					pos_written; //useles
 }						t_proccess;
 
 
