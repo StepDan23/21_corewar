@@ -6,22 +6,23 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/13 19:23:23 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:31:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
 
-static void		render_pause(t_window *window, t_champion *winner)
+static void		render_status_img(t_window *window, t_vm *vm)
 {
 	SDL_Rect	dst;
 
 	dst = (SDL_Rect){9, 15, SCREEN_WIDTH * 0.75, SCREEN_HEIGHT - 30};
 	if (WIN_STATUS == STAT_START)
 	{
-		SDL_RenderCopy(WIN_REND, BACK_PAUSE, NULL, &dst);
+		SDL_RenderCopy(WIN_REND, BACK_START, NULL, &dst);
 		print_str(window, "Press SPACE to start", 380, 800);
 		print_str(window, "** Starting **", 1245, 40);
+		print_start_names(window, vm);
 	}
 	if (WIN_STATUS == STAT_PAUSE)
 	{
@@ -30,14 +31,15 @@ static void		render_pause(t_window *window, t_champion *winner)
 	}
 	if (WIN_STATUS == STAT_END)
 	{
-		SDL_RenderCopy(WIN_REND, BACK_PAUSE, NULL, &dst);
+		SDL_RenderCopy(WIN_REND, BACK_END, NULL, &dst);
 		print_str(window, "Press ANY KEY to exit", 371, 800);
-		print_str(window, winner->name, 604 - ft_strlen(winner->name) * 15, 550);
+		print_str(window, vm->winner->name,
+						609 - ft_strlen(vm->winner->name) * 15, 550);
 		print_str(window, "** Finished **", 1245, 40);
 	}
 }
 
-static void		render_status(t_window *window, t_vm *vm)
+static void		render_status_val(t_window *window, t_vm *vm)
 {
 	int			height;
 	int			i;
@@ -66,16 +68,13 @@ static void		change_run(t_window *window, t_vm *vm)
 	static int	n;
 
 	VM_CYCLE += WIN_SPEED / 50.0;
-	if (VM_CYCLE % 2 == 0)
-	{
-		vm->process->cycles_to_wait--;
+	vm->process->cycles_to_wait--;
 		if (vm->process->cycles_to_wait == 0)
 		{
-			vm->process->cycles_to_wait = 10;
+			vm->process->cycles_to_wait = 50;
 			vm->process->position++;
+			vm->process->pos_written += 10;
 		}
-	}
-
 	if (VM_CYCLE_TO_DIE <= 0)
 	{
 		VM_WINNER = VM_CHAMPS[0];
@@ -90,20 +89,14 @@ static void		change_run(t_window *window, t_vm *vm)
 	}
 }
 
-static void		get_carrier_color(t_window *window, t_proccess	*proc)
+static void		make_carrier_color(t_window *window, t_proccess *proc)
 {
-	SDL_Color	colors[4];
-
-	colors[0] = (SDL_Color){COL_GREEN};
-	colors[1] = (SDL_Color){COL_BLUE};
-	colors[2] = (SDL_Color){COL_RED};
-	colors[3] = (SDL_Color){COL_YELOW};
 	FONT_COLOR = (SDL_Color){COL_BLACK};
 	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
 	if (proc->cycles_to_wait == 1 && proc->player_id == -1)
 		FONT_COLOR = (SDL_Color){COL_L_GREY};
 	else if (proc->cycles_to_wait == 1)
-			FONT_COLOR = colors[proc->player_id];
+		FONT_COLOR = get_player_color(proc->player_id);
 	else if (proc->player_id == -1)
 	{
 		FONT_COLOR = (SDL_Color){COL_GREY};
@@ -119,6 +112,40 @@ static void		get_carrier_color(t_window *window, t_proccess	*proc)
 		SDL_SetRenderDrawColor(WIN_REND, COL_YELOW);
 }
 
+static void		render_carrier_source(t_window *window, t_vm *vm, t_proccess *proc)
+{
+	int		i;
+	char		*hex;
+	char		str[3];
+
+	i = -1;
+	hex = "0123456789abcdef";
+	str[2] = '\0';
+	if (proc->cycles_to_wait == 25 && proc->pos_written >= 0)
+	{
+		FONT_COLOR = get_player_color(proc->player_id + 4);
+		while (++i < 4)
+		{
+			str[0] = hex[VM_MEMORY[proc->pos_written + i] / 16];
+			str[1] = hex[VM_MEMORY[proc->pos_written + i] % 16];
+			print_str(window, str, 13 + (proc->pos_written + i) % 64 * 18.7,
+							20 + 13.5 * (int)((proc->pos_written + i) / 64));
+		}
+	}
+	else if (proc->cycles_to_wait == 1 && proc->pos_written >= 0)
+	{
+		FONT_COLOR = get_player_color(proc->player_id);
+		while (++i < 4)
+		{
+			str[0] = hex[VM_MEMORY[proc->pos_written + i] / 16];
+			str[1] = hex[VM_MEMORY[proc->pos_written + i] % 16];
+			print_str(window, str, 13 + (proc->pos_written + i) % 64 * 18.7,
+							20 + 13.5 * (int)((proc->pos_written + i) / 64));
+		}
+	}
+		// FONT_COLOR = (SDL_Color){COL_L_GREY};
+}
+
 static void		render_carrier(t_window *window, t_vm *vm)
 {
 	SDL_Rect	rect;
@@ -130,17 +157,19 @@ static void		render_carrier(t_window *window, t_vm *vm)
 	hex = "0123456789abcdef";
 	proc = vm->process;
 	str[2] = '\0';
-	FONT_CURR = FONT_ARENA;
 	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
 	while (proc)
 	{
+		render_carrier_source(window, vm, proc);
 		pos = proc->position;
-		rect = (SDL_Rect){13 + pos % 64 * 18.7, 20 + 13.5 * (int)(pos / 64), 15 , 15};
-		get_carrier_color(window, proc);
+		rect = (SDL_Rect){13 + pos % 64 * 18.7,
+							20 + 13.5 * (int)(pos / 64), 15, 15};
+		make_carrier_color(window, proc);
 		SDL_RenderFillRect(WIN_REND, &rect);
 		str[0] = hex[VM_MEMORY[pos] / 16];
 		str[1] = hex[VM_MEMORY[pos] % 16];
-		print_str(window, str, 13 + pos % 64 * 18.7, 20 + 13.5 * (int)(pos / 64));
+		print_str(window, str, 13 + pos % 64 * 18.7,
+							20 + 13.5 * (int)(pos / 64));
 		proc = proc->next;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);
@@ -153,15 +182,16 @@ void			render_image(t_window *window, t_vm *vm)
 									(WIN_HEIG / (float)SCREEN_HEIGHT));
 	FONT_CURR = FONT_STAT;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
-	render_status(window, vm);
+	render_status_val(window, vm);
 	FONT_CURR = FONT_PAUSE;
 	if (WIN_STATUS == STAT_START || WIN_STATUS == STAT_PAUSE
 										|| WIN_STATUS == STAT_END)
-		render_pause(window, VM_WINNER);
+		render_status_img(window, vm);
 	else
 	{
 		print_str(window, "** Running **", 1244, 40);
 		change_run(window, vm);
+		FONT_CURR = FONT_ARENA;
+		render_carrier(window, vm);
 	}
-	render_carrier(window, vm);
 }

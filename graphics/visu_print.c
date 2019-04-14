@@ -6,11 +6,26 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/11 19:27:00 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:26:41 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
+
+SDL_Color	get_player_color(int player_id)
+{
+	SDL_Color	colors[8];
+
+	colors[0] = (SDL_Color){COL_GREEN};
+	colors[1] = (SDL_Color){COL_BLUE};
+	colors[2] = (SDL_Color){COL_RED};
+	colors[3] = (SDL_Color){COL_YELOW};
+	colors[4] = (SDL_Color){COL_L_GREEN};
+	colors[5] = (SDL_Color){COL_BLUE};
+	colors[6] = (SDL_Color){COL_RED};
+	colors[7] = (SDL_Color){COL_YELOW};
+	return (colors[player_id]);
+}
 
 void		print_str(t_window *window, char *str, int x, int y)
 {
@@ -33,4 +48,28 @@ void		print_nbr(t_window *window, int nbr, int x, int y)
 	nbr_text = ft_itoa(nbr);
 	print_str(window, nbr_text, x, y);
 	ft_strdel(&nbr_text);
+}
+
+void		print_start_names(t_window *window, t_vm *vm)
+{
+	int		i;
+	int		x;
+	int		y;
+	SDL_Color	colors[4];
+
+	colors[0] = (SDL_Color){COL_GREEN};
+	colors[1] = (SDL_Color){COL_BLUE};
+	colors[2] = (SDL_Color){COL_RED};
+	colors[3] = (SDL_Color){COL_YELOW};
+	FONT_COLOR = (SDL_Color){COL_BLACK};
+	i = 0;
+	while (VM_CHAMPS[i])
+	{
+		FONT_COLOR = colors[i];
+		x = 9 + 1200 * (i + 1) / (VM_CHAMP_COUNT) - (600 / VM_CHAMP_COUNT) -
+											ft_strlen(VM_CHAMPS[i]->name) * 15;
+		y = (i % 2 == 0) ? 280 : 520;
+		print_str(window, VM_CHAMPS[i]->name, x, y);
+		i++;
+	}
 }

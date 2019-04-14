@@ -6,18 +6,19 @@
 #    By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 18:31:12 by mmcclure          #+#    #+#              #
-#    Updated: 2019/04/12 16:05:50 by mmcclure         ###   ########.fr        #
+#    Updated: 2019/04/14 11:40:15 by mmcclure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = visu
+
 LIB = ./libft/libft.a
 
-LIB_GFX = ~/SDL_gfx/libsdl_gfx.a
+FLAGS = -Wall -Wextra -Werror
 
 HEADERS = -I ~/Library/Frameworks/SDL2.framework/Versions/A/Headers \
 	-I ~/Library/Frameworks/SDL2_image.framework/Versions/A/Headers \
-	-I ~/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers \
-	-I ~/SDL_gfx/
+	-I ~/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers
 
 FRAMEWORKS = -F ~/Library/Frameworks/ -framework SDL2 -framework SDL2_image \
 	-framework SDL2_ttf 
@@ -28,16 +29,18 @@ GRAPH_DIR = graphics/
 
 GRAPH_SRCS = $(addprefix $(GRAPH_DIR), $(GRAPH_SRCS_F))
 
-all: $(LIB) $(LIB_GFX)
-	gcc $(GRAPH_SRCS) $(LIB) $(LIB_GFX) $(HEADERS) $(FRAMEWORKS)
+all: $(LIB)
+	gcc $(FLAGS) $(GRAPH_SRCS) $(LIB) $(HEADERS) $(FRAMEWORKS) -o $(NAME)
 
 $(LIB):
 	make -C ./libft/
 
-$(LIB_GFX):
-	gcc -c ~/SDL_gfx/*.c -F ~/Library/Frameworks/
-	ar rcs $(LIB_GFX) SDL2_framerate.o SDL2_gfxPrimitives.o SDL2_imageFilter.o SDL2_rotozoom.o
-	ranlib $(LIB_GFX)
-
 clean:
-	make -C ../libft/ clean
+	make -C ./libft/ clean
+	rm -f
+
+fclean:
+	make -C ./libft/ fclean
+	rm -f $(NAME)
+
+re: fclean all
