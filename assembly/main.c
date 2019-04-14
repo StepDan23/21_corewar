@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/12 20:41:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/15 01:05:18 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-//	TODO: подумать как фиксировать последнюю строку!!
+//	? подумать как фиксировать последнюю строку!! - сравнивать токен последней строки с общим числом строк
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
 
 // проблема - а что если на другой строке продолжение комментария
 // проблема - а что если имя внутри скобок
-// проблема - как обрабатывать ошибки
 // что такое ошибки в именах - текст перед именем/комментом
 //.name "dsjkfdjsf"dg, .name "djfh"dsf", .name 'dhu"gds"fdsf'
 //.name
@@ -32,86 +31,127 @@
 // комментарий в имени/комментарии
 //
 //.name #.name "name"
-// несколько .name 
+// несколько .name
 // #hjdsfbbdfs
 // .name
 
-void	ft_search_camp_name_or_comment_cmd(t_asm *asm_data, char *line, int len)
+int	ft_strlen_word(char *line)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	NAME_COLUMN = ft_d_strstr(line, NAME_CMD_STRING, COMMENT_CHAR);
-	if (NAME_COLUMN == -1)
-		COMMENT_COLUM = ft_d_strstr(line, COMMENT_CMD_STRING, COMMENT_CHAR);
-
-	while (line[i])
-	{
-
-
-		// сейчас добавляю проверку на корректный текст в нулевой строке, и добавление ошибки
-		ft_printf("%d %d %d\n", STR_DATA_NUM, NAME_COLUMN, COMMENT_COLUM);
-
-		if (!STR_DATA_NUM && (NAME_COLUMN && COMMENT_COLUM))
-		{
-			ft_error_add(asm_data, line, i, 1);
-			break ;
-		}
-
-
-		// * обработка комментария
-
+	while (line[i] && line[i] != ' ' && line[i] != '\t' && line[i] != '#' &&\
+	line[i] != '\'' && line[i] != '\"' && line[i] != '%' && line[i] != 'r')
 		i++;
-	}
-	STR_DATA_NUM++;
+	return (i);
 }
 
-void	ft_lexer_champ_data(t_asm *asm_data, char *line)
+int	ft_get_name_or_comment(t_asm_data *asm_data, char *line, int i)
 {
-	t_rbnode	*node;
-	char		*temp_line;
-	int			len;
-	int			i;
+	//ft_printf("name or comment name == %s\n", &line[i]);
+	int		j;
 
-	if ((len = ft_strlen(line)) == 0)
+	j = 0;
+	if (line[j++] == '"')
 	{
-		free(line);
-		return ;
+		while (line[j] && line[j] != '"')
+			j++;
+		if (MACHINE_WAIT_NAME)
+		{
+			if (j > PROG_NAME_LENGTH)
+				ft_printf("Name is too long\n");
+			else
+			{
+				ft_strncpy(CHAMP_NAME, &line[1], j - 1);
+				ft_printf("CHAMP NAME = %s\n", CHAMP_NAME);
+			}
+			MACHINE_WAIT_NAME = 0;
+			MACHINE_NAME_COMMENT += 1;
+		}
+		if (MACHINE_WAIT_COMMENT)
+		{
+			if (j > COMMENT_LENGTH)
+				ft_printf("COMMENT is too long\n");
+			else
+			{
+				ft_strncpy(CHAMP_COMMENT, &line[1], j - 1);
+				ft_printf("CHAMP COMMENT = %s\n", CHAMP_COMMENT);
+			}
+			MACHINE_WAIT_COMMENT = 0;
+			MACHINE_NAME_COMMENT += 2;
+		}
 	}
+	else
+	{
+		ft_printf("error at %s\n", &line[i]);
+	}
+	return (i + j);
+}
+
+int		ft_get_name_or_comment_flag(t_asm_data *asm_data, char *line, int i)
+{
+	if (MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME)
+		return (ft_get_name_or_comment(asm_data, line, i));
+	if (line[i] == NAME_CMD_STRING[0] && !MACHINE_WAIT_COMMENT && !MACHINE_WAIT_NAME)
+	{
+		if (!ft_strncmp(line, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
+		{
+			MACHINE_WAIT_NAME = 1;
+			return (i + ft_strlen(NAME_CMD_STRING) - 1);
+		}
+	}
+	if (line[i] == COMMENT_CMD_STRING[0] && !MACHINE_WAIT_COMMENT && !MACHINE_WAIT_NAME)
+	{
+		if (!ft_strncmp(line, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
+		{
+			MACHINE_WAIT_COMMENT = 1;
+			return (i + ft_strlen(COMMENT_CMD_STRING) - 1);
+		}
+	}
+		//это эррор мэнеджер для имен. Почекать после завершения считывания имени
+		ft_printf("error_at %s\n", &line[i]);
+		return (i + ft_strlen(&line[i]) - 1);
+}
+
+char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line)
+{
+	int		i;
+	t_token	*token;
+
+	if (ft_strlen(line) == 0)
+		return (line);
 	i = 0;
-	if (CHAMP_DATA->flag < 3)
+	ft_putendl(line);
+	while (line[i] && MACHINE_NAME_COMMENT < 3)
 	{
-		// * пока не считал имя и коммент, или не появился знак ':' флаг будет меньше трёх
-
-		ft_putendl(line);
-		if (line[0] == COMMENT_CHAR)
-			return ;
-		ft_search_camp_name_or_comment_cmd(asm_data, line, len);
-		if (STATUS_FLAG == 0)
-			STATUS_FLAG = 1;
-		else
-			STATUS_FLAG = 0;
+		while(line[i] && line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (line[i] == COMMENT_CHAR)
+			return (line);
+		i = ft_get_name_or_comment_flag(asm_data, &line[i], i);
+		i++;
 	}
+	return (line);
 }
 
 void	ft_read_file(int fd, char *file_name)
 {
-	t_asm		*asm_data;
+	t_asm_data	*asm_data;
 	char		*line;
 	int			i;
 
 	i = 0;
-	asm_data = ft_asm_init();
+	asm_data = ft_asm_data_init();
 	while (get_next_line(fd, &line) > 0)
 	{
 
-		ft_lexer_champ_data(asm_data, ft_strtrim(line));
+		free(ft_lexer_champ_data(asm_data, ft_strtrim(line)));
 		free(line);
-		STR_NUM++;
+		ASM_NUM_ROW++;
 		i++;
 	}
 	ft_putstr("===========================\n");
-	//(i > 0) ? free(line) : 0;
+	(i > 0) ? free(line) : 0;
 	free(asm_data);
 }
 

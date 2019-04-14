@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_asm_structs_init.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/12 16:09:53 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/14 22:53:09 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include <stdlib.h>
+
+t_token			*ft_token_init(int col, int row, char *str, t_types type)
+{
+	t_token		*token;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		exit(1);
+	token->col = col;
+	token->row = row;
+	token->str = str;
+	token->type = type;
+	return (token);
+}
 
 t_champ_data	*ft_champ_data_init(void)
 {
@@ -20,70 +34,40 @@ t_champ_data	*ft_champ_data_init(void)
 	champ_data = (t_champ_data *)malloc(sizeof(t_champ_data));
 	if (!champ_data)
 		exit(1);
-	champ_data->comment = ft_token_init();
-	champ_data->name = ft_token_init();
-	champ_data->flag = 0;
+	champ_data->champ_name = (char *)malloc(PROG_NAME_LENGTH);
+	champ_data->champ_comment = (char *)malloc(COMMENT_LENGTH);
+	champ_data->comment_column = 0;
+	champ_data->comment_row = 0;
+	champ_data->name_column = 0;
+	champ_data->name_row = 0;
 	return (champ_data);
 }
 
-t_marks			*ft_marks_init(void)
+t_machine		*ft_state_machine_init(void)
 {
-	t_marks		*marks;
+	t_machine	*state_machine;
 
-	marks = (t_marks *)malloc(sizeof(t_marks));
-	if (!marks)
+	state_machine = (t_machine *)malloc(sizeof(t_machine));
+	if (!state_machine)
 		exit(1);
-	marks->name = NULL;
-	marks->count_number_in_data = 0;
-	return (marks);
+	state_machine->wait_name = 0;
+	state_machine->wait_comment = 0;
+	state_machine->double_quotes = 0;
+	state_machine->took_name_and_comment = 0;
+	return (state_machine);
 }
 
-t_token			*ft_token_init(void)
+t_asm_data		*ft_asm_data_init(void)
 {
-	t_token		*token;
+	t_asm_data		*asm_data;
 
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		exit(1);
-	token->error = 0;
-	token->num_clomun = 0;
-	token->num_string = 0;
-	token->token = NULL;
-	return (token);
-}
-
-t_lex_str		*ft_lex_str_init(void)
-{
-	t_lex_str	*lex_str;
-
-	lex_str = (t_lex_str *)malloc(sizeof(t_lex_str));
-	if (!lex_str)
-		exit(1);
-	lex_str->num = 0;
-	lex_str->command = NULL;
-	lex_str->arg_1 = NULL;
-	lex_str->delimetr1 = 0;
-	lex_str->arg_2 = NULL;
-	lex_str->delimetr2 = 0;
-	lex_str->arg_3 = NULL;
-	lex_str->new_line = 0;
-	return (lex_str);
-}
-
-t_asm			*ft_asm_init(void)
-{
-	t_asm	*asm_data;
-
-	asm_data = (t_asm *)malloc(sizeof(t_asm));
+	asm_data = (t_asm_data *)malloc(sizeof(t_asm_data));
 	if (!asm_data)
 		exit(1);
-	asm_data->string_with_data = 0;
-	asm_data->string_current = 0;
+	asm_data->num_current_row = 0;
+	asm_data->num_text_row = 0;
+	asm_data->tokens = NULL;
+	asm_data->state_machine = ft_state_machine_init();
 	asm_data->champ_data = ft_champ_data_init();
-	asm_data->marks = NULL;
-	asm_data->lex_tree = ft_rbtree_root_init();
-	asm_data->errors = NULL;
-	asm_data->error_size = 0;
-	asm_data->current_state = 0;
 	return (asm_data);
 }
