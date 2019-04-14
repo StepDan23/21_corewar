@@ -6,24 +6,31 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/12 17:37:27 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:33:47 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/visu.h"
 
-t_window		*init_win(void)
+static void		init_win_consts(t_window *window)
 {
-	t_window	*window;
-
-	window = (t_window*)malloc(sizeof(t_window));
 	WIN_QUIT = 0;
 	WIN_STATUS = STAT_START;
 	WIN_WID = SCREEN_WIDTH;
 	WIN_HEIG = SCREEN_HEIGHT;
 	WIN_SPEED = 50;
-	FONT_COLOR = (SDL_Color){255, 255, 255, 255};
-	if (SDL_Init(SDL_INIT_VIDEO) < 0 || SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
+	FONT_COLOR = (SDL_Color){COL_WHITE};
+}
+
+t_window		*init_win(void)
+{
+	t_window	*window;
+
+	if (!(window = (t_window*)malloc(sizeof(t_window))))
+		return (NULL);
+	init_win_consts(window);
+	if (SDL_Init(SDL_INIT_VIDEO) < 0 ||
+						SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
 		ft_printf("Init_Error: %s\n", SDL_GetError());
 		return (NULL);
