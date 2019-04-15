@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 18:08:18 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/15 19:43:25 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,4 +217,6 @@ void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
 
 t_vm					*init_vm_test(int argc, char *argv[]);
+void					init_optab(t_op op_tab[17]);
+void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
 #endif

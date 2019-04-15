@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 15:16:18 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 19:32:35 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ void					print_start_names(t_window *window, t_vm *vm);
 /*
 ** visu_render.c
 */
-void					render_image(t_window *window, t_vm *vm);
+void					render_image(t_window *window, t_vm *vm, t_op op_tab[17]);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 15:43:56 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 19:35:27 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ static void		render_carrier(t_window *window, t_vm *vm)
 	SDL_SetRenderTarget(WIN_REND, NULL);
 }
 
-void			render_image(t_window *window, t_vm *vm)
+void			render_image(t_window *window, t_vm *vm, t_op op_tab[17])
 {
 	SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
@@ -189,7 +189,7 @@ void			render_image(t_window *window, t_vm *vm)
 		print_str(window, "** Running **", 1244, 40);
 		FONT_CURR = FONT_ARENA;
 		render_carrier(window, vm);
-		change_run(window, vm);
-		//do_cyrcle(vm, t_op op_tab[17])
+		// change_run(window, vm);
+		do_cyrcle(vm, op_tab);
 	}
 }

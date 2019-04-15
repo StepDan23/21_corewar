@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 10:34:07 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 13:57:36 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 19:22:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void			make_back_arena(t_window *window, t_vm *vm)
 		i = 0;
 		while (i < 64)
 		{
+ft_printf("12 i = %d j = %d mem = %d \n", i, j, VM_CHAMP_COUNT);
 			make_player_color(window, vm, j * 64 + i);
+ft_printf("12 i = %d j = %d\n", i, j);
 			str[0] = hex[VM_MEMORY[j * 64 + i] / 16];
 			str[1] = hex[VM_MEMORY[j * 64 + i] % 16];
 			print_str(window, str, 13 + 18.7 * i, 20 + 13.5 * j);
@@ -57,6 +59,7 @@ void			make_back_arena(t_window *window, t_vm *vm)
 		}
 		j++;
 	}
+
 	SDL_SetRenderTarget(WIN_REND, NULL);
 }
 
