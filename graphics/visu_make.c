@@ -6,11 +6,11 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 10:34:07 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/14 18:32:14 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 13:57:36 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/visu.h"
+#include "visu.h"
 
 static void		make_player_color(t_window *window, t_vm *vm, int i)
 {

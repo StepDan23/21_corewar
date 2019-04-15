@@ -6,11 +6,11 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:36:11 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/12 17:21:43 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:34:19 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/visu.h"
+#include "visu.h"
 
 static void		event_space(t_window *window)
 {
@@ -57,18 +57,18 @@ void			win_events(t_window *window)
 	while (SDL_PollEvent(&e) != 0)
 	{
 		if (e.type == SDL_QUIT)
-			WIN_QUIT = 1;
+			WIN_STATUS = STAT_QUIT;
 		if (e.type == SDL_KEYDOWN)
 		{
 			if (e.key.keysym.sym == SDLK_ESCAPE)
-				WIN_QUIT = 1;
+				WIN_STATUS = STAT_QUIT;
 			if (e.key.keysym.sym == SDLK_SPACE)
 				event_space(window);
 			if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_DOWN ||
 				e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT)
 				event_speed(window, e.key.keysym.sym);
 			if (WIN_STATUS == STAT_END)
-				WIN_QUIT = 1;
+				WIN_STATUS = STAT_QUIT;
 		}
 		if (e.type == SDL_WINDOWEVENT &&
 							e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)

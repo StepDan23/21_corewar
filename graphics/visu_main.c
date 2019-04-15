@@ -6,11 +6,11 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/14 17:33:03 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 18:18:38 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/visu.h"
+#include "visu.h"
 
 static void			visu_close(t_window *window)
 {
@@ -42,7 +42,6 @@ static t_champion	**init_champs(int players_count)
 		champ[i] = (t_champion*)malloc(sizeof(t_champion));
 		champ[i]->id = i;
 		champ[i]->size = 23 + i * 23;
-		champ[i]->name = ft_strnew(40);
 		champ[i]->last_live = 0;
 		champ[i]->lives_in_period = 0;
 		i++;
@@ -66,34 +65,30 @@ static t_proccess	*init_proc(void)
 	proc->position = 64;
 	proc->player_id = 0;
 	proc->cycles_to_wait = 10;
-	proc->size_written = 2;
 	proc->pos_written = 30 + 50;
 	//
 	proc->next = (t_proccess*)malloc(sizeof(t_proccess));
 	proc->next->position = 128;
 	proc->next->player_id = 1;
-	proc->next->cycles_to_wait = 12;
-	proc->next->size_written = 2;
+	proc->next->cycles_to_wait = 10;
 	proc->next->pos_written = 60 + 50;
 	//
 	proc->next->next = (t_proccess*)malloc(sizeof(t_proccess));
 	proc->next->next->position = 2200;
 	proc->next->next->player_id = 2;
-	proc->next->next->cycles_to_wait = 12;
-	proc->next->next->size_written = 3;
+	proc->next->next->cycles_to_wait = 10;
 	proc->next->next->pos_written = 90 + 50;
 	//
 	proc->next->next->next = (t_proccess*)malloc(sizeof(t_proccess));
 	proc->next->next->next->position = 3300;
 	proc->next->next->next->player_id = 3;
-	proc->next->next->next->cycles_to_wait = 12;
-	proc->next->next->next->size_written = 4;
+	proc->next->next->next->cycles_to_wait = 10;
 	proc->next->next->next->pos_written = 120 + 50;
 	//
 	proc->next->next->next->next = (t_proccess*)malloc(sizeof(t_proccess));
 	proc->next->next->next->next->position = 3000;
 	proc->next->next->next->next->player_id = -1;
-	proc->next->next->next->next->cycles_to_wait = 12;
+	proc->next->next->next->next->cycles_to_wait = 10;
 	proc->next->next->next->next->next = NULL;
 	return (proc);
 }
@@ -125,12 +120,12 @@ int					main(void)
 	if (load_files(window, vm) != 0)
 		exit(0);
 	make_back_arena(window, vm);
-	while (!WIN_QUIT)
+	while (WIN_STATUS != STAT_QUIT)
 	{
 	// SDL_RenderClear(WIN_REND);
-		win_events(window);
 		render_image(window, vm);
 		SDL_RenderPresent(WIN_REND);
+		win_events(window);
 		// SDL_Delay(1);
 	}
 	visu_close(window);

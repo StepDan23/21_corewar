@@ -6,15 +6,14 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/14 19:33:47 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:34:57 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/visu.h"
+#include "visu.h"
 
 static void		init_win_consts(t_window *window)
 {
-	WIN_QUIT = 0;
 	WIN_STATUS = STAT_START;
 	WIN_WID = SCREEN_WIDTH;
 	WIN_HEIG = SCREEN_HEIGHT;
