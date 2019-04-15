@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/12 20:41:09 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 17:19:51 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,27 @@ static void	vm_init_proccess_counter(t_vm *vm)
 	}
 }
 
-t_vm	*vm_new(int dump)
+t_vm	*vm_new()
 {
 	t_vm	*vm;
+	int		i;
+
 
 	vm = (t_vm *)malloc(sizeof(t_vm));
 	if (!vm)
 		exit(2);
 	vm->cycles = 0;
-	vm->champion = NULL;
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		vm->champion[i] = NULL;
+		i++;
+	}
 	vm->process = NULL;
 	vm->cycles_die = CYCLE_TO_DIE;
 	vm->cycles_to_die = CYCLE_TO_DIE;
-	vm->cycles_to_dump = dump;
-	vm->dump = dump;
+	vm->cycles_to_dump = 0;
+	vm->dump = -1;
 	vm->live_exec = 0;
 	vm->checkups = 0;
 	vm->p_total = 0;

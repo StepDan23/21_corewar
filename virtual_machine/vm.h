@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 20:55:30 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:41:21 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct			vm
 	int					dump;
 	int					cycles_die;
 	t_proccess			*process;
-	t_champion			**champion;
+	t_champion			*champion[MAX_PLAYERS];
 	int					champion_count;
 	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
@@ -170,19 +170,21 @@ void					print_error_exit(int code);
 
 int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
+int						args_read(int ac, char **av, t_vm *vm);
+int						check_n(t_vm *vm, char *param);
+int						manage_flag(t_vm *vm, char *flag, char *param);
+int						check_filename(char *file);
+int						flags_check(int ac, int i, char **av);
 int						champion_count(int ac, char **av);
+int						champion_number(t_champion **arr);
 
-t_vm					*vm_new(int dump);
+t_vm					*vm_new();
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
 void					vm_dump_memory(unsigned char *memory);
 
 t_proccess				*proccess_new(int id, int player_id, int pos);
 void					proccess_add(t_proccess **head, t_proccess *new_p);
 void					proccess_check_live(t_vm *vm, t_proccess **head);
-
-int						check_filename(char *file);
-int						check_args(int ac, char **av, t_vm *vm);
-int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
 
 void					champions_add(char *filename, int num, t_champion **head);
 

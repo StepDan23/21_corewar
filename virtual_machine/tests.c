@@ -18,21 +18,8 @@ int main(int ac, char **av)
 	assert(check_filename("champ.core") == 0);
 		printf("5) %s :			ok\n", "champ.core");
 	
-
-	printf("\n%s\n", "TEST champions_add");
-	t_champion *test = NULL;
-	t_champion *tmp_test = NULL;
-	champions_add("test.cor", 1, &test);
-	tmp_test = test;
-	assert(test->id == 1 && tmp_test->id == 1 && ft_strequ(test->filename, "test.cor") &&
-			ft_strequ(tmp_test->filename, "test.cor"));
-		printf("1) head and tmp first add good\n");
-	champions_add("test2.cor", 2, &tmp_test);
-	assert(test->id == 1 && tmp_test->id == 2 && ft_strequ(test->filename, "test.cor") &&
-			ft_strequ(tmp_test->filename, "test2.cor"));
-		printf("2) head the same and tmp new add good\n");
-		free(test);
-		free(tmp_test);
+	t_vm *vm = vm_new();
+	args_read(ac, av, vm);
 	
 
 	// t_vm *vm = vm_new();
@@ -48,8 +35,8 @@ int main(int ac, char **av)
 	// 	vm->champion = x;
 	// }
 	// free(vm);
-	int x = champion_count(ac, av);
-	printf("x: %d\n", x);
+//	int x = champion_count(ac, av);
+//	printf("x: %d\n", x);
 	return (0);
 }
 
