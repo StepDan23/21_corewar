@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 21:53:58 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:51:34 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,29 @@ void	do_cyrcle(t_vm *vm, t_op op_tab[17])
 	vm->cycles_to_die--;
 }
 
+t_vm	*init_vm_test(int argc, char *argv[])
+{
+	t_vm		*vm;
+	int			i;
+
+	vm = vm_new(0);
+	vm->champion = (t_champion **)malloc(sizeof(t_champion *) * (argc));
+	vm->champion[argc - 1] = NULL;
+	i = 1;
+	while (i < argc)
+	{
+		champions_add(argv[i], i, vm->champion);
+		vm->p_total++;
+		ft_printf("%s\n", vm->champion[i - 1]->filename);
+		vm->p_num[vm->champion[i - 1]->id]++;
+		i++;
+	}
+	vm->winner = vm->champion[0];
+	read_all_champs(vm->champion);
+	vm_spread_champs(vm, vm->champion);
+	return (vm);
+}
+
 int		main(int argc, char *argv[])
 {
 	t_vm		*vm;
@@ -97,14 +120,10 @@ int		main(int argc, char *argv[])
 	vm_spread_champs(vm, vm->champion);
 	introduce_players(vm->champion);
 	init_optab(op_tab);
-	// vm_dump_memory(vm->memory);
 	while (vm->cycles_die > 0 && vm->process)
 	{
 		do_cyrcle(vm, op_tab);
-		ft_printf("%dc %d\n", vm->cycles, vm->cycles_die);
 	}
-	// vm_dump_memory(vm->memory);
-	ft_printf("%d!\n", vm->cycles);
 	ft_printf("Winner is %s!\n", vm->winner->name);
 	free(vm);
 	return (0);

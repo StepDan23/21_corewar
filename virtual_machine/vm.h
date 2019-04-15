@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 19:41:21 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/15 19:52:49 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,4 +217,6 @@ void					add(t_vm *vm, t_proccess *proccess);
 void					sub(t_vm *vm, t_proccess *proccess);
 void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
+
+t_vm					*init_vm_test(int argc, char *argv[]);
 #endif
