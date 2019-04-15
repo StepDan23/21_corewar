@@ -3,14 +3,14 @@
 #	Compiler variables
 #
 
-CC= gcc
+CC= gcc -g
 CC_FLAGS= -Wall -Wextra -Werror
 
 #
 #	Debug compiler variables
 #
 
-DG_CC_FLAGS= #-g -o0
+DG_CC_FLAGS= g -o0
 
 #
 #	Release variables
@@ -22,7 +22,7 @@ HEADERDIR= includes
 SRCSDIR= src
 OBJ= *.o
 SRCS= $(OBJS: .o=.c)
-FLAGS = -c -I ./$(HEADERDIR)
+FLAGS = -c -g -I ./$(HEADERDIR)
 
 all: $(NAME)
 
