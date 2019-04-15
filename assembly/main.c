@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 18:46:41 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 21:08:32 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 //	? подумать как фиксировать последнюю строку!! - сравнивать токен последней строки с общим числом строк
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
 // !переход на новую строку в имени и комменте
 // !ошибка если нет имени или коммента и началось чтение второй части кода
-
-int	ft_strlen_word(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != ' ' && line[i] != '\t' && line[i] != '#' &&\
-	line[i] != '\'' && line[i] != '\"' && line[i] != '%' && line[i] != 'r')
-		i++;
-	return (i);
-}
 
 void	ft_read_file(int fd, char *file_name)
 {
@@ -47,6 +37,8 @@ void	ft_read_file(int fd, char *file_name)
 		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data, trim_line)) : 0;
 		free(line);
 		ASM_NUM_ROW++;
+		if (ASM_NUM_ROW > 10)
+			break ;
 		i++;
 	}
 	ft_putstr("===========================\n");

@@ -1,10 +1,15 @@
 
+
 #dsgdsg ваыва
 
-.comment.comment
+.name "Champ's NAME"
+.comment "comment text"
 
-.comment "dsfds"
-#.name		"jbsdfd"fds"
-#.name            #jdshfhsdf
-#"dsfdsf"sdf"
-#:
+l222:
+	sti r2, r3, r4
+
+
+
+
+
+
