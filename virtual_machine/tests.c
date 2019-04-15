@@ -35,21 +35,21 @@ int main(int ac, char **av)
 		free(tmp_test);
 	
 
-	t_vm *vm = vm_new();
-	t_champion *x;
-	int xx = check_args(ac, av, vm);
-	printf("return check_args: %d\ndump: %d\n", xx, vm->dump);
-	printf("cycles_dump: %d\n", vm->cycles_to_dump);
-	while (vm->champion)
-	{
-		printf("id:\t%d\nfile:\t%s\n------------\n", vm->champion->id, vm->champion->filename);
-		x = vm->champion->next;
-		champion_free(vm->champion);
-		vm->champion = x;
-	}
-	free(vm);
-
-
+	// t_vm *vm = vm_new();
+	// t_champion *x;
+	// int xx = check_args(ac, av, vm);
+	// printf("return check_args: %d\ndump: %d\n", xx, vm->dump);
+	// printf("cycles_dump: %d\n", vm->cycles_to_dump);
+	// while (vm->champion)
+	// {
+	// 	printf("id:\t%d\nfile:\t%s\n------------\n", vm->champion->id, vm->champion->filename);
+	// 	x = vm->champion->next;
+	// 	champion_free(vm->champion);
+	// 	vm->champion = x;
+	// }
+	// free(vm);
+	int x = champion_count(ac, av);
+	printf("x: %d\n", x);
 	return (0);
 }
 
