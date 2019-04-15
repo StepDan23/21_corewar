@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 21:26:41 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 17:34:41 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 17:11:30 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	st(t_vm *vm, t_proccess *proccess)
 
 	arg_type = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 5);
 	number = P_REG[vm->memory[(P_POS + 2) % MEM_SIZE] - 1];
+	index = 0;
 	if (arg_type == T_REG)
 		P_REG[vm->memory[(P_POS + 3) % MEM_SIZE] - 1] = number;
 	else
