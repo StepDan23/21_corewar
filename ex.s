@@ -1,7 +1,7 @@
 
 #dsgdsg ваыва
 
-.comment
+.comment.comment
 
 .comment "dsfds"
 #.name		"jbsdfd"fds"
