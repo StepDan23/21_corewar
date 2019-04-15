@@ -27,7 +27,7 @@ int		count_avaliable(t_vm *vm)
 	{
 		while (tmp)
 		{
-			if (tmp->id == count)
+			if ((unsigned int)tmp->id == count)
 			{
 				tmp = vm->champion;
 				count++;

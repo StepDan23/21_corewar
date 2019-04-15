@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/03/23 14:44:48 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/12 14:48:27 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ char				*ft_strrchr (const char *str, int ch);
 char				*ft_strstr(const char *strb, const char *stra);
 char				*ft_strnstr(const char *hay, const char *needle,\
 size_t len);
+int 				ft_d_strstr(const char *str, const char *needle, char stop_symbol);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
@@ -200,6 +201,10 @@ void				ft_btree_insert(t_btree **r, void *item, int \
 (*cmpf)(void *, void *));
 void				*ft_btree_search(t_btree *root, void *data_ref);
 
+/*
+** функции красно-черного дерева
+*/
+
 int					is_red(t_rbnode *node);
 t_rbnode			*rb_single(t_rbnode *root, int dir);
 t_rbnode			*rb_double(t_rbnode *root, int dir);
@@ -222,7 +227,12 @@ void				ft_relationships(t_rbnode *parent);
 int					ft_rbtree_max(t_rbnode *node);
 int					ft_rbtree_min(t_rbnode *node);
 void				ft_rb_freetree(t_rbnode *node);
+t_rbroot			*ft_rbtree_root_init(void);
 
+
+/*
+** функции принтф
+*/
 int					ft_printf(const char *a, ...);
 int					ft_sprintf(char *a, const char *b, ...);
 int					ft_fprintf(int a, const char *b, ...);
@@ -304,5 +314,7 @@ void				ft_quicksort_lomuto_des(int *arr, int start, int end);
 void				ft_bubble_sort(int *arr, int len);
 int					ft_arr_mediana(int *arr, int start, int len, int flag);
 void				ft_print_int_arr(int *arr, int len);
+char				ft_get_last_letter_in_str(char *str);
+int					ft_get_type_of_file(char *file_name, char *needle);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 20:02:16 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/02 14:08:15 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/03 00:36:49 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <unistd.h>
 #include "vm.h"
 #include "libft.h"
+
+/*
+** Выводит сообщение об ошибке и завершает программу.
+** Коды ошибок объявленны в vm.h
+*/
 
 void	print_error_exit(int code)
 {
@@ -32,6 +37,11 @@ void	print_error_exit(int code)
 		ft_printf("Error: %s\n", strerror(errno));
 	exit(0);
 }
+
+/*
+** Читает из файла 4 байта данных
+** 4 т.к magic, null, bot_size занимает 4 байта.
+*/
 
 int		read_4bytes(int fd)
 {

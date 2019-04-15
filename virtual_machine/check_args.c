@@ -181,7 +181,7 @@ int		check_n(t_vm *vm, char *param)
 	champ = vm->champion;
 	while (champ)
 	{
-		if (champ->id == (unsigned int)n)
+		if (champ->id == n)
 		{
 			ft_printf("There is champion with same number.\n");
 			exit(1);
