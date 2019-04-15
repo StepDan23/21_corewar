@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 14:18:18 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 14:24:54 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ void	ft_print_errors(t_asm_data *asm_data)
 	while (i < ERROR_SIZE)
 	{
 		if (ERROR_FLAG == T_ERROR_TYPE)
-			ft_printf("%s see -> %d row: %d col\n", T_ERROR_STR, T_ERROR_ROW, T_ERROR_COL);
+		{
+			if (ERROR_FLAG == 1)
+				ft_putstr("LEXICAL ERROR: ");
+			else if (ERROR_FLAG == 2)
+				ft_putstr("SYNTAX_ERROR: ");
+			ft_printf("%s see -> %d row: %d col\n", T_ERROR_STR, T_ERROR_ROW,\
+			T_ERROR_COL);
+		}
 		temp = current;
 		free(((t_errors *)(temp->content))->error_str);
 		free(temp);

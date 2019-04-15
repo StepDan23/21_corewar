@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:45:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 14:19:54 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 14:43:04 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,26 @@ int		ft_get_name_or_comment_flag(t_asm_data *asm_data, char *line, int i)
 {
 	if (MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME)
 		return (i + ft_get_name_or_comment(asm_data, line, i));
-	if (line[i] == NAME_CMD_STRING[0] && !MACHINE_WAIT_COMMENT &&\
-	!MACHINE_WAIT_NAME && !(MACHINE_NAME_COMMENT & 1))
+	if (line[i] == NAME_CMD_STRING[0] && !ft_strncmp(line, NAME_CMD_STRING,\
+	ft_strlen(NAME_CMD_STRING)))
 	{
-		if (!ft_strncmp(line, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
-		{
-			MACHINE_WAIT_NAME = 1;
-			return (i + ft_strlen(NAME_CMD_STRING) - 1);
-		}
+		(MACHINE_WAIT_NAME || MACHINE_WAIT_COMMENT) ? (ft_error_add(asm_data,\
+		ft_strdup("Name/comment flag alredy was given"), i, 2)) : 0;
+		(MACHINE_NAME_COMMENT & 1) ? ft_error_add(asm_data,
+		ft_strdup("Name already set"), i, 2) : (MACHINE_WAIT_NAME = 1);
+		return (i + ft_strlen(NAME_CMD_STRING) - 1);
 	}
-	if (line[i] == COMMENT_CMD_STRING[0] && !MACHINE_WAIT_COMMENT &&\
-	!MACHINE_WAIT_NAME && !(MACHINE_NAME_COMMENT & 2))
+	if (line[i] == COMMENT_CMD_STRING[0] && !ft_strncmp(line,\
+	COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
 	{
-		if (!ft_strncmp(line, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
-		{
-			MACHINE_WAIT_COMMENT = 1;
-			return (i + ft_strlen(COMMENT_CMD_STRING) - 1);
-		}
+		(MACHINE_WAIT_NAME || MACHINE_WAIT_COMMENT) ? (ft_error_add(asm_data,\
+		ft_strdup("Name/comment flag alredy was given"), i, 2)) : 0;
+		(MACHINE_NAME_COMMENT & 1) ? ft_error_add(asm_data,\
+		ft_strdup("Comment already set"), i, 2) : (MACHINE_WAIT_NAME = 1);
+		return (i + ft_strlen(COMMENT_CMD_STRING) - 1);
 	}
 	ft_error_add(asm_data, ft_strjoin_orig("Error Unknown type of command \
-name/comment at ,", &line[0]), i, 2);
+name/comment: ", &line[0]), i, 2);
 	return (i + ft_strlen(&line[0]) - 1);
 }
 
