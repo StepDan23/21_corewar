@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:45:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 14:52:02 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 14:55:31 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int		ft_get_name_or_comment_flag(t_asm_data *asm_data, char *line, int i)
 	if (line[0] == NAME_CMD_STRING[0] && !ft_strncmp(line, NAME_CMD_STRING,\
 	ft_strlen(NAME_CMD_STRING)))
 	{
-		(MACHINE_WAIT_NAME) ? (ft_error_add(asm_data, ft_strdup("NAME_CMD \
-alredy was given"), i, 2)) : 0;
+		(MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME) ? (ft_error_add(asm_data,\
+		ft_strdup("NAME_CMD alredy was given"), i, 2)) : 0;
 		(MACHINE_NAME_COMMENT & 1) ? ft_error_add(asm_data,
 		ft_strdup("Name already set"), i, 2) : (MACHINE_WAIT_NAME = 1);
 		return (i + ft_strlen(NAME_CMD_STRING) - 1);
@@ -82,8 +82,8 @@ alredy was given"), i, 2)) : 0;
 	if (line[0] == COMMENT_CMD_STRING[0] && !ft_strncmp(line,\
 	COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
 	{
-		(MACHINE_WAIT_COMMENT) ? (ft_error_add(asm_data, ft_strdup("COMMENT_CMD\
- alredy was given"), i, 2)) : 0;
+		(MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME) ? (ft_error_add(asm_data,\
+		ft_strdup("COMMENT_CMD alredy was given"), i, 2)) : 0;
 		(MACHINE_NAME_COMMENT & 1) ? ft_error_add(asm_data,\
 		ft_strdup("Comment already set"), i, 2) : (MACHINE_WAIT_COMMENT = 1);
 		return (i + ft_strlen(COMMENT_CMD_STRING) - 1);
