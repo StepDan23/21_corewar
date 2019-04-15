@@ -1,11 +1,10 @@
 
-dsgdsg ваыва
+#dsgdsg ваыва
 
+.comment
 
-.name            #jdshfhsdf
-"dsfdsf"sdf
-
+.comment "dsfds"
 #.name		"jbsdfd"fds"
-
-
-.comment"hsd"fgh"
+#.name            #jdshfhsdf
+#"dsfdsf"sdf"
+#:
