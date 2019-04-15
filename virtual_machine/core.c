@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 18:07:59 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/15 18:31:04 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ void	introduce_players(t_champion **players)
 	}
 }
 
-void	do_cyrcle(t_vm *vm, t_op op_tab[17])
+void	update_vm_state(t_vm *vm)
 {
-	performe_proc(vm, vm->process, op_tab);
 	if (!vm->cycles_to_die)
 	{
 		proccess_check_live(vm, &vm->process);
@@ -72,6 +71,12 @@ void	do_cyrcle(t_vm *vm, t_op op_tab[17])
 	}
 	vm->cycles++;
 	vm->cycles_to_die--;
+}
+
+void	do_cyrcle(t_vm *vm, t_op op_tab[17])
+{
+	performe_proc(vm, vm->process, op_tab);
+	update_vm_state(vm);
 }
 
 t_vm	*init_vm_test(int argc, char *argv[])

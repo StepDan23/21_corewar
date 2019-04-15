@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 18:08:18 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/15 18:38:59 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct			s_champion
 **	p_total - общее число кареток
 */
 
-typedef struct			vm
+typedef struct			s_vm
 {
 	int					cycles;
 	int					cycles_to_die;
@@ -101,6 +101,8 @@ typedef struct			vm
 	int					p_num[4];
 	int					p_total;
 }						t_vm;
+
+# define VM_M vm->memory
 
 /*
 **	Декларации опкодов операций
@@ -182,17 +184,21 @@ void					proccess_check_live(t_vm *vm, t_proccess **head);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
-int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
+int						manage_flag(t_vm *vm, char *flag, char *param,
+									int *count);
 
-void					champions_add(char *filename, int num, t_champion **head);
+void					champions_add(char *filename, int num,
+									t_champion **head);
 
 int						coding_byte_check(unsigned char octet, const t_op op);
-void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
-int						valid_reg(unsigned char octet, unsigned char *memory, int pos, t_op op);
+void					performe_proc(t_vm *vm, t_proccess *head,
+									t_op op_tab[17]);
+int						valid_reg(unsigned char octet, unsigned char *memory,
+								int pos, t_op op);
 int						get_arg_size(int arg_type, t_op op);
 int						coding_byte_check(unsigned char octet, const t_op op);
 int						has_register(unsigned char octet);
-int						bit_extracted(int number, int k, int p) ;
+int						bit_extracted(int number, int k, int p);
 int						get_4bytes(unsigned char *memory, int pos);
 int						get_2bytes(unsigned char *memory, int pos);
 int						get_realtive_addr(int from, int to);

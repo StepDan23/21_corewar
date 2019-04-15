@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/12 20:41:09 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 18:34:15 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	vm_init_proccess_counter(t_vm *vm)
 	}
 }
 
-t_vm	*vm_new(int dump)
+t_vm		*vm_new(int dump)
 {
 	t_vm	*vm;
 
@@ -81,5 +81,5 @@ void		vm_dump_memory(unsigned char *memory)
 		i++;
 	}
 	ft_printf("\n");
-	// exit(0);
+	exit(0);
 }

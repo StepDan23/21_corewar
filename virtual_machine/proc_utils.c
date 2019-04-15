@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 21:18:56 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:43:28 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 **	bit_extracted(01101100, 2, 5) вернет 0b10 (2)
 */
 
-int		bit_extracted(int number, int k, int p) 
-{ 
-	return (((1 << k) - 1) & (number >> (p - 1))); 
-} 
+int		bit_extracted(int number, int k, int p)
+{
+	return (((1 << k) - 1) & (number >> (p - 1)));
+}
 
 /*
 **	has_register
