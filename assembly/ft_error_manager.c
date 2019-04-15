@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 14:24:54 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 18:30:52 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_print_errors(t_asm_data *asm_data)
 		}
 		temp = current;
 		free(((t_errors *)(temp->content))->error_str);
-		free(temp);
 		current = current->next;
+		free(temp);
 		i++;
 	}
 }
@@ -56,7 +56,7 @@ void	ft_error_add(t_asm_data *asm_data, char *line, int column, int type)
 	if (ERROR_FLAG == 0)
 		ERROR_FLAG = type;
 	else
-		ERROR_FLAG = (ERROR_FLAG < type) ? type : ERROR_FLAG;
+		ERROR_FLAG = (ERROR_FLAG < type) ? ERROR_FLAG : type;
 	ERROR_SIZE++;
 }
 

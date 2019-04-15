@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lexer_champ_code.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 15:23:51 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 19:35:55 by how_r_u          ###   ########.fr       */
+/*   Created: 2019/04/15 18:46:59 by how_r_u           #+#    #+#             */
+/*   Updated: 2019/04/15 19:05:05 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "asm.h"
 
-char	*ft_strdup(const char *s)
+/*
+	в этой секции нужно проверять:
+	имя команды,
+	ее атрибуты,
+	метки,
+
+*/
+
+char	*ft_lexer_champ_code(t_asm_data *asm_data, char *line)
 {
-	char	*new_str;
-	size_t	i;
-	size_t	len;
-
-	len = ft_strlen(s);
-	new_str = ft_strnew(len + 1);
-	if (new_str == NULL)
-		return (NULL);
-	i = 0;
-	while (i <= len)
-	{
-		new_str[i] = s[i];
-		i++;
-	}
-	return (new_str);
+	ft_putendl(line);
+	return (line);
 }

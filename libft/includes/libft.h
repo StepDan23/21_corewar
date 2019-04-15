@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/12 14:48:27 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/15 19:30:41 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct		s_gnl{
 	int					fd;
 }					t_gnl;
 
-# define BUFF_SIZE 100
+# define BUFF_SIZE 1000
 
 typedef struct		s_fmt {
 	char				flags;

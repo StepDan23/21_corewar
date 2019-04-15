@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 14:37:23 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 18:46:41 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@
 //	? подумать как фиксировать последнюю строку!! - сравнивать токен последней строки с общим числом строк
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
-
 // !переход на новую строку в имени и комменте
 // !ошибка если нет имени или коммента и началось чтение второй части кода
-// .name.comment
 
 int	ft_strlen_word(char *line)
 {
@@ -36,6 +34,7 @@ int	ft_strlen_word(char *line)
 void	ft_read_file(int fd, char *file_name)
 {
 	t_asm_data	*asm_data;
+	char		*trim_line;
 	char		*line;
 	int			i;
 
@@ -43,8 +42,9 @@ void	ft_read_file(int fd, char *file_name)
 	asm_data = ft_asm_data_init();
 	while (get_next_line(fd, &line) > 0)
 	{
-		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data,\
-		ft_strtrim(line))) : 0;
+		trim_line = ft_strtrim(line);
+		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data, trim_line)) : 0;
+		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data, trim_line)) : 0;
 		free(line);
 		ASM_NUM_ROW++;
 		i++;

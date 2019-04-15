@@ -133,5 +133,6 @@ t_errors		*ft_error_init(char *str, int row, int col, int type);
 void			ft_error_add(t_asm_data *asm_data, char *line, int column,\
 int type);
 void			ft_print_errors(t_asm_data *asm_data);
+char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line);
 
 #endif
