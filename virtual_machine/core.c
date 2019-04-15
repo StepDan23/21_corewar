@@ -18,7 +18,7 @@ int		main(int argc, char *argv[])
 {
 	t_vm		*vm;
 
-	vm = vm_new(0);
+	vm = vm_new();
 	while (argc > 1)
 	{
 		champions_add(argv[argc - 1], 1, &vm->champion);

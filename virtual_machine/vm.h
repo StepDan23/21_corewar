@@ -131,6 +131,7 @@ void					vm_dump_memory(unsigned char *memory);
 
 int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
+int						champion_count(int ac, char **av);
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
 int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
