@@ -127,7 +127,7 @@ typedef struct		s_asm_data
 
 
 t_asm_data		*ft_asm_data_init(void);
-t_token			*ft_token_init(int col, int row, char *str, t_types type);
+t_token			*ft_token_init(void);
 char			*ft_lexer_champ_data(t_asm_data *asm_data, char *line);
 t_errors		*ft_error_init(char *str, int row, int col, int type);
 void			ft_error_add(t_asm_data *asm_data, char *line, int column,\

@@ -6,24 +6,24 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 13:47:44 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 23:37:42 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include <stdlib.h>
 
-t_token			*ft_token_init(int col, int row, char *str, t_types type)
+t_token			*ft_token_init(void)
 {
 	t_token		*token;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		exit(1);
-	token->col = col;
-	token->row = row;
-	token->str = str;
-	token->type = type;
+	token->col = 0;
+	token->row = 0;
+	token->str = 0;
+	token->type = 0;
 	return (token);
 }
 
