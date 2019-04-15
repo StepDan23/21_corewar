@@ -62,6 +62,14 @@ typedef struct	s_champ_data
 	int			comment_column;
 }				t_champ_data;
 
+typedef struct	s_errors
+{
+	char		*error_str;
+	int			error_row;
+	int			error_column;
+	int			error_type;
+}				t_errors;
+
 typedef struct	s_machine
 {
 	int			wait_name;
@@ -70,6 +78,9 @@ typedef struct	s_machine
 	int			took_name_and_comment;
 }				t_machine;
 
+/*
+** if error flag == 1/2/3 - ошибка лексическая/синтаксическая/семантическая
+*/
 typedef struct		s_asm_data
 {
 	int				num_current_row;
@@ -77,6 +88,9 @@ typedef struct		s_asm_data
 	t_champ_data	*champ_data;
 	t_list			*tokens;
 	t_machine		*state_machine;
+	t_list			*errors;
+	int				error_list_size;
+	int				error_flag;
 }					t_asm_data;
 
 # define ASM_TOKENS (asm_data->tokens)
@@ -102,8 +116,22 @@ typedef struct		s_asm_data
 # define MACHINE_DOUBLE_QUOT (asm_data->state_machine->double_quotes)
 # define MACHINE_NAME_COMMENT (asm_data->state_machine->took_name_and_comment)
 
+# define ERRORS (asm_data->errors)
+# define ERROR_SIZE (asm_data->error_list_size)
+# define ERROR_FLAG (asm_data->error_flag)
+
+# define T_ERROR_TYPE (((t_errors *)(current->content))->error_type)
+# define T_ERROR_STR (((t_errors *)(current->content))->error_str)
+# define T_ERROR_COL (((t_errors *)(current->content))->error_column)
+# define T_ERROR_ROW (((t_errors *)(current->content))->error_row)
+
+
 t_asm_data		*ft_asm_data_init(void);
 t_token			*ft_token_init(int col, int row, char *str, t_types type);
-
+char			*ft_lexer_champ_data(t_asm_data *asm_data, char *line);
+t_errors		*ft_error_init(char *str, int row, int col, int type);
+void			ft_error_add(t_asm_data *asm_data, char *line, int column,\
+int type);
+void			ft_print_errors(t_asm_data *asm_data);
 
 #endif

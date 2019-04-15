@@ -1,19 +1,11 @@
 
 dsgdsg ваыва
 
-.name            #COMMENT
+
+.name            #jdshfhsdf
+"dsfdsf"sdf
+
+#.name		"jbsdfd"fds"
 
 
-
-"dsfdsf"
-
-
-.comment            "just a basic living prog"
-
-#l2:
-#	sti	r1, %:live, %0
-#	and	r1, %0, r1 #COMMENT
-#ваыва
-#live:
-#	live	%1
-#	zjmp	%:live
+.comment"hsd"fgh"

@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/14 22:53:09 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/15 13:47:44 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ t_champ_data	*ft_champ_data_init(void)
 	return (champ_data);
 }
 
+t_errors		*ft_error_init(char *str, int row, int col, int type)
+{
+	t_errors	*error_data;
+
+	error_data = (t_errors *)malloc(sizeof(t_errors));
+	if (!error_data)
+		exit(1);
+	error_data->error_str = str;
+	error_data->error_row = row;
+	error_data->error_column = col;
+	error_data->error_type = type;
+	return (error_data);
+}
+
 t_machine		*ft_state_machine_init(void)
 {
 	t_machine	*state_machine;
@@ -64,10 +78,11 @@ t_asm_data		*ft_asm_data_init(void)
 	asm_data = (t_asm_data *)malloc(sizeof(t_asm_data));
 	if (!asm_data)
 		exit(1);
-	asm_data->num_current_row = 0;
-	asm_data->num_text_row = 0;
+	asm_data->num_current_row = 1;
+	asm_data->num_text_row = 1;
 	asm_data->tokens = NULL;
 	asm_data->state_machine = ft_state_machine_init();
 	asm_data->champ_data = ft_champ_data_init();
+	asm_data->errors = NULL;
 	return (asm_data);
 }
