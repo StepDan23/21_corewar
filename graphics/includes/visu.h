@@ -6,32 +6,39 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/14 18:19:05 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:16:18 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VISU_H
 # define VISU_H
+
+# include "op.h"
+# include "libft.h"
+# include "vm.h"
+# include <SDL2/SDL.h>
+# include <SDL_image.h>
+# include "SDL_ttf.h"
+
 # define SCREEN_WIDTH	1600
 # define SCREEN_HEIGHT	900
 # define COL_GREEN		0x32, 0xCD, 0x32, 0xFF
 # define COL_L_GREEN	0x19, 0x66, 0x19, 0xFF
 # define COL_BLUE		0x41, 0x69, 0xE1, 0xFF
+# define COL_L_BLUE		0x20, 0x34, 0x70, 0xFF
 # define COL_RED		0xE3, 0x42, 0x34, 0xFF
+# define COL_L_RED		0x71, 0x21, 0x1A, 0xFF
 # define COL_YELOW		0xFF, 0xD7, 0x00, 0xFF
+# define COL_L_YELOW	0x7F, 0x6B, 0x00, 0xFF
 # define COL_WHITE		0xFF, 0xFF, 0xFF, 0xFF
 # define COL_BLACK		0x00, 0x00, 0x00, 0xFF
 # define COL_GREY		0x30, 0x30, 0x30, 0xFF
 # define COL_L_GREY		0x64, 0x64, 0x64, 0xFF
-# define STAT_START 0
-# define STAT_RUNN 1
-# define STAT_PAUSE 2
-# define STAT_END 3
-
-# include "../../libft/includes/libft.h"
-# include <SDL.h>
-# include <SDL_image.h>
-# include <SDL_ttf.h>
+# define STAT_START		0
+# define STAT_RUNN		1
+# define STAT_PAUSE		2
+# define STAT_END		3
+# define STAT_QUIT		4
 
 typedef struct			s_window
 {
@@ -47,76 +54,28 @@ typedef struct			s_window
 	SDL_Color			color;
 	Sint32				width;
 	Sint32				height;
-	char				quit;
 	char				status;
 	int					speed;
 }						t_window;
 
-# define WIN_WIN	(window->window)
-# define WIN_REND	(window->window_render)
-# define WIN_BACK	(window->background)
-# define BACK_START	(window->back_start)
-# define BACK_END	(window->back_finish)
-# define FONT_CURR	(window->f_current)
-# define FONT_PAUSE	(window->f_pause)
-# define FONT_STAT	(window->f_status)
-# define FONT_ARENA	(window->f_arena)
-# define FONT_COLOR	(window->color)
-# define WIN_WID	(window->width)
-# define WIN_HEIG	(window->height)
-# define WIN_QUIT	(window->quit)
-# define WIN_STATUS	(window->status)
-# define WIN_SPEED	(window->speed)
+# define WIN_WIN			(window->window)
+# define WIN_REND			(window->window_render)
+# define WIN_BACK			(window->background)
+# define BACK_START			(window->back_start)
+# define BACK_END			(window->back_finish)
+# define FONT_CURR			(window->f_current)
+# define FONT_PAUSE			(window->f_pause)
+# define FONT_STAT			(window->f_status)
+# define FONT_ARENA			(window->f_arena)
+# define FONT_COLOR			(window->color)
+# define WIN_WID			(window->width)
+# define WIN_HEIG			(window->height)
+# define WIN_STATUS			(window->status)
+# define WIN_SPEED			(window->speed)
 
 /*
-** Merge
+** Macro to t_vm
 */
-
-typedef struct			s_champion
-{
-	char				*filename;
-	char				*name;
-	char				*comment[2048 + 1];
-	unsigned int		size;
-	unsigned char		*code; //usseles
-	int					id; //usseles
-	int					last_live;
-	int					lives_in_period;
-}						t_champion;
-
-typedef struct			s_proccess
-{
-	int					position;
-	int					carry;
-	int					player_id;
-	int					id;
-	unsigned int		registers[100];
-	int					is_live;
-	int					command_type;
-	int					cycles_to_wait;
-	struct s_proccess	*next;
-	int					size_written; //useles
-	int					pos_written; //useles
-}						t_proccess;
-
-typedef struct			s_vm
-{
-	int					cycles;
-	int					cycles_to_die;
-	int					cycles_to_dump;
-	int					dump;
-	int					cycles_die;
-	t_proccess			*process;
-	t_champion			**champion;
-	int					champion_count;
-	t_champion			*winner;
-	unsigned char		memory[4096];
-	unsigned int		live_exec;
-	unsigned int		checkups;
-	int					lives[4];
-	int					p_num[4];
-	int					p_total;
-}						t_vm;
 
 # define VM_CYCLE			(vm->cycles)
 # define VM_CYCLE_TO_DIE	(vm->cycles_to_die)
@@ -125,9 +84,6 @@ typedef struct			s_vm
 # define VM_CHAMPS			(vm->champion)
 # define VM_P_TOTAL			(vm->p_total)
 # define VM_WINNER			(vm->winner)
-# define CYC_DELTA			50 //
-# define NBR_LIVE			21 //
-# define MAX_CHECKS			21 //
 
 /*
 ** visu_int.c
