@@ -149,8 +149,7 @@ int		check_dump(t_vm *vm, char *param)
 		ft_printf("Dump cycles isn't correct number.\n");
 		exit(1);
 	}
-	ft_atoi(param) > 0 ? vm->dump = ft_atoi(param) : exit(1);
-	vm->cycles_to_dump = vm->dump;
+	ft_atoi(param) > 0 ? vm->cycles_to_dump = ft_atoi(param) : exit(1);
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 16:54:11 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/17 01:24:06 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,13 @@ void	update_vm_state(t_vm *vm)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
 			vm->checkups = 0;
+			if (vm->cycles_die <= 0)
+				vm->end_game = 1;
 		}
 		else
 			vm->checkups++;
 		vm->cycles_to_die = vm->cycles_die;
+		vm->live_exec = 0;
 	}
 	vm->cycles++;
 	vm->cycles_to_die--;
@@ -133,9 +136,11 @@ int		main(int argc, char *argv[])
 	vm_spread_champs(vm, vm->champion);
 	introduce_players(vm->champion);
 	init_optab(op_tab);
-	while (vm->cycles_die > 0 && vm->process)
+	while (!vm->end_game)
 	{
 		do_cyrcle(vm, op_tab);
+		if (!vm->cycles_to_dump)
+			vm_dump_memory(vm->memory);
 	}
 	ft_printf("Winner is %s!\n", vm->winner->name);
 	free(vm);
