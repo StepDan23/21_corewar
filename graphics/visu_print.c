@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 18:13:47 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:37:28 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 SDL_Color	get_player_color(int player_id)
 {
-	SDL_Color	colors[8];
+	SDL_Color	colors[9];
 
-	colors[0] = (SDL_Color){COL_GREEN};
-	colors[1] = (SDL_Color){COL_BLUE};
-	colors[2] = (SDL_Color){COL_RED};
-	colors[3] = (SDL_Color){COL_YELOW};
-	colors[4] = (SDL_Color){COL_L_GREEN};
-	colors[5] = (SDL_Color){COL_L_BLUE};
-	colors[6] = (SDL_Color){COL_L_RED};
-	colors[7] = (SDL_Color){COL_L_YELOW};
+	colors[0] = (SDL_Color){COL_L_GREY};
+	colors[1] = (SDL_Color){COL_GREEN};
+	colors[2] = (SDL_Color){COL_BLUE};
+	colors[3] = (SDL_Color){COL_RED};
+	colors[4] = (SDL_Color){COL_YELOW};
+	colors[5] = (SDL_Color){COL_L_GREEN};
+	colors[6] = (SDL_Color){COL_L_BLUE};
+	colors[7] = (SDL_Color){COL_L_RED};
+	colors[8] = (SDL_Color){COL_L_YELOW};
 	return (colors[player_id]);
 }
 

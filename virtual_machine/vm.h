@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 20:55:30 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:43:25 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void					print_error_exit(int code);
 
 int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
+int						champion_count(int ac, char **av);
 
 t_vm					*vm_new(int dump);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
@@ -214,4 +215,8 @@ void					add(t_vm *vm, t_proccess *proccess);
 void					sub(t_vm *vm, t_proccess *proccess);
 void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
+
+t_vm					*init_vm_test(int argc, char *argv[]);
+void					init_optab(t_op op_tab[17]);
+void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
 #endif

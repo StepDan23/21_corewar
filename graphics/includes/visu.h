@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 15:16:18 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:40:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,26 @@
 # define STAT_PAUSE		2
 # define STAT_END		3
 # define STAT_QUIT		4
+# define STAT_STEP		5
 
-typedef struct			s_window
+typedef struct		s_window
 {
-	SDL_Window			*window;
-	SDL_Renderer		*window_render;
-	SDL_Texture			*background;
-	SDL_Texture			*back_start;
-	SDL_Texture			*back_finish;
-	TTF_Font			*f_current;
-	TTF_Font			*f_pause;
-	TTF_Font			*f_status;
-	TTF_Font			*f_arena;
-	SDL_Color			color;
-	Sint32				width;
-	Sint32				height;
-	char				status;
-	int					speed;
-}						t_window;
+	SDL_Window		*window;
+	SDL_Renderer	*window_render;
+	SDL_Texture		*background;
+	SDL_Texture		*back_start;
+	SDL_Texture		*back_finish;
+	TTF_Font		*f_current;
+	TTF_Font		*f_pause;
+	TTF_Font		*f_status;
+	TTF_Font		*f_arena;
+	char			mem_code[MEM_SIZE + 1];
+	SDL_Color		color;
+	Sint32			width;
+	Sint32			height;
+	char			status;
+	int				speed;
+}					t_window;
 
 # define WIN_WIN			(window->window)
 # define WIN_REND			(window->window_render)
@@ -67,6 +69,7 @@ typedef struct			s_window
 # define FONT_PAUSE			(window->f_pause)
 # define FONT_STAT			(window->f_status)
 # define FONT_ARENA			(window->f_arena)
+# define MEM_CODE			(window->mem_code)
 # define FONT_COLOR			(window->color)
 # define WIN_WID			(window->width)
 # define WIN_HEIG			(window->height)
@@ -78,7 +81,7 @@ typedef struct			s_window
 */
 
 # define VM_CYCLE			(vm->cycles)
-# define VM_CYCLE_TO_DIE	(vm->cycles_to_die)
+# define VM_CYCLE_TO_DIE	(vm->cycles_die)
 # define VM_MEMORY			(vm->memory)
 # define VM_CHAMP_COUNT		(vm->champion_count)
 # define VM_CHAMPS			(vm->champion)
@@ -88,29 +91,31 @@ typedef struct			s_window
 /*
 ** visu_int.c
 */
-t_window				*init_win(void);
+t_window			*init_win(t_vm *vm);
 /*
 ** visu_load.c
 */
-int						load_files(t_window *window, t_vm *vm);
+int					load_files(t_window *window, t_vm *vm);
 /*
 ** visu_make.c
 */
-void					make_background(t_window *window, t_vm *vm);
-void					make_back_arena(t_window *window, t_vm *vm);
+void				make_background(t_window *window, t_vm *vm);
 /*
 ** visu_events.c
 */
-void					win_events(t_window *window);
+void				win_events(t_window *window);
 /*
 ** visu_print.c
 */
-SDL_Color				get_player_color(int player_id);
-void					print_str(t_window *window, char *str, int x, int y);
-void					print_nbr(t_window *window, int nbr, int x, int y);
-void					print_start_names(t_window *window, t_vm *vm);
+SDL_Color			get_player_color(int player_id);
+void				print_str(t_window *window, char *str, int x, int y);
+void				print_nbr(t_window *window, int nbr, int x, int y);
+void				print_start_names(t_window *window, t_vm *vm);
 /*
 ** visu_render.c
 */
-void					render_image(t_window *window, t_vm *vm);
+void				render_image(t_window *window, t_vm *vm, t_op op_tab[17]);
+//tests
+void				render_tests(t_window *window, t_vm *vm);
+void				init_tests(t_vm *vm);
 #endif

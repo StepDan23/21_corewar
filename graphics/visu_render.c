@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 15:43:56 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:38:47 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void		render_status_img(t_window *window, t_vm *vm)
 	SDL_Rect	dst;
 
 	dst = (SDL_Rect){9, 15, SCREEN_WIDTH * 0.75, SCREEN_HEIGHT - 30};
+	FONT_CURR = FONT_PAUSE;
 	if (WIN_STATUS == STAT_START)
 	{
 		SDL_RenderCopy(WIN_REND, BACK_START, NULL, &dst);
@@ -26,7 +27,7 @@ static void		render_status_img(t_window *window, t_vm *vm)
 	}
 	if (WIN_STATUS == STAT_PAUSE)
 	{
-		print_str(window, "Press SPACE to continue", 330, 800);
+		print_str(window, "Press SPACE to continue or S to step up", 178, 800);
 		print_str(window, "** Paused **", 1258, 40);
 	}
 	if (WIN_STATUS == STAT_END)
@@ -46,6 +47,8 @@ static void		render_status_val(t_window *window, t_vm *vm)
 
 	i = 0;
 	height = 80;
+	FONT_CURR = FONT_STAT;
+	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_nbr(window, WIN_SPEED, 1459, height += 35);
 	print_nbr(window, VM_CYCLE, 1287, height += 35);
 	print_nbr(window, VM_P_TOTAL, 1324, height += 35);
@@ -63,84 +66,52 @@ static void		render_status_val(t_window *window, t_vm *vm)
 	}
 }
 
-static void		change_run(t_window *window, t_vm *vm)
-{
-	static int	n;
-
-	VM_CYCLE += 1;
-	vm->process->cycles_to_wait -= 1;
-	vm->process->next->cycles_to_wait -= 1;
-	if (vm->process->cycles_to_wait < 0)
-	{
-		vm->process->next->cycles_to_wait = 50;
-		vm->process->next->position += 2;
-		vm->process->next->pos_written += 15;
-		vm->process->cycles_to_wait = 50;
-		vm->process->position++;
-		vm->process->pos_written += 10;
-	}
-	if (VM_CYCLE_TO_DIE <= 0)
-	{
-		VM_WINNER = VM_CHAMPS[0];
-		VM_CYCLE_TO_DIE = 0;
-		WIN_STATUS = 3;
-		return ;
-	}
-	if (VM_CYCLE >= 1460 * (n + 1))
-	{
-		n++;
-		VM_CYCLE_TO_DIE -= CYCLE_DELTA;
-	}
-}
-
 static void		make_car_color(t_window *window, t_proccess *proc)
 {
+	char	id;
+
+	id = window->mem_code[proc->position];
 	FONT_COLOR = (SDL_Color){COL_BLACK};
-	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
-	if (proc->cycles_to_wait == 0 && proc->player_id == -1)
-		FONT_COLOR = (SDL_Color){COL_L_GREY};
-	else if (proc->cycles_to_wait == 0)
-		FONT_COLOR = get_player_color(proc->player_id);
-	else if (proc->player_id == -1)
+	if (id == 0)
 	{
 		FONT_COLOR = (SDL_Color){COL_GREY};
 		SDL_SetRenderDrawColor(WIN_REND, COL_L_GREY);
 	}
-	else if (proc->player_id == 0)
+	else if (id == 1)
 		SDL_SetRenderDrawColor(WIN_REND, COL_GREEN);
-	else if (proc->player_id == 1)
+	else if (id == 2)
 		SDL_SetRenderDrawColor(WIN_REND, COL_BLUE);
-	else if (proc->player_id == 2)
+	else if (id == 3)
 		SDL_SetRenderDrawColor(WIN_REND, COL_RED);
-	else if (proc->player_id == 3)
+	else if (id == 4)
 		SDL_SetRenderDrawColor(WIN_REND, COL_YELOW);
 }
 
-static void		render_car_source(t_window *window, t_vm *vm, t_proccess *proc)
+static void		render_carr_back(t_window *window, t_vm *vm, t_proccess *proc)
 {
 	int			i;
 	char		*hex;
 	char		str[3];
+	SDL_Rect	rect;
 
+	i = -1;
 	hex = "0123456789abcdef";
-	if (proc->pos_written >= 0)
+	str[2] = '\0';
+	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
+	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
+	FONT_COLOR = get_player_color(proc->player_id);
+	while (++i < 4)
 	{
-		str[2] = '\0';
-		i = -1;
-		if (proc->cycles_to_wait == 25)
-			FONT_COLOR = get_player_color(proc->player_id + 4);
-		else if (proc->cycles_to_wait == 0)
-			FONT_COLOR = get_player_color(proc->player_id);
-		if (proc->cycles_to_wait == 25 || proc->cycles_to_wait == 0)
-			while (++i < 4)
-			{
-				str[0] = hex[VM_MEMORY[proc->pos_written + i] / 16];
-				str[1] = hex[VM_MEMORY[proc->pos_written + i] % 16];
-				print_str(window, str,
-							13 + (proc->pos_written + i) % 64 * 18.7,
-							20 + 13.5 * (int)((proc->pos_written + i) / 64));
-			}
+		MEM_CODE[proc->pos_written + i] = proc->player_id;
+		rect = (SDL_Rect){13 + (proc->pos_written + i) % 64 * 18.7,
+				20 + 13.5 * (int)((proc->pos_written + i) / 64), 15, 15};
+		SDL_RenderFillRect(WIN_REND, &rect);
+		str[0] = hex[VM_MEMORY[proc->pos_written + i] / 16];
+		str[1] = hex[VM_MEMORY[proc->pos_written + i] % 16];
+		print_str(window, str, 13 + (proc->pos_written + i) % 64 * 18.7,
+					20 + 13.5 * (int)((proc->pos_written + i) / 64));
 	}
+	SDL_SetRenderTarget(WIN_REND, NULL);
 }
 
 static void		render_carrier(t_window *window, t_vm *vm)
@@ -154,7 +125,7 @@ static void		render_carrier(t_window *window, t_vm *vm)
 	hex = "0123456789abcdef";
 	proc = vm->process;
 	str[2] = '\0';
-	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
+	FONT_CURR = FONT_ARENA;
 	while (proc)
 	{
 		pos = proc->position;
@@ -166,30 +137,62 @@ static void		render_carrier(t_window *window, t_vm *vm)
 		str[1] = hex[VM_MEMORY[pos] % 16];
 		print_str(window, str, 13 + pos % 64 * 18.7,
 							20 + 13.5 * (int)(pos / 64));
-		render_car_source(window, vm, proc);
 		proc = proc->next;
 	}
-	SDL_SetRenderTarget(WIN_REND, NULL);
 }
 
-void			render_image(t_window *window, t_vm *vm)
+static void		render_carrier_source(t_window *window, t_vm *vm)
 {
+	t_proccess	*proc;
+
+	proc = vm->process;
+	FONT_CURR = FONT_ARENA;
+	while (proc)
+	{
+		if (proc->pos_written >= 0)
+			render_carr_back(window, vm, proc);
+		proc = proc->next;
+	}
+}
+
+void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
+{
+	do_cyrcle(vm, op_tab);
+	render_carrier_source(window, vm);
+	FONT_CURR = FONT_PAUSE;
+	FONT_COLOR = (SDL_Color){COL_WHITE};
+	print_str(window, "Press SPACE to continue or S to step up", 178, 800);
+	print_str(window, "** Paused **", 1258, 40);
+	WIN_STATUS = STAT_PAUSE;
+}
+
+void			render_image(t_window *window, t_vm *vm, t_op op_tab[17])
+{
+	int		speed_cycle;
+
+if (WIN_STATUS != STAT_START && WIN_STATUS != STAT_PAUSE
+										&& WIN_STATUS != STAT_END)
+render_tests(window, vm);
+	speed_cycle = WIN_SPEED / 50;
 	SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
 									(WIN_HEIG / (float)SCREEN_HEIGHT));
-	FONT_CURR = FONT_STAT;
-	FONT_COLOR = (SDL_Color){COL_WHITE};
+	render_carrier(window, vm);
 	render_status_val(window, vm);
-	FONT_CURR = FONT_PAUSE;
-	if (WIN_STATUS == STAT_START || WIN_STATUS == STAT_PAUSE
+	if (WIN_STATUS == STAT_STEP)
+		render_step(window, vm, op_tab);
+	else if (WIN_STATUS == STAT_START || WIN_STATUS == STAT_PAUSE
 										|| WIN_STATUS == STAT_END)
 		render_status_img(window, vm);
 	else
 	{
+		FONT_CURR = FONT_PAUSE;
 		print_str(window, "** Running **", 1244, 40);
-		FONT_CURR = FONT_ARENA;
-		render_carrier(window, vm);
-		change_run(window, vm);
-		//do_cyrcle(vm, t_op op_tab[17])
+		while (speed_cycle >= 0)
+		{
+			do_cyrcle(vm, op_tab);
+			render_carrier_source(window, vm);
+			speed_cycle--;
+		}
 	}
 }

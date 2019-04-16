@@ -6,28 +6,47 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 14:34:57 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 20:32:44 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 
-static void		init_win_consts(t_window *window)
+static void		init_win_consts(t_window *window, t_vm *vm)
 {
-	WIN_STATUS = STAT_START;
+	int		i;
+
+	i = -1;
+	while (++i <= MEM_SIZE)
+	{
+		if (i >= 0 && i < (int)VM_CHAMPS[0]->size)
+			MEM_CODE[i] = 1;
+		else if (i >= (4096 / VM_CHAMP_COUNT) && VM_CHAMP_COUNT > 1 &&
+					i < (int)(4096 / VM_CHAMP_COUNT + VM_CHAMPS[1]->size))
+			MEM_CODE[i] = 2;
+		else if (i >= (2 * 4096 / VM_CHAMP_COUNT) && VM_CHAMP_COUNT > 2 &&
+				i < (int)(2 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[2]->size))
+			MEM_CODE[i] = 3;
+		else if (i >= (3 * 4096 / VM_CHAMP_COUNT) && VM_CHAMP_COUNT > 3 &&
+				i < (int)(3 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[3]->size))
+			MEM_CODE[i] = 4;
+		else
+			MEM_CODE[i] = 0;
+	}
+	FONT_COLOR = (SDL_Color){COL_WHITE};
 	WIN_WID = SCREEN_WIDTH;
 	WIN_HEIG = SCREEN_HEIGHT;
+	WIN_STATUS = STAT_START;
 	WIN_SPEED = 50;
-	FONT_COLOR = (SDL_Color){COL_WHITE};
 }
 
-t_window		*init_win(void)
+t_window		*init_win(t_vm *vm)
 {
 	t_window	*window;
 
 	if (!(window = (t_window*)malloc(sizeof(t_window))))
 		return (NULL);
-	init_win_consts(window);
+	init_win_consts(window, vm);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0 ||
 						SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
