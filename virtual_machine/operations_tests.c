@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/10 01:31:37 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/16 16:33:41 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1005,7 +1005,7 @@ int		fork_test(t_vm *vm, t_proccess *proccess)
 
 int		main(void)
 {
-	t_vm *vm = vm_new(0);
+	t_vm *vm = vm_new();
 	t_proccess *proccess = proccess_new(0, 1, 0);
 	proccess_add(&vm->process, proccess);
 	vm_init_memory(vm->memory);

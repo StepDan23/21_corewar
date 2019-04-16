@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/12 20:45:45 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/16 16:38:10 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
 **	fork
-**	Операция fork делает копию каретки. 
+**	Операция fork делает копию каретки.
 **	И эту копию размещает по адресу <ПЕРВЫЙ_АРГУМЕНТ> % IDX_MOD
 */
 
@@ -24,7 +24,7 @@ void	ft_fork(t_vm *vm, t_proccess *proccess)
 	int	value;
 	int	i;
 
-	value = get_2bytes(vm->memory,(P_POS + 1) % MEM_SIZE) % IDX_MOD;
+	value = get_2bytes(vm->memory, (P_POS + 1) % MEM_SIZE) % IDX_MOD;
 	proccess_add(&vm->process,\
 	proccess_new(vm->process->id + 1, P_PI, get_realtive_addr(P_POS, value)));
 	i = 0;
@@ -42,7 +42,7 @@ void	ft_fork(t_vm *vm, t_proccess *proccess)
 /*
 **	lfork
 **	По своей сути эта операция аналогична операции fork.
-**	
+**
 **	За исключением того факта, что новая каретка в этом случае
 **	создается по адресу — текущая позиция + <ПЕРВЫЙ_АРГУМЕНТ>.
 **	В операции lfork усечение по модулю делать не нужно.
@@ -53,7 +53,7 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 	int	index;
 	int	i;
 
-	index = get_2bytes(vm->memory,(P_POS + 1) % MEM_SIZE);
+	index = get_2bytes(vm->memory, (P_POS + 1) % MEM_SIZE);
 	proccess_add(&vm->process,\
 	proccess_new(vm->process->id + 1, P_PI, get_realtive_addr(P_POS, index)));
 	i = 0;
@@ -71,7 +71,7 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 /*
 **	live
 **	Она засчитывает, что каретка, которая выполняет операцию live, жива.
-**	
+**
 **	Если указанный в качестве аргумента операции live номер совпадает
 **	с номером игрока, то она засчитывает, что это игрок жив. Например,
 **	если значение аргумента равно -2, значит игрок с номером 2 жив.
@@ -109,3 +109,29 @@ void	aff(t_vm *vm, t_proccess *proccess)
 	ft_printf("%c", ch);
 }
 
+/*
+**	zjmp
+**	Эта та самая функция, на работу которой влияет значение флага carry.
+**
+**	Если оно равно 1, то функция обновляет значение PC
+**	на адрес — текущая позиция + <ПЕРВЫЙ_АРГУМЕНТ> % IDX_MOD.
+**
+**	То есть zjmp устанавливает куда должна переместиться каретка
+**	для выполнения следующей операции. Это позволяет нам
+**	перепрыгивать в памяти на нужную позицию, а не выполнять всё по порядку.
+**
+**	Если значение carry равно нулю, перемещение не выполняется.
+*/
+
+void	zjmp(t_vm *vm, t_proccess *proccess)
+{
+	int	value;
+
+	if (P_C)
+	{
+		value = get_2bytes(vm->memory, (P_POS + 1) % MEM_SIZE) % IDX_MOD;
+		P_POS = get_realtive_addr(P_POS, value);
+	}
+	else
+		P_POS = (P_POS + 3) % MEM_SIZE;
+}

@@ -3,32 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ldi.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 22:30:26 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 21:20:46 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/16 16:36:45 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
+void	ldi_get_args(t_vm *vm, t_proccess *proccess, int args[3])
+{
+	int		arg_type;
+	int		i;
+	int		ofs;
+
+	i = 0;
+	ofs = 0;
+	while (i < 2)
+	{
+		arg_type = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2,
+															7 - 2 * i);
+		if (arg_type == T_REG)
+			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
+		else if (arg_type == T_DIR)
+			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
+		else
+		{
+			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE,
+																P_POS);
+			args[i] = get_4bytes(vm->memory, args[i]);
+		}
+		ofs += (arg_type == T_REG ? 1 : 2);
+		i++;
+	}
+	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+}
+
 /*
 **	ldi
 ** Данная операция записывает значение в регистр, который был ей передан
 ** как третий параметр. Значением, которая она записывает, являются 4 байта.
-** Эти 4 байта она считывает по адресу, который формируется 
+** Эти 4 байта она считывает по адресу, который формируется
 ** по следующему принципу:текущая позиция + (<ЗНАЧЕНИЕ_ПЕРВОГО_АРГУМЕНТА> +
-**  									<ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА>) % IDX_MOD.
-** 
+**  								<ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА>) % IDX_MOD.
+**
 ** Поскольку операция может принимать разные типы первого и второго аргументов,
 ** рассмотрим способ получения значения для каждого типа:
-** 
+**
 ** Аргумент #1 / Аргумент #2 — T_REG
 ** Значение содержится в регистре, который был передан в качестве параметра.
-** 
+**
 ** Аргумент #1 / Аргумент #2 — T_DIR
 ** В данном случае у нас аргумент уже содержит свое значение.
-** 
+**
 ** Аргумент #1 — T_IND
 ** Чтобы получить значение этого аргумента, нужно считать 4 байта по адресу
 ** текущая позиция + <ПЕРВЫЙ_АРГУМЕНТ> % IDX_MOD.
@@ -37,43 +65,26 @@
 void	ldi(t_vm *vm, t_proccess *proccess)
 {
 	int		num;
-	int		arg_type[3];
 	int		args[3];
-	int		i;
-	int		ofs;
 
-	i = 0;
-	ofs = 0;
-	while (i < 2)
-	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
-		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
-		else if (arg_type[i] == T_DIR)
-			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
-		else
-		{
-			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
-			args[i] = get_4bytes(vm->memory, args[i]);
-		}
-		ofs += (arg_type[i] == T_REG ? 1 : 2);
-		i++;
-	}
-	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
-	num = get_4bytes(vm->memory, (P_POS + (args[0] + args[1]) % IDX_MOD) % MEM_SIZE);
+	ldi_get_args(vm, proccess, args);
+	num = get_4bytes(vm->memory,
+					(P_POS + (args[0] + args[1]) % IDX_MOD) % MEM_SIZE);
 	P_REG[args[2]] = num;
 }
 
 /*
 **	lldi
 **	По своей сути данная операция аналогична операции ldi.
-**	
-**	Она записывает значение в регистр, который был передан ей как третий параметр. 
+**
+**	Она записывает значение в регистр, который был передан ей
+**	как третий параметр.
 **	Значением, которая эта операция записывает, являются считанные 4 байта.
-**	
-**	Они считываются по адресу, который формируется по следующему принципу: 
-**	текущая позиция + (<ЗНАЧЕНИЕ_ПЕРВОГО_АРГУМЕНТА> + <ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА>).
-**	
+**
+**	Они считываются по адресу, который формируется по следующему принципу:
+**	текущая позиция +
+**	(<ЗНАЧЕНИЕ_ПЕРВОГО_АРГУМЕНТА> + <ЗНАЧЕНИЕ_ВТОРОГО_АРГУМЕНТА>).
+**
 **	В отличие от операции ldi в этом случае при формировании адреса
 **	не нужно делать усечение по модулю IDX_MOD.
 */
@@ -81,29 +92,9 @@ void	ldi(t_vm *vm, t_proccess *proccess)
 void	lldi(t_vm *vm, t_proccess *proccess)
 {
 	int		num;
-	int		arg_type[3];
 	int		args[3];
-	int		i;
-	int		ofs;
 
-	i = 0;
-	ofs = 0;
-	while (i < 2)
-	{
-		arg_type[i] = bit_extracted(vm->memory[(P_POS + 1) % MEM_SIZE], 2, 7 - 2 * i);
-		if (arg_type[i] == T_REG)
-			args[i] = P_REG[vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1];
-		else if (arg_type[i] == T_DIR)
-			args[i] = get_2bytes(vm->memory, (P_POS + 2 + ofs) % MEM_SIZE);
-		else
-		{
-			args[i] = get_indirect_addr(vm, (P_POS + 2 + ofs) % MEM_SIZE, P_POS);
-			args[i] = get_4bytes(vm->memory, args[i]);
-		}
-		ofs += arg_type[i] == T_REG ? 1 : 2;
-		i++;
-	}
-	args[2] = vm->memory[(P_POS + 2 + ofs) % MEM_SIZE] - 1;
+	ldi_get_args(vm, proccess, args);
 	num = get_4bytes(vm->memory, (P_POS + (args[0] + args[1])) % MEM_SIZE);
 	P_REG[args[2]] = num;
 	P_C = num ? 0 : 1;

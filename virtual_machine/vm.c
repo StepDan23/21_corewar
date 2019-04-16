@@ -6,15 +6,16 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/15 18:34:15 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 16:30:14 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
+#include "tests.h"
 
-static void	vm_init_memory(unsigned char *memory)
+void	vm_init_memory(unsigned char *memory)
 {
 	unsigned int	i;
 
@@ -26,7 +27,7 @@ static void	vm_init_memory(unsigned char *memory)
 	}
 }
 
-static void	vm_init_proccess_counter(t_vm *vm)
+void	vm_init_proccess_counter(t_vm *vm)
 {
 	int	i;
 
@@ -38,20 +39,26 @@ static void	vm_init_proccess_counter(t_vm *vm)
 	}
 }
 
-t_vm		*vm_new(int dump)
+t_vm	*vm_new(void)
 {
 	t_vm	*vm;
+	int		i;
 
 	vm = (t_vm *)malloc(sizeof(t_vm));
 	if (!vm)
 		exit(2);
 	vm->cycles = 0;
-	vm->champion = NULL;
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		vm->champion[i] = NULL;
+		i++;
+	}
 	vm->process = NULL;
 	vm->cycles_die = CYCLE_TO_DIE;
 	vm->cycles_to_die = CYCLE_TO_DIE;
-	vm->cycles_to_dump = dump;
-	vm->dump = dump;
+	vm->cycles_to_dump = 0;
+	vm->dump = -1;
 	vm->live_exec = 0;
 	vm->checkups = 0;
 	vm->p_total = 0;
@@ -60,7 +67,7 @@ t_vm		*vm_new(int dump)
 	return (vm);
 }
 
-void		vm_dump_memory(unsigned char *memory)
+void	vm_dump_memory(unsigned char *memory)
 {
 	int	i;
 
