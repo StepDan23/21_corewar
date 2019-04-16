@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 21:08:32 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/16 14:20:15 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ void	ft_read_file(int fd, char *file_name)
 	asm_data = ft_asm_data_init();
 	while (get_next_line(fd, &line) > 0)
 	{
+		MACHINE_NEW_LINE = 0;
 		trim_line = ft_strtrim(line);
-		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data, trim_line)) : 0;
 		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data, trim_line)) : 0;
+		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data, trim_line)) : 0;
 		free(line);
 		ASM_NUM_ROW++;
-		if (ASM_NUM_ROW > 10)
-			break ;
+
+
 		i++;
 	}
 	ft_putstr("===========================\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_champ_name_comment.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:45:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/15 18:46:11 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/16 13:26:11 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line)
 	ft_putendl(line);
 	while (i < line_len)
 	{
-		while(line[i] && line[i] == ' ' || line[i] == '\t')
+		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
 		if (line[i] == COMMENT_CHAR)
 			return (line);

@@ -33,6 +33,7 @@ typedef enum		e_types
 {
 	Unknown = -1,
 	None = 0,
+	Separator,
 	Comment,
 	Whitespace,
 	Newline,
@@ -76,6 +77,7 @@ typedef struct	s_machine
 	int			wait_comment;
 	int			double_quotes;
 	int			took_name_and_comment;
+	int			new_line;
 }				t_machine;
 
 /*
@@ -115,6 +117,7 @@ typedef struct		s_asm_data
 # define MACHINE_WAIT_COMMENT (asm_data->state_machine->wait_comment)
 # define MACHINE_DOUBLE_QUOT (asm_data->state_machine->double_quotes)
 # define MACHINE_NAME_COMMENT (asm_data->state_machine->took_name_and_comment)
+# define MACHINE_NEW_LINE (asm_data->state_machine->new_line)
 
 # define ERRORS (asm_data->errors)
 # define ERROR_SIZE (asm_data->error_list_size)
