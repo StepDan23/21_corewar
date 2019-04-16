@@ -125,6 +125,8 @@ typedef struct		s_asm_data
 # define T_ERROR_COL (((t_errors *)(current->content))->error_column)
 # define T_ERROR_ROW (((t_errors *)(current->content))->error_row)
 
+# define TOKEN_DATA ((t_token *)(ASM_TOKENS->content))
+
 
 t_asm_data		*ft_asm_data_init(void);
 t_token			*ft_token_init(void);
