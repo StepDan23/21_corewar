@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 16:33:41 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 18:17:08 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -999,6 +999,85 @@ int		fork_test(t_vm *vm, t_proccess *proccess)
 		ft_printf("fork_test [02] \x1b[32mOK\x1b[0m\n");
 	else
 		ft_printf("fork_test [02] \x1b[31mFAIL\x1b[0m\n");
+	
+	vm->process->id = 0;
+	P_POS = 100;
+	vm->memory[101] = 0x03;
+	vm->memory[102] = 0x20;
+	ft_fork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 388 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("fork_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("fork_test [03] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	vm->memory[1] = 0x80;
+	vm->memory[2] = 0x00;
+	lfork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 0 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("fork_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("fork_test [04] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
+int		lfork_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	vm->process->id = 0;
+
+	P_POS = 100;
+	vm->memory[101] = 0x01;
+	vm->memory[102] = 0xF4;
+	P_REG[15] = 89173;
+	P_REG[7] = -2786426;
+	P_REG[0] = 3;
+	lfork(vm, proccess);
+	if (vm->process->id == proccess->id + 1 && vm->process->position == 600 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("lfork_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lfork_test [01] \x1b[31mFAIL\x1b[0m\n");
+
+	P_POS = 100;
+	vm->memory[101] = 0x03;
+	vm->memory[102] = 0x20;
+	lfork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 900 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("lfork_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lfork_test [02] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	vm->memory[1] = 0x7F;
+	vm->memory[2] = 0xFF;
+	lfork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 4095 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("lfork_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lfork_test [03] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	vm->memory[1] = 0x80;
+	vm->memory[2] = 0x00;
+	lfork(vm, proccess);
+	if (vm->process->id == vm->process->next->id + 1 && vm->process->position == 0 &&\
+		vm->process->registers[0] == P_REG[0] && vm->process->registers[7] == P_REG[7]\
+		&& vm->process->registers[15] == P_REG[15])
+		ft_printf("lfork_test [04] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("lfork_test [04] \x1b[31mFAIL\x1b[0m\n");
 	ft_printf("--------------------------\n");
 	return (1);
 }
@@ -1023,5 +1102,6 @@ int		main(void)
 	logic_test(vm, proccess);
 	zjmp_test(vm, proccess);
 	fork_test(vm, proccess);
+	lfork_test(vm, proccess);
 	return (0);
 }

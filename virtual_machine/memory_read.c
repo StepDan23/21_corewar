@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 18:54:21 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 18:54:49 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 18:15:09 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ int		get_2bytes(unsigned char *memory, int pos)
 int		get_realtive_addr(int from, int to)
 {
 	if (from + to < 0)
-		return ((MEM_SIZE + (from + to) % MEM_SIZE));
+	{
+		if ((from + to) % MEM_SIZE)
+			return ((MEM_SIZE + (from + to) % MEM_SIZE));
+		else
+			return (0);
+	}
 	else
 		return ((from + to) % MEM_SIZE);
 }
