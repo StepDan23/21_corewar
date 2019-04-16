@@ -1,27 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asm.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
+/*   Updated: 2019/04/16 21:51:24 by lshanaha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
 #include "libft.h"
 #include "op.h"
+
 /*
 char	commands[16][6] = {
-	"live",
-	"ld",
-	"st",
-	"add",
-	"sub",
-	"and",
-	"or",
-	"xor",
-	"zjmp",
-	"ldi",
-	"sti",
-	"fork",
-	"lld",
-	"lldi",
-	"lfork",
-	"aff"
+	{"live"},
+	{"ld"},
+	{"st"},
+	{"add"},
+	{"sub"},
+	{"and"},
+	{"or"},
+	{"xor"},
+	{"zjmp"},
+	{"ldi"},
+	{"sti"},
+	{"fork"},
+	{"lld"},
+	{"lldi"},
+	{"lfork"},
+	{"aff"}
 };
 */
 /*
@@ -38,10 +50,10 @@ typedef enum		e_types
 	Whitespace,
 	Newline,
 	Label,
+	Label_arg,
 	Command,
 	Register,
 	Direct,
-	String,
 	Number
 }					t_types;
 
@@ -133,24 +145,22 @@ typedef struct		s_asm_data
 
 t_asm_data		*ft_asm_data_init(void);
 t_token			*ft_token_init(void);
-char			*ft_lexer_champ_data(t_asm_data *asm_data, char *line);
+char			*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j);
 t_errors		*ft_error_init(char *str, int row, int col, int type);
 void			ft_error_add(t_asm_data *asm_data, char *line, int column,\
 int type);
 void			ft_print_errors(t_asm_data *asm_data);
-char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line);
-void			ft_fill_token(t_asm_data *asm_data, char *line);
+char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j);
+void			ft_fill_token(t_asm_data *asm_data, char *line, t_token *token);
 void			ft_add_new_str_token(t_asm_data *asm_data);
-void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line);
-void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line);
-void			ft_fill_token_direct_regs(t_asm_data *asm_data, char *line);
+void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line, t_token *token);
+void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line, t_token *token);
+void			ft_fill_token_direct_regs(t_asm_data *asm_data, char *line, t_token *token);
 int				ft_find_sym(char *line, char sym);
 int				ft_check_label_symbols(char *line);
 int				ft_get_word_len(char *line);
 int				ft_string_contain_only_num(char	*str);
-
-
-
-
+int				ft_line_is_command(char *line);
+void			ft_print_tokens(t_asm_data *asm_data);
 
 #endif

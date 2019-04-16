@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/16 18:38:44 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/16 21:41:24 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,36 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-//	? подумать как фиксировать последнюю строку!! - сравнивать токен последней строки с общим числом строк
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name",\
 	также глянуть какая ошибка при обработке коммента или имени в центре исходика
 // !переход на новую строку в имени и комменте
 // !ошибка если нет имени или коммента и началось чтение второй части кода
 
-// TODO: добавить табуляцию в начале строки к общему числу симвоволов в строке
-
-// 	TODO: sti %r, %:label, r
-
 void	ft_read_file(int fd, char *file_name)
 {
 	t_asm_data	*asm_data;
-	char		*trim_line;
 	char		*line;
 	int			i;
+	int			j;
 
 	i = 0;
+	j = 0;
 	asm_data = ft_asm_data_init();
 	while (get_next_line(fd, &line) > 0)
 	{
+		while (line[j] == ' ' || line[j] == '\t')
+			j += (line[j] == ' ') ? 1 : 4;
 		MACHINE_NEW_LINE = 0;
-		trim_line = ft_strtrim(line);
-		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data, trim_line)) : 0;
-		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data, trim_line)) : 0;
+		(MACHINE_NAME_COMMENT >= 3) ? free(ft_lexer_champ_code(asm_data,\
+		ft_strtrim(line), j)) : 0;
+		(MACHINE_NAME_COMMENT < 3) ? free(ft_lexer_champ_data(asm_data,\
+		ft_strtrim(line), j)) : 0;
 		free(line);
 		ASM_NUM_ROW++;
-
-
 		i++;
 	}
-	ft_putstr("===========================\n");
 	ft_print_errors(asm_data);
+	ft_print_tokens(asm_data);
 	(i > 0) ? free(line) : 0;
 	free(asm_data);
 }
@@ -68,6 +65,7 @@ void	ft_start_compile_sequence(char *file_name)
 		return ;
 	}
 	ft_read_file(fd, file_name);
+	ft_putstr("==================================\n");
 	close(fd);
 }
 

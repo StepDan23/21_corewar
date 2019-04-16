@@ -4,7 +4,8 @@
 .name "Champ's NAME"
 .comment "comment text"
 
-	-11, -22, -33
+test:
+	aff :test
 
 
 
