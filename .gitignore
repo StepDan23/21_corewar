@@ -199,4 +199,5 @@ champs/examples/zork.s
 vm_champs.tar
 op.h.gch
 a.out
+corewar.dSYM
 .gitignore

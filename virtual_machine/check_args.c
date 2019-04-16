@@ -38,7 +38,10 @@ int		w_champion(int ac, char **av, t_vm *vm)
 	while (i < ac)
 	{
 		if (ft_strequ(av[i], "-n"))
+		{
 			i += 3;
+			continue;
+		}
 		else if (ft_strequ(av[i], "-dump"))
 			i += 2;
 		if (i < ac)
@@ -62,6 +65,11 @@ int		args_check(int ac, char **av)
 		{
 			if (!flags_check(ac, i, av))
 				exit(1);
+			if (ft_strequ(av[i], "-n"))
+				i++;
+			else
+				i++;
+			
 		}
 		else if (!check_filename(av[i]))
 			exit(1);
@@ -98,10 +106,10 @@ int		champion_count(int ac, char **av)
 	{
 		if (av[i][0] != '-' && !is_all_digit(av[i]) && check_filename(av[i]))
 			count++;
-		else if (av[i][0] != '-' && !is_all_digit(av[i]) && !check_filename(av[i]))
+		else if ((av[i][0] != '-' && !is_all_digit(av[i])) && !check_filename(av[i]))
 		{
-			ft_printf("arg filename %s invalid\n", av[i]);
-			exit(1);
+			ft_printf("filename %s invalid\n", av[i]);
+			return (0);
 		}
 		i++;
 	}
@@ -112,8 +120,14 @@ int		args_read(int ac, char **av, t_vm *vm)
 {
 	int			j;
 
+	if (ac <= 1)
+	{
+		ft_printf("[-n][number][filename.cor]|[filename.cor]\n");
+			exit(1);
+	}
 	if (args_check(ac, av))
 	{
+		vm->champion_count = champion_count(ac, av);
 		n_champion(ac, av, vm);
 		w_champion(ac, av, vm);
 		j = 1;
@@ -139,6 +153,7 @@ int		check_filename(char *file)
 		if (ft_strnequ(&file[len - 4], ".cor", 4))
 			return (1);
 	}
+	ft_printf("Invalid filename %s\n", file);
 	return (0);
 }
 
@@ -147,6 +162,11 @@ int		check_dump(t_vm *vm, char *param)
 	if (!is_all_digit(param))
 	{
 		ft_printf("Dump cycles isn't correct number.\n");
+		exit(1);
+	}
+	if (vm->dump != -1)
+	{
+		ft_printf("Several -dump args forbidden.\n");
 		exit(1);
 	}
 	ft_atoi(param) > 0 ? vm->dump = ft_atoi(param) : exit(1);
@@ -172,13 +192,16 @@ int		check_n(t_vm *vm, char *param)
 		exit(1);
 	}
 	champ = vm->champion[0];
-	id = 1;
-	while (id <= MAX_PLAYERS)
+	id = 0;
+	while (id < MAX_PLAYERS)
 	{
-		if (champ->id == n)
+		if (champ != NULL)
 		{
-			ft_printf("There is champion with same number.\n");
-			exit(1);
+			if (champ->id == n)
+			{
+				ft_printf("There is champion with same number.\n");
+				exit(1);
+			}
 		}
 		champ = vm->champion[++id];
 	}

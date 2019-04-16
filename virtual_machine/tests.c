@@ -21,7 +21,32 @@ int main(int ac, char **av)
 	t_vm *vm = vm_new();
 	args_read(ac, av, vm);
 	
-
+	printf("\nchampions number:\t\t%d\n\n", vm->champion_count);
+	if (vm->champion[0])
+		printf("filename:\t%s\nid:\t\t%d\n\n", vm->champion[0]->filename, vm->champion[0]->id);
+	else
+	{
+		printf("no champ with id\t%d\n\n", 1);
+	}
+	if (vm->champion[1])
+		printf("filename:\t%s\nid:\t\t%d\n\n", vm->champion[1]->filename, vm->champion[1]->id);
+	else
+	{
+		printf("no champ with id\t%d\n\n", 2);
+	}
+	if (vm->champion[2])
+		printf("filename:\t%s\nid:\t\t%d\n\n", vm->champion[2]->filename, vm->champion[2]->id);
+	else
+	{
+		printf("no champ with id\t%d\n\n", 3);
+	}
+	if (vm->champion[3])
+		printf("filename:\t%s\nid:\t\t%d\n\n", vm->champion[3]->filename, vm->champion[3]->id);
+	else
+	{
+		printf("no champ with id\t%d\n\n", 4);
+	}
+	
 	// t_vm *vm = vm_new();
 	// t_champion *x;
 	// int xx = check_args(ac, av, vm);

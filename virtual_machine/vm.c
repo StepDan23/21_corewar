@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ttreutel <ttreutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/16 16:30:14 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 17:31:06 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_vm	*vm_new(void)
 	vm->live_exec = 0;
 	vm->checkups = 0;
 	vm->p_total = 0;
+	vm->champion_count = 0;
 	vm_init_memory(vm->memory);
 	vm_init_proccess_counter(vm);
 	return (vm);
