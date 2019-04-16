@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 18:17:08 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 19:31:29 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1082,6 +1082,135 @@ int		lfork_test(t_vm *vm, t_proccess *proccess)
 	return (1);
 }
 
+int		live_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	champions_add("lol", 1, vm->champion);
+	vm->process->id = 0;
+
+	P_POS = 100;
+	proccess->is_live = 0;
+	vm->memory[101] = 0xFF;
+	vm->memory[102] = 0xFF;
+	vm->memory[103] = 0xFF;
+	vm->memory[104] = 0xFF;
+	live(vm, proccess);
+	if (proccess->is_live == 1 && vm->winner == vm->champion[0])
+		ft_printf("live_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("live_test [01] \x1b[31mFAIL\x1b[0m\n");
+
+	proccess->is_live = 0;
+	vm->winner = NULL;
+	vm->memory[101] = 0x00;
+	vm->memory[102] = 0x00;
+	vm->memory[103] = 0x00;
+	vm->memory[104] = 0xFF;
+	live(vm, proccess);
+	if (proccess->is_live == 1 && vm->winner == NULL)
+		ft_printf("live_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("live_test [02] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
+int		addsub_test(t_vm *vm, t_proccess *proccess)
+{
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+
+	P_POS = 0;
+	P_REG[1] = 0;
+	P_REG[2] = 0;
+	P_REG[3] = 11110;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x04; //00001100
+	add(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("add_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("add_test [01] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	P_C = 0;
+	P_REG[1] = -1;
+	P_REG[2] = 1;
+	P_REG[3] = 11110;
+	add(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("add_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("add_test [02] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x10; //00001100
+	P_C = 1;
+	P_REG[1] = 100;
+	P_REG[2] = 1;
+	add(vm, proccess);
+	if (P_REG[15] == 101 && P_C == 0)
+		ft_printf("add_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("add_test [03] \x1b[31mFAIL\x1b[0m\n");
+	// ft_printf("%d\n", P_REG[15]);
+	P_POS = 0;
+	P_REG[1] = 0;
+	P_REG[2] = 0;
+	P_REG[3] = 11110;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x04; //00001100
+	sub(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("sub_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("sub_test [01] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	P_C = 0;
+	P_REG[1] = 1;
+	P_REG[2] = 1;
+	P_REG[3] = 11110;
+	sub(vm, proccess);
+	if (P_REG[3] == 0 && P_C == 1)
+		ft_printf("sub_test [02] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("sub_test [02] \x1b[31mFAIL\x1b[0m\n");
+	
+	P_POS = 0;
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x10; //00001100
+	P_C = 1;
+	P_REG[1] = 100;
+	P_REG[2] = 1;
+	sub(vm, proccess);
+	if (P_REG[15] == 99 && P_C == 0)
+		ft_printf("sub_test [03] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("sub_test [03] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("--------------------------\n");
+	return (1);
+}
+
+void	aff_test(t_vm *vm, t_proccess *proccess)
+{
+	P_POS = 0;
+	P_REG[1] = 'a';
+	vm->memory[1] = 0x40; // Байт аргументов (REG)
+	vm->memory[2] = 0x02;
+	aff(vm, proccess);
+}
+
 int		main(void)
 {
 	t_vm *vm = vm_new();
@@ -1103,5 +1232,8 @@ int		main(void)
 	zjmp_test(vm, proccess);
 	fork_test(vm, proccess);
 	lfork_test(vm, proccess);
+	live_test(vm, proccess);
+	addsub_test(vm, proccess);
+	aff_test(vm, proccess);
 	return (0);
 }

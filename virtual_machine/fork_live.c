@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/16 16:38:10 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 19:29:14 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,10 @@ void	live(t_vm *vm, t_proccess *proccess)
 void	aff(t_vm *vm, t_proccess *proccess)
 {
 	char	ch;
+	int		reg_id;
 
-	ch = (char)P_REG[get_4bytes(vm->memory, (P_POS + 2) % MEM_SIZE) - 1];
+	reg_id = vm->memory[(P_POS + 2) % MEM_SIZE] - 1;
+	ch = (char)P_REG[reg_id];
 	ft_printf("%c", ch);
 }
 
