@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 19:28:15 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 12:01:47 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ t_vm	*init_vm_test(int argc, char *argv[])
 		i++;
 	}
 	vm->winner = vm->champion[0];
-	vm->champion_count = 2;
+	vm->champion_count = 0;
+	i = -1;
+	while(vm->champion[++i])
+		vm->champion_count++;
 	read_all_champs(vm->champion);
 	vm_spread_champs(vm, vm->champion);
 	return (vm);

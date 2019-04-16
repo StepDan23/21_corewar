@@ -6,33 +6,13 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 10:34:07 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 19:22:29 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 22:36:34 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 
-static void		make_player_color(t_window *window, t_vm *vm, int i)
-{
-	if (i >= 0 && i < (int)VM_CHAMPS[0]->size)
-		FONT_COLOR = (SDL_Color){COL_GREEN};
-	else if (i >= (4096 / VM_CHAMP_COUNT) &&
-				i < (int)(4096 / VM_CHAMP_COUNT + VM_CHAMPS[1]->size) &&
-													VM_CHAMP_COUNT > 1)
-		FONT_COLOR = (SDL_Color){COL_BLUE};
-	else if (i >= (2 * 4096 / VM_CHAMP_COUNT) &&
-			i < (int)(2 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[2]->size) &&
-													VM_CHAMP_COUNT > 2)
-		FONT_COLOR = (SDL_Color){COL_RED};
-	else if (i >= (3 * 4096 / VM_CHAMP_COUNT) &&
-			i < (int)(3 * 4096 / VM_CHAMP_COUNT + VM_CHAMPS[3]->size) &&
-													VM_CHAMP_COUNT > 3)
-		FONT_COLOR = (SDL_Color){COL_YELOW};
-	else
-		FONT_COLOR = (SDL_Color){COL_L_GREY};
-}
-
-void			make_back_arena(t_window *window, t_vm *vm)
+static void		make_back_arena(t_window *window, t_vm *vm)
 {
 	int			i;
 	int			j;
@@ -41,7 +21,6 @@ void			make_back_arena(t_window *window, t_vm *vm)
 
 	hex = "0123456789abcdef";
 	FONT_CURR = FONT_ARENA;
-	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
 	j = 0;
 	str[2] = '\0';
 	while (j < 64)
@@ -49,18 +28,14 @@ void			make_back_arena(t_window *window, t_vm *vm)
 		i = 0;
 		while (i < 64)
 		{
-ft_printf("12 i = %d j = %d mem = %d \n", i, j, VM_CHAMP_COUNT);
-			make_player_color(window, vm, j * 64 + i);
-ft_printf("12 i = %d j = %d\n", i, j);
 			str[0] = hex[VM_MEMORY[j * 64 + i] / 16];
 			str[1] = hex[VM_MEMORY[j * 64 + i] % 16];
+			FONT_COLOR = get_player_color(MEM_CODE[j * 64 + i]);
 			print_str(window, str, 13 + 18.7 * i, 20 + 13.5 * j);
 			i++;
 		}
 		j++;
 	}
-
-	SDL_SetRenderTarget(WIN_REND, NULL);
 }
 
 static void		make_text_players(t_window *window, t_vm *vm)
@@ -75,7 +50,7 @@ static void		make_text_players(t_window *window, t_vm *vm)
 		print_str(window, "Player - ", 1235, height += 60);
 		print_nbr(window, i, 1300, height);
 		print_str(window, ":", 1312, height);
-		FONT_COLOR = get_player_color(i);
+		FONT_COLOR = get_player_color(i + 1);
 		print_str(window, VM_CHAMPS[i]->name, 1324, height);
 		FONT_COLOR = (SDL_Color){COL_WHITE};
 		print_str(window, "Last live:", 1250, height += 30);
@@ -115,5 +90,6 @@ void			make_background(t_window *window, t_vm *vm)
 	SDL_RenderFillRects(WIN_REND, rects, 3);
 	make_text_status(window);
 	make_text_players(window, vm);
+	make_back_arena(window, vm);
 	SDL_SetRenderTarget(WIN_REND, NULL);
 }

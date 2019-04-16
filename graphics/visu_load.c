@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/15 18:09:07 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/16 14:25:15 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int						load_files(t_window *window, t_vm *vm)
 					SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!WIN_BACK)
 		return (ft_printf("Texture_Error: %s\n", SDL_GetError()));
-	make_background(window, vm);
 	load_text_start_end(window, VM_CHAMP_COUNT);
 	if (!BACK_START || !BACK_END)
 		return (ft_printf("Load_Error: %s\n", SDL_GetError()));
