@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 17:56:41 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/03/08 14:54:50 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/16 18:32:53 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static long long	ft_helper(const char *nptr, int i, long long res, int minus)
 		temp = res;
 		res = 10 * res + nptr[i++] - '0';
 		if (temp > res)
-			exit(write(1, "Error: atol overflow\n", 21));
+			return (-1000000);
 	}
 	return ((res) * minus);
 }

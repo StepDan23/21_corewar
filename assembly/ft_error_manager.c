@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error_manager.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 18:30:52 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/16 19:40:39 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,20 @@ void	ft_print_errors(t_asm_data *asm_data)
 void	ft_error_add(t_asm_data *asm_data, char *line, int column, int type)
 {
 	t_list		*chain;
+	t_errors	*error;
 
+	ERROR_SIZE++;
 	chain = ft_lstnew(NULL, sizeof(t_errors));
+	error = ft_error_init(line, ASM_NUM_ROW, column, type);
+	chain->content = error;
+	chain->content_size = ERROR_SIZE;
 	if (!ERRORS)
 		ERRORS = chain;
 	else
-		ft_lstadd_last(&ERRORS, chain);
-	chain->content = ft_error_init(line, ASM_NUM_ROW, column, type);
+		ft_lstadd_last(ERRORS, chain);
 	if (ERROR_FLAG == 0)
 		ERROR_FLAG = type;
 	else
 		ERROR_FLAG = (ERROR_FLAG < type) ? ERROR_FLAG : type;
-	ERROR_SIZE++;
 }
 

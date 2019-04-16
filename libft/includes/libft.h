@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/15 19:30:41 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/16 19:40:17 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ char				*ft_power2(int power);
 char				*ft_power5(int power);
 
 void				ft_lstadd(t_list **alst, t_list *list);
-void				ft_lstadd_last(t_list **alst, t_list *list);
+void				ft_lstadd_last(t_list *alst, t_list *list);
 void				ft_lstclear(t_list *lst);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));

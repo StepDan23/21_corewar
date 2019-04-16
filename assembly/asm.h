@@ -40,7 +40,7 @@ typedef enum		e_types
 	Label,
 	Command,
 	Register,
-	Symbol,
+	Direct,
 	String,
 	Number
 }					t_types;
@@ -128,7 +128,7 @@ typedef struct		s_asm_data
 # define T_ERROR_COL (((t_errors *)(current->content))->error_column)
 # define T_ERROR_ROW (((t_errors *)(current->content))->error_row)
 
-# define TOKEN_DATA ((t_token *)(ASM_TOKENS->content))
+# define TOKEN_DATA ((t_token *)(asm_data->tokens->content))
 
 
 t_asm_data		*ft_asm_data_init(void);
@@ -139,5 +139,18 @@ void			ft_error_add(t_asm_data *asm_data, char *line, int column,\
 int type);
 void			ft_print_errors(t_asm_data *asm_data);
 char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line);
+void			ft_fill_token(t_asm_data *asm_data, char *line);
+void			ft_add_new_str_token(t_asm_data *asm_data);
+void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line);
+void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line);
+void			ft_fill_token_direct_regs(t_asm_data *asm_data, char *line);
+int				ft_find_sym(char *line, char sym);
+int				ft_check_label_symbols(char *line);
+int				ft_get_word_len(char *line);
+int				ft_string_contain_only_num(char	*str);
+
+
+
+
 
 #endif
