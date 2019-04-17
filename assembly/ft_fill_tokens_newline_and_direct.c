@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 19:20:17 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:14:44 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_add_new_str_token(t_asm_data *asm_data)
 	token->col = 0;
 	token->str = "\n";
 	token->type = Newline;
+	asm_data->token_size += 1;
 	MACHINE_NEW_LINE = 1;
 }
 

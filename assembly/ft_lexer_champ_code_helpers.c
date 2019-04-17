@@ -6,13 +6,13 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:23:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 18:11:51 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 20:57:46 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-char	g_commands[16][6] = {
+char	g_commands[REG_NUMBER][6] = {
 	"live",
 	"ld",
 	"st",
@@ -43,7 +43,7 @@ int		ft_line_is_command(char *line)
 		while (line[j] == g_commands[i][j] && line[j] && g_commands[i][j])
 			j++;
 		if (g_commands[i][j] == '\0')
-			return (1);
+			return ((i == 0) ? (-1) : i);
 		i++;
 	}
 	return (0);

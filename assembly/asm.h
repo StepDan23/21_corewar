@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 18:16:19 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:13:15 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ typedef enum		e_types
 	Direct_reg,
 	Number
 }					t_types;
+
+typedef struct		s_table_ops
+{
+	int				*command_nums;
+	int				*count_of_args;
+	int				*arg1_type;
+	int				*arg2_type;
+	int				*arg3_type;
+	int				*args_codes;
+}					t_table_ops;
 
 typedef struct		s_token
 {
@@ -77,6 +87,7 @@ typedef struct		s_asm_data
 	int				num_text_row;
 	t_champ_data	*champ_data;
 	t_list			*tokens;
+	int				token_size;
 	t_machine		*state_machine;
 	t_list			*errors;
 	int				error_list_size;
@@ -118,6 +129,10 @@ typedef struct		s_asm_data
 
 # define TOKEN_DATA ((t_token *)(asm_data->tokens->content))
 
+# define T_REG 1
+# define T_DIR 2
+# define T_IND 4
+
 
 t_asm_data		*ft_asm_data_init(void);
 t_token			*ft_token_init(void);
@@ -144,5 +159,6 @@ int				ft_line_is_command(char *line);
 void			ft_print_tokens(t_asm_data *asm_data);
 void			ft_current_func_divis(t_asm_data *asm_data, char *line, int i,\
 int j);
+t_table_ops		*ft_table_operations_init(void);
 
 #endif

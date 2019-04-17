@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 17:37:35 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:13:39 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_asm_data		*ft_asm_data_init(void)
 	asm_data->num_current_row = 1;
 	asm_data->num_text_row = 1;
 	asm_data->tokens = NULL;
+	asm_data->token_size = 0;
 	asm_data->state_machine = ft_state_machine_init();
 	asm_data->champ_data = ft_champ_data_init();
 	asm_data->errors = NULL;

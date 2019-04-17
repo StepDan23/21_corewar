@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/17 18:48:14 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 21:16:33 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 // ! задание на сегодня - провести синтаксический разбор кода
 // ! провести компиляцию
 // ! заняться очисткой памяти
+// ! Расставить ошибки по типам
 
 void	ft_check_main_params_exists(t_asm_data *asm_data)
 {
@@ -44,6 +45,7 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 	{
 		chain = ft_lstnew(NULL, sizeof(t_token));
 		token = ft_token_init();
+		asm_data->token_size += 1;
 		chain->content = token;
 		if (asm_data->tokens)
 			ft_lstadd_last(asm_data->tokens, chain);
