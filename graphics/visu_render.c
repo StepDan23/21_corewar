@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 22:38:47 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/17 09:50:49 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,95 +63,6 @@ static void		render_status_val(t_window *window, t_vm *vm)
 		print_nbr(window, VM_CHAMPS[i]->lives_in_period, 1435, height += 30);
 		height += 30;
 		i++;
-	}
-}
-
-static void		make_car_color(t_window *window, t_proccess *proc)
-{
-	char	id;
-
-	id = window->mem_code[proc->position];
-	FONT_COLOR = (SDL_Color){COL_BLACK};
-	if (id == 0)
-	{
-		FONT_COLOR = (SDL_Color){COL_GREY};
-		SDL_SetRenderDrawColor(WIN_REND, COL_L_GREY);
-	}
-	else if (id == 1)
-		SDL_SetRenderDrawColor(WIN_REND, COL_GREEN);
-	else if (id == 2)
-		SDL_SetRenderDrawColor(WIN_REND, COL_BLUE);
-	else if (id == 3)
-		SDL_SetRenderDrawColor(WIN_REND, COL_RED);
-	else if (id == 4)
-		SDL_SetRenderDrawColor(WIN_REND, COL_YELOW);
-}
-
-static void		render_carr_back(t_window *window, t_vm *vm, t_proccess *proc)
-{
-	int			i;
-	char		*hex;
-	char		str[3];
-	SDL_Rect	rect;
-
-	i = -1;
-	hex = "0123456789abcdef";
-	str[2] = '\0';
-	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
-	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
-	FONT_COLOR = get_player_color(proc->player_id);
-	while (++i < 4)
-	{
-		MEM_CODE[proc->pos_written + i] = proc->player_id;
-		rect = (SDL_Rect){13 + (proc->pos_written + i) % 64 * 18.7,
-				20 + 13.5 * (int)((proc->pos_written + i) / 64), 15, 15};
-		SDL_RenderFillRect(WIN_REND, &rect);
-		str[0] = hex[VM_MEMORY[proc->pos_written + i] / 16];
-		str[1] = hex[VM_MEMORY[proc->pos_written + i] % 16];
-		print_str(window, str, 13 + (proc->pos_written + i) % 64 * 18.7,
-					20 + 13.5 * (int)((proc->pos_written + i) / 64));
-	}
-	SDL_SetRenderTarget(WIN_REND, NULL);
-}
-
-static void		render_carrier(t_window *window, t_vm *vm)
-{
-	SDL_Rect	rect;
-	t_proccess	*proc;
-	int			pos;
-	char		str[3];
-	char		*hex;
-
-	hex = "0123456789abcdef";
-	proc = vm->process;
-	str[2] = '\0';
-	FONT_CURR = FONT_ARENA;
-	while (proc)
-	{
-		pos = proc->position;
-		rect = (SDL_Rect){13 + pos % 64 * 18.7,
-							20 + 13.5 * (int)(pos / 64), 15, 15};
-		make_car_color(window, proc);
-		SDL_RenderFillRect(WIN_REND, &rect);
-		str[0] = hex[VM_MEMORY[pos] / 16];
-		str[1] = hex[VM_MEMORY[pos] % 16];
-		print_str(window, str, 13 + pos % 64 * 18.7,
-							20 + 13.5 * (int)(pos / 64));
-		proc = proc->next;
-	}
-}
-
-static void		render_carrier_source(t_window *window, t_vm *vm)
-{
-	t_proccess	*proc;
-
-	proc = vm->process;
-	FONT_CURR = FONT_ARENA;
-	while (proc)
-	{
-		if (proc->pos_written >= 0)
-			render_carr_back(window, vm, proc);
-		proc = proc->next;
 	}
 }
 

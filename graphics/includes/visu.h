@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 22:40:29 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/17 10:31:52 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct		s_window
 	TTF_Font		*f_pause;
 	TTF_Font		*f_status;
 	TTF_Font		*f_arena;
-	char			mem_code[MEM_SIZE + 1];
+	unsigned char	mem_code[MEM_SIZE + 1];
 	SDL_Color		color;
 	Sint32			width;
 	Sint32			height;
@@ -115,6 +115,11 @@ void				print_start_names(t_window *window, t_vm *vm);
 ** visu_render.c
 */
 void				render_image(t_window *window, t_vm *vm, t_op op_tab[17]);
+/*
+** visu_render_carrier.c
+*/
+void				render_carrier(t_window *window, t_vm *vm);
+void				render_carrier_source(t_window *window, t_vm *vm);
 //tests
 void				render_tests(t_window *window, t_vm *vm);
 void				init_tests(t_vm *vm);

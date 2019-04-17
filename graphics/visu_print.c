@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 22:37:28 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/17 11:00:02 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 SDL_Color	get_player_color(int player_id)
 {
-	SDL_Color	colors[9];
+	SDL_Color	colors[10];
 
 	colors[0] = (SDL_Color){COL_L_GREY};
 	colors[1] = (SDL_Color){COL_GREEN};
 	colors[2] = (SDL_Color){COL_BLUE};
 	colors[3] = (SDL_Color){COL_RED};
 	colors[4] = (SDL_Color){COL_YELOW};
-	colors[5] = (SDL_Color){COL_L_GREEN};
-	colors[6] = (SDL_Color){COL_L_BLUE};
-	colors[7] = (SDL_Color){COL_L_RED};
-	colors[8] = (SDL_Color){COL_L_YELOW};
+	colors[5] = (SDL_Color){COL_GREY};
+	colors[6] = (SDL_Color){COL_L_GREEN};
+	colors[7] = (SDL_Color){COL_L_BLUE};
+	colors[8] = (SDL_Color){COL_L_RED};
+	colors[9] = (SDL_Color){COL_L_YELOW};
+	if (player_id > 9)
+		return (colors[player_id % 5 + 5]);
 	return (colors[player_id]);
 }
 
