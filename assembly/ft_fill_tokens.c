@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:40:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 21:54:43 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 19:21:52 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_fill_token_command(t_asm_data *asm_data, char *line, t_token *token)
 {
-	if (line[0] == ':' && line[1] != '\0')
+	if (line[0] == LABEL_CHAR && line[1] != '\0')
 	{
 		token->type = Label_arg;
 		return ;
@@ -58,7 +58,6 @@ void	ft_fill_token_direct(t_asm_data *asm_data, char *line, t_token *token)
 {
 	if (line[0] == DIRECT_CHAR)
 	{
-		ft_printf("token str = %s\n", token->str);
 		if (line[1] == LABEL_CHAR)
 			ft_fill_token_direct_labels(asm_data, &line[2], token);
 		else if (ft_isdigit(line[1]) || line[1] == '+' || line[1] == '-')
@@ -81,8 +80,8 @@ void	ft_fill_token_digits(t_asm_data *asm_data, char *line, t_token *token)
 	if (ft_isdigit(line[0]) || line[0] == '+' || line[0] == '-')
 	{
 		token->type = Unknown;
-		if (line[0] == '-')
-			ft_error_add(asm_data, ft_strjoin_orig("Detected minus in number ",\
+		if (line[0] == '+')
+			ft_error_add(asm_data, ft_strjoin_orig("Detected plus in number ",\
 			token->str), token->col, 1);
 		else if (ft_atol(line) > MEM_SIZE)
 			ft_error_add(asm_data, ft_strjoin_orig("Value is greater than \
@@ -99,7 +98,6 @@ MEM_SIZE ", token->str), token->col, 1);
 
 void	ft_fill_token(t_asm_data *asm_data, char *line, t_token *token)
 {
-	(line[0] != ' ') ? ft_printf("{%s} ", line) : 0;
 	token->str = line;
 	if (line[0] == ' ' || line[0] == '\t')
 	{

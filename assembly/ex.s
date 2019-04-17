@@ -5,6 +5,6 @@
 .comment "comment"
 
 test:
-	aff :test
+	aff %-5
 	sti 55 #sdgkfdj
-	st 45
+	st %+45

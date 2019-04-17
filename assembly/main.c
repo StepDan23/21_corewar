@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/17 18:17:18 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:48:14 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 //	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name", также глянуть какая ошибка при обработке коммента или имени в центре исходика
 
 // ! задание на сегодня - провести синтаксический разбор кода
+// ! провести компиляцию
+// ! заняться очисткой памяти
 
 void	ft_check_main_params_exists(t_asm_data *asm_data)
 {
@@ -61,7 +63,6 @@ void	ft_solve_sequence(t_asm_data *asm_data, int fd)
 	//todo проверить строку после завершения разработки
 	asm_data->count_symbols += ASM_NUM_ROW - 10;
 	ft_check_last_row(asm_data, fd, 20);
-	ft_print_tokens(asm_data);
 	ft_check_syntax(asm_data);
 	ft_check_main_params_exists(asm_data);
 	ft_print_errors(asm_data);
