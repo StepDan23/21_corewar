@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 20:03:30 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:02:15 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_fill_token_direct_labels(t_asm_data *asm_data, char *line,\
 t_token *token)
 {
 	if (ft_check_label_symbols(line))
-		token->type = Direct;
+		token->type = Direct_label;
 	else
 	{
 		token->type = Unknown;
@@ -64,7 +64,7 @@ t_token *token)
 		token->str), token->col, 1);
 	}
 	else
-		token->type = Direct;
+		token->type = Direct_number;
 }
 
 void	ft_fill_token_direct_regs(t_asm_data *asm_data, char *line,\
@@ -90,5 +90,5 @@ t_token *token)
 		ft_error_add(asm_data, ft_strjoin_orig("Wrong value in Direct ",\
 		token->str), token->col, 1);
 	else
-		token->type = Direct;
+		token->type = Direct_reg;
 }

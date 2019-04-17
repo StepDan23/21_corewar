@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:23:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 21:17:13 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:11:51 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		ft_check_label_symbols(char *line)
 
 	i = 0;
 	j = 0;
-	while (line[i] && line[i] != ':')
+	while (line[i] && line[i] != LABEL_CHAR)
 	{
 		j = 0;
 		while (LABEL_CHARS[j])
@@ -100,13 +100,10 @@ int		ft_get_word_len(char *line)
 		i++;
 	if (line[0] == SEPARATOR_CHAR && i == 0)
 		i++;
-	if (line[i] == ':' && i != 0)
+	if (line[i] == LABEL_CHAR && i != 0)
 		i++;
 	if (i > 0)
-	{
-		ft_printf("\n WORD len = %i ", i);
 		return (i);
-	}
 	if (line[i] == ' ' || line[i] == '\t')
 		return (1);
 	return (0);

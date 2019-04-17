@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/17 17:48:40 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:17:18 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 			asm_data->tokens = chain;
 		token->row = ASM_NUM_ROW;
 		token->str = ft_strdup("\n");
-		token->type = Whitespace;
+		token->type = Newline;
 	}
 	else
 		ft_error_add(asm_data, ft_strdup("No newline at the end of the file "), 0, 2);
@@ -61,10 +61,10 @@ void	ft_solve_sequence(t_asm_data *asm_data, int fd)
 	//todo проверить строку после завершения разработки
 	asm_data->count_symbols += ASM_NUM_ROW - 10;
 	ft_check_last_row(asm_data, fd, 20);
+	ft_print_tokens(asm_data);
 	ft_check_syntax(asm_data);
 	ft_check_main_params_exists(asm_data);
 	ft_print_errors(asm_data);
-	ft_print_tokens(asm_data);
 }
 
 void	ft_read_file(int fd, char *file_name)

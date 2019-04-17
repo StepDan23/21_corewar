@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 17:56:14 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:16:19 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,19 @@
 #include "libft.h"
 #include "op.h"
 
-/*
-char	commands[16][6] = {
-	{"live"},
-	{"ld"},
-	{"st"},
-	{"add"},
-	{"sub"},
-	{"and"},
-	{"or"},
-	{"xor"},
-	{"zjmp"},
-	{"ldi"},
-	{"sti"},
-	{"fork"},
-	{"lld"},
-	{"lldi"},
-	{"lfork"},
-	{"aff"}
-};
-*/
-/*
-** как обработать эти марки?
-*/
-
-//0-10
 typedef enum		e_types
 {
 	Unknown = -1,
-	None = 0,
 	Separator,
-	Comment,
 	Whitespace,
 	Newline,
 	Label,
 	Label_arg,
 	Command,
 	Register,
-	Direct,
+	Direct_label,
+	Direct_number,
+	Direct_reg,
 	Number
 }					t_types;
 

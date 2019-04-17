@@ -6,19 +6,12 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:12:32 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 17:48:24 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 18:09:49 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include <stdlib.h>
-
-/*
-** в этой секции нужно проверять:
-** имя команды,
-** ее атрибуты,
-** метки,
-*/
 
 char	*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j)
 {
