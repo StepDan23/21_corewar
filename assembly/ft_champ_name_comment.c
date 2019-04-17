@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:14:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 20:45:50 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 17:55:38 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,6 @@ int		ft_wrong_quotes(t_asm_data *asm_data, char *line, int i, int j)
 	else
 		ft_error_add(asm_data, ft_strdup("Wrong quotes and no end "), i, 1);
 	return (j);
-}
-
-void	ft_current_func_divis(t_asm_data *asm_data, char *line, int i, int j)
-{
-	if (MACHINE_WAIT_NAME)
-	{
-		if (j > PROG_NAME_LENGTH)
-			ft_error_add(asm_data, ft_strdup("Name too long\n"), i, 2);
-		else
-		{
-			ft_strncpy(CHAMP_NAME, &line[1], j - 1);
-			ft_printf("CHAMP NAME = %s\n", CHAMP_NAME);
-		}
-		MACHINE_WAIT_NAME = 0;
-		MACHINE_NAME_COMMENT += 1;
-	}
-	if (MACHINE_WAIT_COMMENT)
-	{
-		if (j > COMMENT_LENGTH)
-			ft_error_add(asm_data, ft_strdup("Comment too long\n"), i, 2);
-		else
-		{
-			ft_strncpy(CHAMP_COMMENT, &line[1], j - 1);
-			ft_printf("CHAMP COMMENT = %s\n", CHAMP_COMMENT);
-		}
-		MACHINE_WAIT_COMMENT = 0;
-		MACHINE_NAME_COMMENT += 2;
-	}
 }
 
 int		ft_get_name_or_comment(t_asm_data *asm_data, char *line, int i, int k)
@@ -66,16 +38,15 @@ int		ft_get_name_or_comment(t_asm_data *asm_data, char *line, int i, int k)
 			j++;
 		if (!line[j])
 		{
-			ft_error_add(asm_data, ft_strjoin_orig("No close quotes found \
-at ", &line[temp]), temp + k, 2);
+			MACHINE_DOUBLE_QUOTES = 1;
 			return (j + ft_strlen(&line[temp]));
 		}
 		ft_current_func_divis(asm_data, line, i + k, j);
 	}
 	else
 	{
-		ft_error_add(asm_data, ft_strjoin_orig("An error accured at \
-", &line[temp]), temp + k, 2);
+		ft_error_add(asm_data, ft_strdup("Some unidentified error \
+oqqured while set name or comment: "), temp + k, 2);
 		j = ft_strlen(line) - 1;
 	}
 	return (j);
@@ -84,6 +55,7 @@ at ", &line[temp]), temp + k, 2);
 int		ft_get_name_or_comment_flag(t_asm_data *asm_data, char *line,\
 int i, int j)
 {
+
 	if (line[0] == NAME_CMD_STRING[0] && !ft_strncmp(line, NAME_CMD_STRING,\
 	ft_strlen(NAME_CMD_STRING)))
 	{
@@ -109,24 +81,53 @@ name/comment: ", &line[0]), i + j, 2);
 	return (i + ft_strlen(&line[0]) - 1);
 }
 
+int		ft_add_text_in_quotes(t_asm_data *asm_data, char *line, int i)
+{
+	while (line[i] && line[i] != '"')
+		i++;
+	if (MACHINE_WAIT_NAME)
+	{
+		CHAMP_NAME = ft_strjoin(CHAMP_NAME, ft_strsub(line, 0, i));
+		if (line[i] == '"')
+		{
+			MACHINE_DOUBLE_QUOTES = 0;
+			MACHINE_WAIT_NAME = 0;
+			MACHINE_NAME_COMMENT += 1;
+		}
+	}
+	if (MACHINE_WAIT_COMMENT)
+	{
+		CHAMP_COMMENT = ft_strjoin(CHAMP_COMMENT, ft_strsub(line, 0, i));
+		if (line[i] == '"')
+		{
+			MACHINE_DOUBLE_QUOTES = 0;
+			MACHINE_WAIT_COMMENT = 0;
+			MACHINE_NAME_COMMENT += 2;
+		}
+	}
+	return (i);
+}
+
 char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j)
 {
 	int		i;
 	int		line_len;
 	t_token	*token;
 
-	if (ft_strlen(line) == 0)
+	if ((line_len = ft_strlen(line)) == 0)
 		return (line);
-	i = 0;
-	line_len = ft_strlen(line);
 	ft_putendl(line);
+	i = 0;
 	while (i < line_len)
 	{
 		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
 		if (line[i] == COMMENT_CHAR)
 			return (line);
-		i = ft_get_name_or_comment_flag(asm_data, &line[i], i, j);
+		if (MACHINE_DOUBLE_QUOTES)
+			i = ft_add_text_in_quotes(asm_data, line, 0);
+		else
+			i = ft_get_name_or_comment_flag(asm_data, &line[i], i, j);
 		i++;
 	}
 	return (line);

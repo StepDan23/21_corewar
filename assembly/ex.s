@@ -1,11 +1,10 @@
 
-#dsgdsg ваыва
+#dsgdsg dsf
 
-.name "Champ's NAME"
-.comment "comment text"
+.name "name"
+.comment "comment"
 
 test:
 	aff :test
-
-
-
+	sti 55 #sdgkfdj
+	st 45

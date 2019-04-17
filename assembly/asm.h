@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 21:51:24 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 17:56:14 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct	s_machine
 */
 typedef struct		s_asm_data
 {
+	int				count_symbols;
 	int				num_current_row;
 	int				num_text_row;
 	t_champ_data	*champ_data;
@@ -127,7 +128,7 @@ typedef struct		s_asm_data
 
 # define MACHINE_WAIT_NAME (asm_data->state_machine->wait_name)
 # define MACHINE_WAIT_COMMENT (asm_data->state_machine->wait_comment)
-# define MACHINE_DOUBLE_QUOT (asm_data->state_machine->double_quotes)
+# define MACHINE_DOUBLE_QUOTES (asm_data->state_machine->double_quotes)
 # define MACHINE_NAME_COMMENT (asm_data->state_machine->took_name_and_comment)
 # define MACHINE_NEW_LINE (asm_data->state_machine->new_line)
 
@@ -153,14 +154,20 @@ void			ft_print_errors(t_asm_data *asm_data);
 char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j);
 void			ft_fill_token(t_asm_data *asm_data, char *line, t_token *token);
 void			ft_add_new_str_token(t_asm_data *asm_data);
-void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line, t_token *token);
-void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line, t_token *token);
-void			ft_fill_token_direct_regs(t_asm_data *asm_data, char *line, t_token *token);
+void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line,\
+t_token *token);
+void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line,\
+t_token *token);
+void			ft_fill_token_direct_regs(t_asm_data *asm_data, char *line,\
+t_token *token);
 int				ft_find_sym(char *line, char sym);
 int				ft_check_label_symbols(char *line);
+void			ft_check_syntax(t_asm_data *asm_data);
 int				ft_get_word_len(char *line);
 int				ft_string_contain_only_num(char	*str);
 int				ft_line_is_command(char *line);
 void			ft_print_tokens(t_asm_data *asm_data);
+void			ft_current_func_divis(t_asm_data *asm_data, char *line, int i,\
+int j);
 
 #endif

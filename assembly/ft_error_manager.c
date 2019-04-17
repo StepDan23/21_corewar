@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 20:12:25 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/17 12:36:52 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ft_print_errors(t_asm_data *asm_data)
 	t_list	*temp;
 	t_list	*current;
 
-	i = 0;
+	i = -1;
 	current = ERRORS;
-	while (i < ERROR_SIZE)
+	while (++i < ERROR_SIZE)
 	{
 		if (ERROR_FLAG == T_ERROR_TYPE)
 		{
@@ -39,7 +39,11 @@ void	ft_print_errors(t_asm_data *asm_data)
 		free(((t_errors *)(temp->content))->error_str);
 		current = current->next;
 		free(temp);
-		i++;
+	}
+	if (ERROR_SIZE > 0)
+	{
+		// запустить очистку памяти
+		exit(ft_printf("ERRORS was founded. Fix your champ's code\n"));
 	}
 }
 
