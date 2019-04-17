@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:52:21 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 12:09:20 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:14:16 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			render_tests(t_window *window, t_vm *vm)
 					carriers->player_id, carriers->position, carriers->cycles_to_wait);
 		ft_printf("pos_written = %d\n", carriers->pos_written);
 		if (carriers->pos_written >= 0)
-			ft_printf("code_to_written = %d%d %d%d %d%d %d%d\n",
+			ft_printf("\033[31m code_to_written = %d%d %d%d %d%d %d%d\033[37m\n",
 			VM_MEMORY[carriers->pos_written] / 16, VM_MEMORY[carriers->pos_written] % 16,
 			VM_MEMORY[carriers->pos_written + 1] / 16, VM_MEMORY[carriers->pos_written + 1] % 16,
 			VM_MEMORY[carriers->pos_written + 2] / 16, VM_MEMORY[carriers->pos_written + 2] % 16,

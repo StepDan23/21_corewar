@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/11 17:22:23 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/17 00:26:20 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_proccess	*proccess_new(int id, int player_id, int pos)
 	return (new_p);
 }
 
-void	proccess_add(t_proccess **head, t_proccess *new_p)
+void		proccess_add(t_proccess **head, t_proccess *new_p)
 {
 	if (head && new_p)
 	{
@@ -55,7 +55,7 @@ void	proccess_add(t_proccess **head, t_proccess *new_p)
 	}
 }
 
-void	proccess_kill(t_proccess **head, t_proccess *ps)
+void		proccess_kill(t_proccess **head, t_proccess *ps)
 {
 	t_proccess	*prev;
 	t_proccess	*curr;
@@ -84,12 +84,12 @@ void	proccess_kill(t_proccess **head, t_proccess *ps)
 ** Удаляет процессы у которых live = 0
 */
 
-void	proccess_check_live(t_vm *vm, t_proccess **head)
+void		proccess_check_live(t_vm *vm, t_proccess **head)
 {
 	t_proccess	*curr;
 	t_proccess	*next;
-	
-	if (!head)
+
+	if (head == NULL)
 		return ;
 	curr = *head;
 	while (curr)
@@ -105,4 +105,6 @@ void	proccess_check_live(t_vm *vm, t_proccess **head)
 			curr->is_live = 0;
 		curr = next;
 	}
+	if (head == NULL)
+		vm->end_game = 1;
 }
