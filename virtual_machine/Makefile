@@ -3,7 +3,7 @@ LIB = ../libft/libft.a
 FLAGS = -Werror -Wall -Wextra -g
 GCC = gcc
 SRC = core.c args_utils.c check_args.c champions.c read_champions.c read_champions2.c vm.c vm_load.c proccesses.c proc_performe.c proc_utils.c ld.c ldi.c st.c add_sub.c fork_live.c logic.c\
-		memory_read.c
+		memory_read.c args_champs.c
 OBJ = $(SRC:.c=.o)
 #  core.c 
 all: $(LIB) $(NAME)

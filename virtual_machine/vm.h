@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 16:30:05 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/17 01:06:58 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct			s_champion
 **	cycles - кол-во выполненных циклов
 **	cycles_to_die - кол-во оставшихся циклов до проверки процессов на live
 **	cycles_to_dump - кол-во циклов до дампа памяти
-**	dump - периодичность дампа памяти в циклах
 **	cycles_die - периодичность проверки на live в циклах
 **	*process - список живых процессов (кареток)
 **	*champion - список чемпионов (пока хз с этим)
@@ -89,7 +88,6 @@ typedef struct			s_vm
 	int					cycles;
 	int					cycles_to_die;
 	int					cycles_to_dump;
-	int					dump;
 	int					cycles_die;
 	t_proccess			*process;
 	t_champion			*champion[MAX_PLAYERS];
@@ -100,6 +98,7 @@ typedef struct			s_vm
 	unsigned int		checkups;
 	int					p_num[4];
 	int					p_total;
+	int					end_game;
 }						t_vm;
 
 # define VM_M vm->memory
