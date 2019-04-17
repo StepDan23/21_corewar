@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/17 01:06:58 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/17 15:28:24 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,4 +231,9 @@ void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
 
 t_vm					*init_vm_test(int argc, char *argv[]);
+void					init_optab(t_op op_tab[17]);
+void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
+void					update_vm_state(t_vm *vm);
+void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
+void					introduce_players(t_champion **players);
 #endif

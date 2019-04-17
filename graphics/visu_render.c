@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 09:50:49 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/17 15:24:24 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ static void		render_status_val(t_window *window, t_vm *vm)
 
 void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
 {
-	do_cyrcle(vm, op_tab);
+	performe_proc(vm, vm->process, op_tab);
 	render_carrier_source(window, vm);
+	update_vm_state(vm);
 	FONT_CURR = FONT_PAUSE;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Press SPACE to continue or S to step up", 178, 800);
@@ -101,8 +102,9 @@ render_tests(window, vm);
 		print_str(window, "** Running **", 1244, 40);
 		while (speed_cycle >= 0)
 		{
-			do_cyrcle(vm, op_tab);
+			performe_proc(vm, vm->process, op_tab);
 			render_carrier_source(window, vm);
+			update_vm_state(vm);
 			speed_cycle--;
 		}
 	}
