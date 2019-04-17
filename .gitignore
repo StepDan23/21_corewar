@@ -1,2 +1,6 @@
 .DS_Store
 .vscode
+visu.dSYM/Contents/Resources/DWARF/visu
+visu
+libft/libft.a
+visu.dSYM/Contents/Info.plist
