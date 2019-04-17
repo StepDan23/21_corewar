@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_performe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/10 23:03:18 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:32:32 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	init_f(void (*f[17])(t_vm *, t_proccess *))
 
 /*
 **	performe_action
-**	Вызывается для процесса, если cyrcles_to_wait = 0 и номер операции корректный.
+**	Вызывается для процесса, если cyrcles_to_wait = 0 и
+**	номер операции корректный.
 **	Проверяет правильность байта кодирования аргументов (если есть)
 **	Выполняет операцию и перемещает каретку на новую позицию
 */
@@ -91,19 +92,23 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 	init_f(f);
 	if (op_tab[P_CT].coding_byte)
 	{
-		if (coding_byte_check(vm->memory[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
+		if (coding_byte_check(VM_M[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
 		{
-			if (has_register(vm->memory[(P_POS + 1) % MEM_SIZE]) &&\
-				!valid_reg(vm->memory[(P_POS + 1) % MEM_SIZE], vm->memory, P_POS + 1, op_tab[P_CT]))
-				P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
+			if (has_register(VM_M[(P_POS + 1) % MEM_SIZE]) &&\
+				!valid_reg(VM_M[(P_POS + 1) % MEM_SIZE],
+							VM_M, P_POS + 1, op_tab[P_CT]))
+				P_POS = get_new_pos(P_POS, op_tab[P_CT],
+									VM_M[(P_POS + 1) % MEM_SIZE]);
 			else
 			{
 				f[P_CT](vm, proccess);
-				P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
+				P_POS = get_new_pos(P_POS, op_tab[P_CT],
+									VM_M[(P_POS + 1) % MEM_SIZE]);
 			}
 		}
 		else
-			P_POS = get_new_pos(P_POS, op_tab[P_CT], vm->memory[(P_POS + 1) % MEM_SIZE]);
+			P_POS = get_new_pos(P_POS, op_tab[P_CT],
+								VM_M[(P_POS + 1) % MEM_SIZE]);
 	}
 	else
 		f[P_CT](vm, proccess);
@@ -130,18 +135,14 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 		{
 			performe_action(vm, proccess, op_tab);
 			if (P_CT != 3 && P_CT != 13)
-			{
-				proccess->value_written = 0;
 				proccess->pos_written = -1;
-			}
 		}
 		else if (!P_CTW)
 		{
 			proccess->value_written = 0;
 			proccess->pos_written = -1;
-			P_POS = (P_POS + 1) % MEM_SIZE;	
+			P_POS = (P_POS + 1) % MEM_SIZE;
 		}
 		proccess = proccess->next;
 	}
 }
-

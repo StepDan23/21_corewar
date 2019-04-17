@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_load.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/12 20:42:13 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/15 19:34:32 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		vm_index_to_load(int total, int curr)
 	int	pos;
 
 	pos = curr * (MEM_SIZE / total);
-	// pos -= pos % 32;
 	return (pos);
 }
 
@@ -77,7 +76,8 @@ void	vm_spread_champs(t_vm *vm, t_champion **champs)
 	while (champs[i])
 	{
 		vm_load_champ(vm->memory, champs[i], vm_index_to_load(champs_num, i));
-		proccess = proccess_new(i, champs[i]->id, vm_index_to_load(champs_num, i));
+		proccess = proccess_new(i, champs[i]->id,
+								vm_index_to_load(champs_num, i));
 		if (!proccess)
 		{
 			ft_printf("Error: %s\n", strerror(errno));
