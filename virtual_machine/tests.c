@@ -8,16 +8,16 @@ int main(int ac, char **av)
 {
 	printf("\n%s\n", "TEST check_filename");
 	assert(check_filename(".cor") == 0);
-		printf("1) %s :			ok\n", ".cor");
+	printf("1) %s :			ok\n", ".cor");
 	assert(check_filename("1.cor") == 1);
-		printf("2) %s :			ok\n", "1.cor");
+	printf("2) %s :			ok\n", "1.cor");
 	assert(check_filename(".cor.cor") == 1);
-		printf("3) %s :			ok\n", ".cor.cor");
+	printf("3) %s :			ok\n", ".cor.cor");
 	assert(check_filename("champ.cor") == 1);
-		printf("4) %s :			ok\n", "champ.cor");
+	printf("4) %s :			ok\n", "champ.cor");
 	assert(check_filename("champ.core") == 0);
-		printf("5) %s :			ok\n", "champ.core");
-	
+	printf("5) %s :			ok\n", "champ.core");
+
 	t_vm *vm = vm_new();
 	args_read(ac, av, vm);
 	

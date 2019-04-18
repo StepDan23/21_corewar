@@ -9,7 +9,7 @@ int		args_read(int ac, char **av, t_vm *vm)
 	if (ac <= 1)
 	{
 		ft_printf("[-n][number][filename.cor]|[filename.cor]\n");
-			exit(1);
+		exit(1);
 	}
 	if (args_check(ac, av))
 	{
@@ -29,7 +29,7 @@ int		args_read(int ac, char **av, t_vm *vm)
 			j++;
 		}
 	}
-	return (0);
+	return (1);
 }
 
 int		check_filename(char *file)
@@ -44,7 +44,7 @@ int		check_filename(char *file)
 		if (ft_strnequ(&file[len - 4], ".cor", 4))
 			return (1);
 	}
-	ft_printf("Invalid filename %s\n", file);
+	ft_printf("invalid filename %s\n", file);
 	return (0);
 }
 
