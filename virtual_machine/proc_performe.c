@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/15 19:32:32 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/17 16:13:43 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 		if (!P_CTW && P_CT < 17 && P_CT > 0)
 		{
 			performe_action(vm, proccess, op_tab);
-			if (P_CT != 3 && P_CT != 13)
+			if (P_CT != 3 && P_CT != 11)
 				proccess->pos_written = -1;
 		}
 		else if (!P_CTW)
