@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/17 16:13:43 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/18 20:17:35 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,22 @@ int		get_new_pos(int pos, t_op op, unsigned int octet)
 	int	arg;
 
 	new_pos = pos + 1;
+	i = 0;
 	if (op.coding_byte)
+	{
 		new_pos += 1;
+		while (i < op.arg_num)
+		{
+			arg = bit_extracted(octet, 2, 7 - i * 2);
+			new_pos += get_arg_size(arg, op);
+			i++;
+		}
+		return (new_pos % MEM_SIZE);
+	}
 	i = 0;
 	while (i < op.arg_num)
 	{
-		arg = bit_extracted(octet, 2, 7 - i * 2);
-		new_pos += get_arg_size(arg, op);
+		new_pos += get_arg_size(op.arg_types[i], op);
 		i++;
 	}
 	return (new_pos % MEM_SIZE);

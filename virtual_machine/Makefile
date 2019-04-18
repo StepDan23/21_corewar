@@ -28,5 +28,5 @@ re: fclean all
 test: $(LIB) $(OBJ) operations_tests.c
 	$(GCC) $(FLAGS) -c operations_tests.c -o operations_tests.o -I../libft/includes -I.. -I.
 	$(GCC) $(FLAGS) args_utils.c args_champs.c check_args.o champions.o read_champions.o read_champions2.o vm.c vm_load.o \
-	proccesses.o proc_performe.o proc_utils.o ld.o ldi.o st.o add_sub.o fork_live.o logic.o operations_tests.o memory_read.c \
+	proccesses.o proc_performe.o proc_utils.o ld.o ldi.o st.o add_sub.o fork_live.o logic.o operations_tests.o memory_read.c core.c \
 	-I../libft/includes -I.. -I. -L ../libft -lft -o test
