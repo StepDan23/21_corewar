@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 15:13:37 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/02/08 15:42:02 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:24:10 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		ft_intlen(long long n)
 {
 	int		i;
 
-	i = 0;
-	while (n != 0)
+	i = 1;
+	while (n >= 10)
 	{
 		n = n / 10;
 		i++;

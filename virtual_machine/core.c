@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 16:54:11 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/17 15:30:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,13 @@ void	update_vm_state(t_vm *vm)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
 			vm->checkups = 0;
+			if (vm->cycles_die <= 0)
+				vm->end_game = 1;
 		}
 		else
 			vm->checkups++;
 		vm->cycles_to_die = vm->cycles_die;
+		vm->live_exec = 0;
 	}
 	vm->cycles++;
 	vm->cycles_to_die--;
@@ -103,41 +106,11 @@ t_vm	*init_vm_test(int argc, char *argv[])
 		vm->p_total++;
 		ft_printf("%s\n", vm->champion[i - 1]->filename);
 		vm->p_num[vm->champion[i - 1]->id]++;
+		vm->champion_count++;
 		i++;
 	}
 	vm->winner = vm->champion[0];
 	read_all_champs(vm->champion);
 	vm_spread_champs(vm, vm->champion);
 	return (vm);
-}
-
-int		main(int argc, char *argv[])
-{
-	t_vm		*vm;
-	t_op		op_tab[17];
-	int			i;
-
-	vm = vm_new();
-	vm->champion[argc - 1] = NULL;
-	i = 1;
-	while (i < argc)
-	{
-		champions_add(argv[i], i, vm->champion);
-		vm->p_total++;
-		ft_printf("%s\n", vm->champion[i - 1]->filename);
-		vm->p_num[vm->champion[i - 1]->id]++;
-		i++;
-	}
-	vm->winner = vm->champion[0];
-	read_all_champs(vm->champion);
-	vm_spread_champs(vm, vm->champion);
-	introduce_players(vm->champion);
-	init_optab(op_tab);
-	while (vm->cycles_die > 0 && vm->process)
-	{
-		do_cyrcle(vm, op_tab);
-	}
-	ft_printf("Winner is %s!\n", vm->winner->name);
-	free(vm);
-	return (0);
 }

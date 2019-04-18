@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/16 16:30:05 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/17 15:28:24 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct			s_champion
 **	cycles - кол-во выполненных циклов
 **	cycles_to_die - кол-во оставшихся циклов до проверки процессов на live
 **	cycles_to_dump - кол-во циклов до дампа памяти
-**	dump - периодичность дампа памяти в циклах
 **	cycles_die - периодичность проверки на live в циклах
 **	*process - список живых процессов (кареток)
 **	*champion - список чемпионов (пока хз с этим)
@@ -89,7 +88,6 @@ typedef struct			s_vm
 	int					cycles;
 	int					cycles_to_die;
 	int					cycles_to_dump;
-	int					dump;
 	int					cycles_die;
 	t_proccess			*process;
 	t_champion			*champion[MAX_PLAYERS];
@@ -100,6 +98,7 @@ typedef struct			s_vm
 	unsigned int		checkups;
 	int					p_num[4];
 	int					p_total;
+	int					end_game;
 }						t_vm;
 
 # define VM_M vm->memory
@@ -232,4 +231,9 @@ void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
 
 t_vm					*init_vm_test(int argc, char *argv[]);
+void					init_optab(t_op op_tab[17]);
+void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
+void					update_vm_state(t_vm *vm);
+void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
+void					introduce_players(t_champion **players);
 #endif

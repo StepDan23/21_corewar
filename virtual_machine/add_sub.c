@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 02:04:29 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/15 19:20:07 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/16 19:10:55 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	add(t_vm *vm, t_proccess *proccess)
 	int		right;
 	int		target;
 
-	left = P_REG[vm->memory[(P_POS + 2) % MEM_SIZE]];
-	right = P_REG[vm->memory[(P_POS + 3) % MEM_SIZE]];
-	target = vm->memory[(P_POS + 4) % MEM_SIZE];
+	left = P_REG[vm->memory[(P_POS + 2) % MEM_SIZE] - 1];
+	right = P_REG[vm->memory[(P_POS + 3) % MEM_SIZE] - 1];
+	target = vm->memory[(P_POS + 4) % MEM_SIZE] - 1;
 	P_REG[target] = left + right;
 	if (left + right == 0)
 		P_C = 1;
@@ -63,9 +63,9 @@ void	sub(t_vm *vm, t_proccess *proccess)
 	int		right;
 	int		target;
 
-	left = P_REG[vm->memory[(P_POS + 2) % MEM_SIZE]];
-	right = P_REG[vm->memory[(P_POS + 3) % MEM_SIZE]];
-	target = vm->memory[(P_POS + 4) % MEM_SIZE];
+	left = P_REG[vm->memory[(P_POS + 2) % MEM_SIZE] - 1];
+	right = P_REG[vm->memory[(P_POS + 3) % MEM_SIZE] - 1];
+	target = vm->memory[(P_POS + 4) % MEM_SIZE] - 1;
 	P_REG[target] = left - right;
 	if (left - right == 0)
 		P_C = 1;
