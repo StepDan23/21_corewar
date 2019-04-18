@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 21:30:56 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:34:31 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ t_syntax_row *row)
 		ROW_CNT_ARG++;
 		return ;
 	}
-	ROW_CNT_ARG++;
 	ROW_ARG_CODE += ft_token_type_value(TKN_TYPE);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
+	ROW_CNT_ARG++;
 	ROW_WAIT_SEP = 1;
 }
 
@@ -89,11 +89,11 @@ t_syntax_row *row)
 	row = ft_syn_row_init();
 	synt_row = ft_lstnew(NULL, (sizeof(t_syntax_row)));
 	synt_row->content = row;
-	ROW_NUM = (!ROW_NUM) ? ASM_NUM_ROW : ROW_NUM;
+	ROW_NUM = (!ROW_NUM) ? token->row : ROW_NUM;
 	ROW_COM_NUM = ft_line_is_command(token->str);
 	ROW_COM_NUM = (ROW_COM_NUM == -1) ? 0 : ROW_COM_NUM;
 	ROW_CNT_MAX = g_ops->count_of_args[ROW_COM_NUM];
-	ROW_ARGS_TEXT = malloc(8 * ROW_CNT_MAX);
+	ROW_ARGS_TEXT = ft_memalloc(8 * ROW_CNT_MAX);
 	ASM_SYNTAX_ROW_COUNT++;
 	if (asm_data->syntax_row)
 		ft_lstadd_last(asm_data->syntax_row, synt_row);
@@ -118,10 +118,8 @@ t_list *labels, t_token *token)
 	}
 }
 
-// протестировать полученные row
-// как же сука связать лэйблы со строками???
-// добавить чек на одну строку с командой
-// добавить проверку на конец строки
+// завтра день лэйблов
+
 void	ft_check_syntax(t_asm_data *asm_data)
 {
 	t_token		*token;
@@ -138,4 +136,5 @@ void	ft_check_syntax(t_asm_data *asm_data)
 		token = (t_token *)(token_chain->content);
 	}
 	ft_start_fill_rows(asm_data, token_chain, labels, token);
+	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
 }

@@ -6,8 +6,8 @@
 
 
 test:
-	sti r1, r2, %55
+	sti r1, 55, %55
 test:
 r1:
-	aff r5
+	aff 55
 	live %6

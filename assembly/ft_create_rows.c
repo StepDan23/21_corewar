@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 21:28:33 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:33:20 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,33 @@ t_list *labels, t_syntax_row *row)
 list ", TKN_STR), TKN_ROW, TKN_COL, 1);
 	ROW_CNT_ARG++;
 	return (1);
+}
+
+void	ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows)
+{
+	t_syntax_row	*row;
+
+	int				i;
+
+	while (rows)
+	{
+		row = ((t_syntax_row *)(rows->content));
+		if (!ROW_NEWLINE)
+			ft_error_token(asm_data, ft_strdup("No Newline in Row "),\
+			ROW_NUM, 0, 1);
+		if (ROW_CNT_MAX != ROW_CNT_ARG - 1)
+			ft_error_token(asm_data, ft_strdup("Wrong count of args "),\
+			ROW_NUM, 0, 1);
+		ft_putstr("Test: \n");
+		i = -1;
+		ft_printf("%p\n", ROW_ARGS_TEXT);
+		while (++i < ROW_CNT_ARG - 1)
+			ft_printf("%s ",( ROW_ARGS_TEXT[i]) ? ROW_ARGS_TEXT[i] : "NULL");
+		ft_printf("\n Current count = %d, estimated count = %d, arg_code = %d\n", ROW_CNT_ARG - 1, ROW_CNT_MAX, ROW_ARG_CODE);
+		ft_printf("str num = %d\n", ROW_NUM);
+		rows = rows->next;
+		MACHINE_VALID_CODE++;
+	}
 }
 
 void	ft_fill_row(t_asm_data *asm_data, t_token *token, t_list *labels,\

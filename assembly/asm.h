@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 21:09:35 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:26:12 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct		s_syntax_row
 	int				num_current_arg;
 	int				wait_separator;
 	int				newline;
-
 	t_types			prev_arg_type;
 	char			**args_text;
 	int				arg_types_code;
@@ -144,7 +143,7 @@ typedef struct	s_machine
 # define MACHINE_DOUBLE_QUOTES (asm_data->state_machine->double_quotes)
 # define MACHINE_NAME_COMMENT (asm_data->state_machine->took_name_and_comment)
 # define MACHINE_NEW_LINE (asm_data->state_machine->new_line)
-# define MACHINE_VALID_CODE (asm_data->state_machine->new_line)
+# define MACHINE_VALID_CODE (asm_data->state_machine->one_valid_command)
 /*
 ** if error flag == 1/2/3 - ошибка лексическая/синтаксическая/семантическая
 */
@@ -217,4 +216,7 @@ t_list *labels, t_syntax_row *row);
 t_list			*ft_collect_labels(t_asm_data *asm_data, int i);
 void			ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
+void			ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
+
+
 #endif

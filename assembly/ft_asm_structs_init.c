@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 20:44:59 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:45:28 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_machine		*ft_state_machine_init(void)
 	state_machine->wait_comment = 0;
 	state_machine->double_quotes = 0;
 	state_machine->took_name_and_comment = 0;
+	state_machine->one_valid_command = 0;
 	return (state_machine);
 }
 

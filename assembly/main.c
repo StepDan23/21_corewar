@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/18 20:37:32 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 22:19:00 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 #include <stdio.h>
 
 // ! задание на сегодня - провести синтаксический разбор кода
-// ! проверить на то что аргументов не меньше чем должно быть
-// ! провести компиляцию
+// ! задание на сегодня - провести компиляцию
 // ! заняться очисткой памяти
 // ! Расставить ошибки по типам
 
@@ -28,6 +27,9 @@ void	ft_check_main_params_exists(t_asm_data *asm_data)
 		ft_error_add(asm_data, ft_strdup("No Champ's name founded "), 0, 3);
 	if (!(MACHINE_NAME_COMMENT & 2))
 		ft_error_add(asm_data, ft_strdup("No Champ's comment founded "), 0, 3);
+	if (!MACHINE_VALID_CODE)
+		ft_error_add(asm_data, ft_strdup("No commands were founed. Add one "),\
+		0, 3);
 }
 
 void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
