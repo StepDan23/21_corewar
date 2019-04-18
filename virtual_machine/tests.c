@@ -20,7 +20,6 @@ int main(int ac, char **av)
 
 	t_vm *vm = vm_new();
 	args_read(ac, av, vm);
-	
 	printf("\nchampions number:\t\t%d\n\n", vm->champion_count);
 	if (vm->champion[0])
 		printf("filename:\t%s\nid:\t\t%d\n\n", vm->champion[0]->filename, vm->champion[0]->id);

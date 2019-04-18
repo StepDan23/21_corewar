@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/17 15:28:45 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:03:14 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,13 @@ int		main(int argc, char *argv[])
 {
 	t_vm		*vm;
 	t_op		op_tab[17];
-	int			i;
 
 	vm = vm_new();
-	vm->champion[argc - 1] = NULL;
-	i = 1;
-	while (i < argc)
+	args_read(argc, argv, vm);
+	if (!vm->champion_count)
 	{
-		champions_add(argv[i], i, vm->champion);
-		vm->p_total++;
-		ft_printf("%s\n", vm->champion[i - 1]->filename);
-		vm->p_num[vm->champion[i - 1]->id]++;
-		i++;
+		ft_printf("Count of champions must be between 2 and %d.\n", MAX_PLAYERS);
+		exit(1);
 	}
 	vm->winner = vm->champion[0];
 	read_all_champs(vm->champion);
