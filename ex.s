@@ -4,7 +4,10 @@
 .name "name"
 .comment "comment"
 
+aff 55
 test:
-	aff :test
-	s
-	s
+	sti r1, 55, %55
+	aff 55
+	live 6
+
+

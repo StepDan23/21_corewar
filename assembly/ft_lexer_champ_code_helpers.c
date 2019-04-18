@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:23:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 20:57:46 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 16:21:25 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,11 @@ char	g_commands[REG_NUMBER][6] = {
 int		ft_line_is_command(char *line)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	while (i <= 16)
+	while (i <= REG_NUMBER)
 	{
-		j = 0;
-		while (line[j] == g_commands[i][j] && line[j] && g_commands[i][j])
-			j++;
-		if (g_commands[i][j] == '\0')
+		if (!ft_strcmp(g_commands[i], line))
 			return ((i == 0) ? (-1) : i);
 		i++;
 	}

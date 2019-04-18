@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:40:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 19:21:52 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 19:03:39 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_fill_token_command(t_asm_data *asm_data, char *line, t_token *token)
 		token->type = Label_arg;
 		return ;
 	}
-	if (ft_line_is_command(line))
+	if (ft_line_is_command(line) != 0)
 	{
 		token->type = Command;
 		return ;
@@ -62,8 +62,6 @@ void	ft_fill_token_direct(t_asm_data *asm_data, char *line, t_token *token)
 			ft_fill_token_direct_labels(asm_data, &line[2], token);
 		else if (ft_isdigit(line[1]) || line[1] == '+' || line[1] == '-')
 			ft_fill_token_direct_digits(asm_data, &line[1], token);
-		else if (line[1] == 'r')
-			ft_fill_token_direct_regs(asm_data, &line[2], token);
 		else
 		{
 			token->type = Unknown;

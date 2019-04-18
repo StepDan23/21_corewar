@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 21:13:39 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 16:12:55 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ t_asm_data		*ft_asm_data_init(void)
 	asm_data->count_symbols = 0;
 	asm_data->error_list_size = 0;
 	asm_data->error_flag = 0;
+	asm_data->num_syntax_row = 0;
+	asm_data->syntax_row = NULL;
 	return (asm_data);
 }

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 20:15:51 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 17:10:11 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,27 @@ void	ft_print_errors(t_asm_data *asm_data)
 	}
 	if (ERROR_SIZE > 0)
 		exit(ft_printf("ERRORS was founded. Fix your champ's code\n"));
+}
+
+void	ft_error_token(t_asm_data *asm_data, char *line, int row, int column,\
+int type)
+{
+	t_list		*chain;
+	t_errors	*error;
+
+	ERROR_SIZE++;
+	chain = ft_lstnew(NULL, sizeof(t_errors));
+	error = ft_error_init(line, row, column, type);
+	chain->content = error;
+	chain->content_size = ERROR_SIZE;
+	if (!ERRORS)
+		ERRORS = chain;
+	else
+		ft_lstadd_last(ERRORS, chain);
+	if (ERROR_FLAG == 0)
+		ERROR_FLAG = type;
+	else
+		ERROR_FLAG = (ERROR_FLAG < type) ? ERROR_FLAG : type;
 }
 
 void	ft_error_add(t_asm_data *asm_data, char *line, int column, int type)

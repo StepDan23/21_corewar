@@ -1,10 +1,11 @@
 
-#dsgdsg dsf
+#dsgdsg ваыва
 
 .name "name"
 .comment "comment"
 
 test:
-	aff %-5
-	sti 55 #sdgkfdj
-	st %-45
+	sti r1, 55, %55
+	aff r5
+	live %6
+	

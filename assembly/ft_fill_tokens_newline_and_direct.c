@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 21:14:44 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 19:03:54 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_add_new_str_token(t_asm_data *asm_data)
 	else
 		ft_lstadd_last(ASM_TOKENS, chain);
 	token->row = ASM_NUM_ROW - 1;
-	token->col = 0;
+	token->col = -1;
 	token->str = "\n";
 	token->type = Newline;
 	asm_data->token_size += 1;
@@ -69,30 +69,4 @@ t_token *token)
 		token->str), token->col, 1);
 	else
 		token->type = Direct_number;
-}
-
-void	ft_fill_token_direct_regs(t_asm_data *asm_data, char *line,\
-t_token *token)
-{
-	long long	temp;
-
-	token->type = Unknown;
-	if (line[0] == 0)
-	{
-		ft_error_add(asm_data, ft_strjoin_orig("No value in Direct reg ",\
-		token->str), token->col, 1);
-		return ;
-	}
-	else if (!ft_string_contain_only_num(line))
-	{
-		ft_error_add(asm_data, ft_strjoin_orig("Chars in Direct value ",\
-		token->str), token->col, 1);
-		return ;
-	}
-	temp = ft_atol(line);
-	if (temp < 0 || temp > REG_NUMBER)
-		ft_error_add(asm_data, ft_strjoin_orig("Wrong value in Direct ",\
-		token->str), token->col, 1);
-	else
-		token->type = Direct_reg;
 }

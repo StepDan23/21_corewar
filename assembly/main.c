@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/17 21:16:33 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 20:37:32 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-//	TODO: Проверить как обрабатывает оригинальный асссемблер случай с .name"name", также глянуть какая ошибка при обработке коммента или имени в центре исходика
 
 // ! задание на сегодня - провести синтаксический разбор кода
+// ! проверить на то что аргументов не меньше чем должно быть
 // ! провести компиляцию
 // ! заняться очисткой памяти
 // ! Расставить ошибки по типам
@@ -36,10 +36,10 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 	t_list		*chain;
 	t_token		*token;
 
-	str = ft_strnew(21);
-	lseek(fd, (off_t)(asm_data->count_symbols), 0);
-	read(fd, str, 20);
-	while (str[i] == 0)
+	str = ft_strnew(31);
+	lseek(fd, (off_t)(asm_data->count_symbols - 10), 0);
+	read(fd, str, 30);
+	while (str[i] == 0 || str[i] == ' ' || str[i] == '\t')
 		i--;
 	if (str[i] == '\n')
 	{
