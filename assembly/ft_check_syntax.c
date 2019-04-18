@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 20:40:39 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:30:56 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ t_syntax_row *row)
 	{
 		ft_error_token(asm_data, ft_strdup("Two args in row "),\
 		TKN_ROW, TKN_COL, 1);
+		ROW_CNT_ARG++;
 		return ;
 	}
-	if (ROW_CNT_ARG - 1 == ROW_CNT_MAX)
+	if (ROW_CNT_ARG - 1 >= ROW_CNT_MAX)
 	{
 		ft_error_token(asm_data, ft_strdup("Extra param for command "),\
 		TKN_ROW, TKN_COL, 1);
@@ -71,11 +72,12 @@ t_syntax_row *row)
 	{
 		ft_error_token(asm_data, ft_strdup("Wrong type of arg "),\
 		TKN_ROW, TKN_COL, 1);
+		ROW_CNT_ARG++;
 		return ;
 	}
+	ROW_CNT_ARG++;
 	ROW_ARG_CODE += ft_token_type_value(TKN_TYPE);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
-	ROW_CNT_ARG++;
 	ROW_WAIT_SEP = 1;
 }
 
@@ -92,10 +94,28 @@ t_syntax_row *row)
 	ROW_COM_NUM = (ROW_COM_NUM == -1) ? 0 : ROW_COM_NUM;
 	ROW_CNT_MAX = g_ops->count_of_args[ROW_COM_NUM];
 	ROW_ARGS_TEXT = malloc(8 * ROW_CNT_MAX);
+	ASM_SYNTAX_ROW_COUNT++;
 	if (asm_data->syntax_row)
 		ft_lstadd_last(asm_data->syntax_row, synt_row);
 	else
 		asm_data->syntax_row = synt_row;
+}
+
+void	ft_start_fill_rows(t_asm_data *asm_data, t_list *token_chain,\
+t_list *labels, t_token *token)
+{
+	while (token_chain)
+	{
+		token = (t_token *)(token_chain->content);
+		if (token->type == Label)
+		{
+			token_chain = token_chain->next;
+			continue ;
+		}
+		else
+			ft_fill_strings(asm_data, token, labels);
+		token_chain = token_chain->next;
+	}
 }
 
 // протестировать полученные row
@@ -112,21 +132,10 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	labels = ft_collect_labels(asm_data, 1);
 	token_chain = (asm_data->tokens);
 	token = (t_token *)(token_chain->content);
-	while (token_chain->next && (token->type == Newline || token->type == Whitespace))
+	while (token_chain && (token->type == Newline || token->type == Whitespace))
 	{
 		token_chain = token_chain->next;
 		token = (t_token *)(token_chain->content);
 	}
-	while (token_chain)
-	{
-		token = (t_token *)(token_chain->content);
-		if (token->type == Label)
-		{
-			token_chain = token_chain->next;
-			continue ;
-		}
-		else
-			ft_fill_strings(asm_data, token, labels);
-		token_chain = token_chain->next;
-	}
+	ft_start_fill_rows(asm_data, token_chain, labels, token);
 }

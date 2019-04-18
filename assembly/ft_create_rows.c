@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 20:21:03 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:28:33 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ int		ft_token_type_value(t_types value)
 	else
 		ft_printf("Strange type of arg = %d\n", value);
 	return (res);
+}
+
+int		ft_check_label_arg(t_asm_data *asm_data, t_token *token,\
+t_list *labels, t_syntax_row *row)
+{
+	t_list	*current;
+	char	*str;
+	int		i;
+
+	str = &TKN_STR[1];
+	current = labels;
+	ft_printf("list of labels:\n");
+	while (current)
+	{
+		i = 0;
+		while (str[i] == LABEL_TEXT[i] && str[i] && LABEL_TEXT[i] != ':')
+			i++;
+		if (!str[i] && LABEL_TEXT[i] == ':')
+			return (0);
+		current = current->next;
+	}
+	ft_error_token(asm_data, ft_strjoin_orig("Label argument not in Label's \
+list ", TKN_STR), TKN_ROW, TKN_COL, 1);
+	ROW_CNT_ARG++;
+	return (1);
 }
 
 void	ft_fill_row(t_asm_data *asm_data, t_token *token, t_list *labels,\
@@ -46,6 +71,9 @@ t_syntax_row *row)
 		ROW_WAIT_SEP = 0;
 		return ;
 	}
+	if (token->type == Label_arg && ft_check_label_arg(asm_data, token, labels,\
+	row))
+		return ;
 	if (TKN_TYPE == Label_arg || TKN_TYPE == Register || TKN_TYPE ==\
 	Direct_label || TKN_TYPE == Direct_number || TKN_TYPE == Number)
 		ft_row_args_check(asm_data, token, labels, row);

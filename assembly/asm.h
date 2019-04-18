@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 20:41:28 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/18 21:09:35 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ typedef struct		s_label_compile
 	int				points_to_row;
 	char			*label_text;
 }					t_label_compile;
+
+# define LABEL_TEXT (((t_label_compile *)(current->content))->label_text)
+
 
 typedef struct		s_token
 {
@@ -167,6 +170,8 @@ typedef struct		s_asm_data
 # define ASM_CHAMP_DATA (asm_data->champ_data)
 # define ASM_STATE_MACHINE (asm_data->state_machine)
 # define ASM_TOKEN_SIZE (asm_data->token_size)
+# define ASM_SYNTAX_ROW (asm_data->syntax_row)
+# define ASM_SYNTAX_ROW_COUNT (asm_data->num_syntax_row)
 
 # define T_REG 1
 # define T_DIR 2
