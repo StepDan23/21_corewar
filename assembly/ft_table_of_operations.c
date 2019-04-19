@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 20:29:00 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 13:16:46 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,39 @@ int				g_count_of_args[REG_NUMBER] = {1, 2, 2, 3, 3, 3, 3, 3, 1, 3,\
 	3, 1, 2, 3, 1, 1};
 
 int				g_arg1_type[REG_NUMBER] = {
-	T_DIR,
-	T_DIR + T_IND,
-	T_REG,
-	T_REG,
-	T_REG,
-	T_REG + T_DIR + T_IND,
-	T_REG + T_DIR + T_IND,
-	T_REG + T_DIR + T_IND,
-	T_DIR,
-	T_REG + T_DIR + T_IND,
-	T_REG,
-	T_DIR,
-	T_DIR + T_IND,
-	T_REG + T_DIR + T_IND,
-	T_DIR,
-	T_REG
+	T_DIRS,
+	T_DIRS + T_INDS,
+	T_REGS,
+	T_REGS,
+	T_REGS,
+	T_REGS + T_DIRS + T_INDS,
+	T_REGS + T_DIRS + T_INDS,
+	T_REGS + T_DIRS + T_INDS,
+	T_DIRS,
+	T_REGS + T_DIRS + T_INDS,
+	T_REGS,
+	T_DIRS,
+	T_DIRS + T_INDS,
+	T_REGS + T_DIRS + T_INDS,
+	T_DIRS,
+	T_REGS
 };
 
 int				g_arg2_type[REG_NUMBER] = {
 	0,
-	T_REG,
-	T_REG + T_IND,
-	T_REG,
-	T_REG,
-	T_REG + T_DIR + T_IND,
-	T_REG + T_DIR + T_IND,
-	T_REG + T_DIR + T_IND,
+	T_REGS,
+	T_REGS + T_INDS,
+	T_REGS,
+	T_REGS,
+	T_REGS + T_DIRS + T_INDS,
+	T_REGS + T_DIRS + T_INDS,
+	T_REGS + T_DIRS + T_INDS,
 	0,
-	T_REG + T_DIR,
-	T_REG + T_DIR + T_IND,
+	T_REGS + T_DIRS,
+	T_REGS + T_DIRS + T_INDS,
 	0,
-	T_REG,
-	T_REG + T_DIR,
+	T_REGS,
+	T_REGS + T_DIRS,
 	0,
 	0
 };
@@ -61,17 +61,17 @@ int				g_arg3_type[REG_NUMBER] = {
 	0,
 	0,
 	0,
-	T_REG,
-	T_REG,
-	T_REG,
-	T_REG,
-	T_REG,
+	T_REGS,
+	T_REGS,
+	T_REGS,
+	T_REGS,
+	T_REGS,
 	0,
-	T_REG,
-	T_REG + T_DIR,
+	T_REGS,
+	T_REGS + T_DIRS,
 	0,
 	0,
-	T_REG,
+	T_REGS,
 	0,
 	0
 };
@@ -128,7 +128,7 @@ t_syntax_row	*ft_syn_row_init(void)
 	return (row);
 }
 
-t_list		*ft_collect_labels(t_asm_data *asm_data, int i)
+t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j)
 {
 	t_list			*current;
 	t_list			*root;
@@ -142,11 +142,11 @@ t_list		*ft_collect_labels(t_asm_data *asm_data, int i)
 		if (((t_token *)(current->content))->type == Label)
 		{
 			label = ft_init_label_compile();
-			label->row_num = ASM_NUM_ROW;
+			label->row_num = ((t_token *)(current->content))->row;
 			label->label_text = ft_strdup(((t_token *)(current->content))->str);
 			chain = ft_lstnew(NULL, sizeof(t_label_compile));
 			chain->content = label;
-			chain->content_size = i++;
+			chain->content_size = j++;
 			if (!root)
 				root = chain;
 			else

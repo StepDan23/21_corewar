@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 22:26:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 13:10:02 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct		s_label_compile
 }					t_label_compile;
 
 # define LABEL_TEXT (((t_label_compile *)(current->content))->label_text)
-
 
 typedef struct		s_token
 {
@@ -161,6 +160,8 @@ typedef struct		s_asm_data
 	int				error_flag;
 	t_list			*syntax_row;
 	int				num_syntax_row;
+	t_list			*label_temp;
+	int				num_label_temp;
 }					t_asm_data;
 
 # define ASM_TOKENS (asm_data->tokens)
@@ -172,9 +173,9 @@ typedef struct		s_asm_data
 # define ASM_SYNTAX_ROW (asm_data->syntax_row)
 # define ASM_SYNTAX_ROW_COUNT (asm_data->num_syntax_row)
 
-# define T_REG 1
-# define T_DIR 2
-# define T_IND 4
+# define T_REGS 1
+# define T_DIRS 10
+# define T_INDS 100
 
 t_asm_data		*ft_asm_data_init(void);
 t_token			*ft_token_init(void);
@@ -198,7 +199,6 @@ void			ft_check_syntax(t_asm_data *asm_data);
 int				ft_get_word_len(char *line);
 int				ft_string_contain_only_num(char	*str);
 int				ft_line_is_command(char *line);
-void			ft_print_tokens(t_asm_data *asm_data);
 void			ft_current_func_divis(t_asm_data *asm_data, char *line, int i,\
 int j);
 t_table_ops		*ft_table_operations_init(void);
@@ -213,10 +213,13 @@ void			ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
 t_syntax_row *row);
 void			ft_fill_row(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
-t_list			*ft_collect_labels(t_asm_data *asm_data, int i);
+t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j);
 void			ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
 void			ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
 
+
+void			ft_print_labels(t_asm_data *asm_data, t_list *labels);
+void			ft_print_tokens(t_asm_data *asm_data);
 
 #endif

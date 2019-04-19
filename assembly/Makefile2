@@ -1,0 +1,49 @@
+#
+#	Compiler variables
+#
+
+CC= gcc
+CC_FLAGS= #-Wall -Wextra -Werror
+NAME_ASM = asm
+NAME_DEASM = deasm
+LIB_DIR = ../libft/includes
+HEADERDIR = ../
+SRC = main.c ft_asm_structs_init.c ft_error_manager.c ft_champ_name_comment.c ft_lexer_champ_code.c \
+ft_fill_tokens.c ft_fill_tokens_newline_and_direct.c ft_lexer_champ_code_helpers.c ft_check_syntax.c tests.c \
+ft_champ_name_comment_extend.c ft_table_of_operations.c ft_create_rows.c
+#CH_SRC = checker.c
+OBJ= $(SRC:.c=.o)
+LIB=../libft/libft.a
+
+
+#
+#	Debug mode settings
+#
+
+#debug: CC_FLAGS += $(DG_CC_FLAGS)
+#debug: $(NAME)
+
+#
+#	Release mode
+#
+
+all: $(NAME_ASM)
+
+$(NAME_ASM): $(OBJ)
+	@make -C ../libft/ debug
+	@make -C ../libft/ clean
+	@$(CC)  $(SRC) $(CC_FLAGS) $(OBJ) $(LIB) -I $(LIB_DIR) -I ../ -o $(NAME_ASM)
+	#@$(CC) $(CH_SRC) $(CC_FLAGS) $(OBJ) $(LIB) -I $(LIB_DIR) -o $(NAME_CH)
+
+
+%.o : %.c
+	@$(CC)  $(FLAGS) -I $(LIB_DIR) -c $< -o $@
+
+clean:
+	rm -rf *.o
+
+fclean: clean
+	rm -rf $(NAME_ASM)
+	#rm -rf $(NAME_DEASM)
+
+re: fclean all

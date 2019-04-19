@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 22:33:20 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 12:55:19 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		ft_token_type_value(t_types value)
 	int		res;
 
 	if (value == Register)
-		res = T_REG;
+		res = T_REGS;
 	else if (value == Direct_number || value == Direct_label)
-		res = T_DIR;
+		res = T_DIRS;
 	else if (value == Number || value == Label_arg)
-		res = T_IND;
+		res = T_INDS;
 	else
 		ft_printf("Strange type of arg = %d\n", value);
 	return (res);
@@ -69,10 +69,9 @@ void	ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows)
 			ROW_NUM, 0, 1);
 		ft_putstr("Test: \n");
 		i = -1;
-		ft_printf("%p\n", ROW_ARGS_TEXT);
 		while (++i < ROW_CNT_ARG - 1)
 			ft_printf("%s ",( ROW_ARGS_TEXT[i]) ? ROW_ARGS_TEXT[i] : "NULL");
-		ft_printf("\n Current count = %d, estimated count = %d, arg_code = %d\n", ROW_CNT_ARG - 1, ROW_CNT_MAX, ROW_ARG_CODE);
+		ft_printf("\nCurrent count = %d, estimated count = %d, arg_code = %d\n", ROW_CNT_ARG - 1, ROW_CNT_MAX, ROW_ARG_CODE);
 		ft_printf("str num = %d\n", ROW_NUM);
 		rows = rows->next;
 		MACHINE_VALID_CODE++;

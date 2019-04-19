@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 22:34:31 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 13:11:05 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,17 @@ t_syntax_row *row)
 void	ft_start_fill_rows(t_asm_data *asm_data, t_list *token_chain,\
 t_list *labels, t_token *token)
 {
+	t_list	*chain;
+	static int	label_num = 0;
+
 	while (token_chain)
 	{
 		token = (t_token *)(token_chain->content);
 		if (token->type == Label)
 		{
-			token_chain = token_chain->next;
-			continue ;
+			//chain = ft_lstnew(NULL, sizeof());
+			//ft_label_wait_for_command(asm_data);
+			//label_num++;
 		}
 		else
 			ft_fill_strings(asm_data, token, labels);
@@ -127,7 +131,8 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	t_list		*token_chain;
 
 	g_ops = ft_table_operations_init();
-	labels = ft_collect_labels(asm_data, 1);
+	labels = ft_collect_labels(asm_data, 1, 0);
+	ft_print_labels(asm_data, labels);
 	token_chain = (asm_data->tokens);
 	token = (t_token *)(token_chain->content);
 	while (token_chain && (token->type == Newline || token->type == Whitespace))
