@@ -6,6 +6,5 @@
 
 
 test:
-test1:
-	aff r16
-	live %6
+	aff r6
+	sti r1, :test2, r2

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 13:10:02 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 15:25:23 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct	s_machine
 	int			wait_comment;
 	int			double_quotes;
 	int			took_name_and_comment;
+	int			syntax_row_exists;
 	int			new_line;
 	int			one_valid_command;
 }				t_machine;
@@ -141,6 +142,7 @@ typedef struct	s_machine
 # define MACHINE_WAIT_COMMENT (asm_data->state_machine->wait_comment)
 # define MACHINE_DOUBLE_QUOTES (asm_data->state_machine->double_quotes)
 # define MACHINE_NAME_COMMENT (asm_data->state_machine->took_name_and_comment)
+# define MACHINE_SYNT_ROW (asm_data->state_machine->syntax_row_exists)
 # define MACHINE_NEW_LINE (asm_data->state_machine->new_line)
 # define MACHINE_VALID_CODE (asm_data->state_machine->one_valid_command)
 /*
@@ -172,6 +174,8 @@ typedef struct		s_asm_data
 # define ASM_TOKEN_SIZE (asm_data->token_size)
 # define ASM_SYNTAX_ROW (asm_data->syntax_row)
 # define ASM_SYNTAX_ROW_COUNT (asm_data->num_syntax_row)
+# define ASM_LABEL (asm_data->label_temp)
+# define ASM_NUM_LABEL (asm_data->num_label_temp)
 
 # define T_REGS 1
 # define T_DIRS 10
@@ -210,16 +214,20 @@ int				ft_token_type_value(t_types value);
 int				ft_is_arg_valid(t_types type, int cur_arg, int com_num,\
 t_token *token);
 void			ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
-t_syntax_row *row);
+t_syntax_row *row, t_list *labels);
 void			ft_fill_row(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
 t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j);
 void			ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
 void			ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
+void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
+t_syntax_row *row);
+void			ft_check_last_row(t_asm_data *asm_data, int fd, int i);
+void			ft_check_main_params_exists(t_asm_data *asm_data);
 
-
-void			ft_print_labels(t_asm_data *asm_data, t_list *labels);
+void			test_print_labels(t_asm_data *asm_data, t_list *labels);
 void			ft_print_tokens(t_asm_data *asm_data);
+void			test_print_rows(t_asm_data *asm_data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 13:16:46 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 14:54:37 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_label_compile	*ft_init_label_compile(void)
 	label = (t_label_compile *)malloc(sizeof(t_label_compile));
 	if (!label)
 		exit(1);
-	label->points_to_row = 0;
+	label->points_to_row = -5;
 	label->label_text = NULL;
 	label->row_num = 0;
 	return (label);
@@ -117,7 +117,7 @@ t_syntax_row	*ft_syn_row_init(void)
 	if (!row)
 		exit(ft_printf("error in malloc ft_syn_row_init()\n"));
 	row->row_num = 0;
-	row->command_num = 0;
+	row->command_num = -1;
 	row->command_size = 0;
 	row->num_current_arg = 1;
 	row->wait_separator = 0;
@@ -137,7 +137,7 @@ t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j)
 
 	root = NULL;
 	current = asm_data->tokens;
-	while (++i < ASM_TOKEN_SIZE)
+	while (++i <= ASM_TOKEN_SIZE)
 	{
 		if (((t_token *)(current->content))->type == Label)
 		{
@@ -155,4 +155,24 @@ t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j)
 		current = current->next;
 	}
 	return (root);
+}
+
+void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
+t_syntax_row *row)
+{
+	t_list			*current_label;
+	t_list			*last_label;
+	t_label_compile	*label_data;
+
+	current_label = ASM_LABEL;
+	while (current_label)
+	{
+		label_data = (t_label_compile *)current_label->content;
+		label_data->points_to_row = ROW_NUM;
+		last_label = current_label;
+		current_label = current_label->next;
+		free(last_label);
+	}
+	ASM_NUM_LABEL = 0;
+	ASM_LABEL = NULL;
 }

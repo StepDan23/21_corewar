@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 13:11:05 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 15:28:37 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	g_comms[REG_NUMBER][6] = {
 };
 
 t_table_ops	*g_ops = NULL;
+
+size_t		g_label_num = 0;
 
 int		ft_is_arg_valid(t_types type, int cur_arg, int com_num, t_token *token)
 {
@@ -82,7 +84,7 @@ t_syntax_row *row)
 }
 
 void	ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
-t_syntax_row *row)
+t_syntax_row *row, t_list *labels)
 {
 	t_list			*synt_row;
 
@@ -99,30 +101,39 @@ t_syntax_row *row)
 		ft_lstadd_last(asm_data->syntax_row, synt_row);
 	else
 		asm_data->syntax_row = synt_row;
+	if (ASM_NUM_LABEL)
+		ft_merge_in_ecstasy(asm_data, labels, row);
+	MACHINE_SYNT_ROW = 1;
 }
 
 void	ft_start_fill_rows(t_asm_data *asm_data, t_list *token_chain,\
-t_list *labels, t_token *token)
+t_list *labels)
 {
-	t_list	*chain;
-	static int	label_num = 0;
+	t_list			*chain;
+	t_list			*label_chain;
+	t_token			*token;
 
 	while (token_chain)
 	{
 		token = (t_token *)(token_chain->content);
 		if (token->type == Label)
 		{
-			//chain = ft_lstnew(NULL, sizeof());
-			//ft_label_wait_for_command(asm_data);
-			//label_num++;
+			MACHINE_VALID_CODE++;
+			chain = ft_lstnew(NULL, sizeof(t_label_compile));
+			free(chain->content);
+			label_chain = labels;
+			while (label_chain && label_chain->content_size != g_label_num)
+				label_chain = label_chain->next;
+			chain->content = (t_label_compile *)(label_chain->content);
+			ft_add_chain_in_linked_list(ASM_LABEL, chain);
+			g_label_num++;
+			ASM_NUM_LABEL++;
 		}
 		else
 			ft_fill_strings(asm_data, token, labels);
 		token_chain = token_chain->next;
 	}
 }
-
-// завтра день лэйблов
 
 void	ft_check_syntax(t_asm_data *asm_data)
 {
@@ -132,14 +143,16 @@ void	ft_check_syntax(t_asm_data *asm_data)
 
 	g_ops = ft_table_operations_init();
 	labels = ft_collect_labels(asm_data, 1, 0);
-	ft_print_labels(asm_data, labels);
-	token_chain = (asm_data->tokens);
+	token_chain = ASM_TOKENS;
 	token = (t_token *)(token_chain->content);
-	while (token_chain && (token->type == Newline || token->type == Whitespace))
+	while (token_chain && (TKN_TYPE == Newline || TKN_TYPE == Whitespace))
 	{
 		token_chain = token_chain->next;
 		token = (t_token *)(token_chain->content);
 	}
-	ft_start_fill_rows(asm_data, token_chain, labels, token);
+	ft_start_fill_rows(asm_data, token_chain, labels);
+	test_print_rows(asm_data);
+	test_print_labels(asm_data, labels);
 	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
+	ASM_LABEL = labels;
 }
