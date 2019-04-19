@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 17:26:01 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:36:56 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,17 @@ void			ft_check_last_row(t_asm_data *asm_data, int fd, int i);
 void			ft_check_main_params_exists(t_asm_data *asm_data);
 int				ft_count_arg(int arg_type, int arg_num);
 void			ft_add_chain_in_list(t_asm_data *asm_data, t_list *what);
+void			ft_convert_to_binary(t_asm_data *asm_data, char *name);
+char			*ft_add_name(t_asm_data *asm_data, char *str, int *i, int j);
+char			*ft_add_magic_header(char *str, int *i);
+char			*ft_add_null(char *str, int *i);
+char			*ft_add_comment(t_asm_data *asm_data, char *str, int *i, int j);
+char			*ft_str_realloc(char *str, int i);
+char			*ft_str_realloc(char *str, int i);
+
+
+
+
 
 void			test_print_labels(t_asm_data *asm_data, t_list *labels);
 void			ft_print_tokens(t_asm_data *asm_data);

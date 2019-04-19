@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/19 17:33:43 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:50:48 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	ft_solve_sequence(t_asm_data *asm_data, int fd, char *filename)
 	ft_check_last_row(asm_data, fd, 20);
 	ft_check_syntax(asm_data);
 	ft_check_main_params_exists(asm_data);
-	ft_print_errors(asm_data);
+	if (asm_data->error_list_size > 0)
+		ft_print_errors(asm_data);
+	else
+		ft_convert_to_binary(asm_data, filename);
 }
 
 void	ft_read_file(int fd, char *file_name)

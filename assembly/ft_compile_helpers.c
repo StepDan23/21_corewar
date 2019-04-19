@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_last_letter_in_str.c                        :+:      :+:    :+:   */
+/*   ft_compile_helpers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 18:15:59 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 18:16:00 by lshanaha         ###   ########.fr       */
+/*   Created: 2019/04/19 19:36:25 by lshanaha          #+#    #+#             */
+/*   Updated: 2019/04/19 19:36:49 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "asm.h"
 
-char	ft_get_last_letter_in_str(char *str)
+char	*ft_str_realloc(char *str, int i)
 {
-	char	letter;
+	char	*temp;
 
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		letter = *str;
-		str++;
-	}
-	return (letter);
+	if (i == 0)
+		return (str);
+	temp = (char *)realloc(str, ((i / 100000) * 100000 + 100000));
+	free(str);
+	return (temp);
 }
