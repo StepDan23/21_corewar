@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 19:55:36 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:36:12 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_syntax_row	*ft_syn_row_init(void)
 	if (!row)
 		exit(ft_printf("error in malloc ft_syn_row_init()\n"));
 	row->row_num = 0;
-	row->code_place = 0;
 	row->command_num = -2;
 	row->command_size = 0;
 	row->num_current_arg = 1;
@@ -126,6 +125,8 @@ t_syntax_row	*ft_syn_row_init(void)
 	row->prev_arg_type = -5;
 	row->args_text = NULL;
 	row->arg_types_code = 0;
+	row->code_place = 0;
+	row->code_size = 0;
 	return (row);
 }
 

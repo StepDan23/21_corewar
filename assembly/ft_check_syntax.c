@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 17:25:42 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:44:19 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_is_arg_valid(t_types type, int cur_arg, int com_num, t_token *token)
 		value = g_ops->arg2_type[com_num];
 	else if (cur_arg == 3)
 		value = g_ops->arg3_type[com_num];
-	token_value = ft_token_type_value(token->type);
+	token_value = ft_type_value(token->type);
 	if (value & token_value)
 		return (1);
 	else
@@ -77,7 +77,8 @@ t_syntax_row *row)
 		ROW_CNT_ARG++;
 		return ;
 	}
-	ROW_ARG_CODE += ft_count_arg(ft_token_type_value(TKN_TYPE), ROW_CNT_ARG);
+	ROW_ARG_CODE += ft_cnt_arg(ft_type_value(TKN_TYPE), ROW_CNT_ARG,\
+	TABLE_FLAG[ROW_COM_NUM]);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
 	ROW_CNT_ARG++;
 	ROW_WAIT_SEP = 1;

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 19:55:14 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:44:04 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ typedef struct		s_table_ops
 	int				*arg_code_exists;
 }					t_table_ops;
 
+# define TABLE_FLAG (g_ops->arg_code_exists)
+
 typedef struct		s_syntax_row
 {
 	int				row_num;
-	int				code_place;
 	int				command_num;
 	int				command_size;
 	int				num_current_arg;
@@ -53,10 +54,11 @@ typedef struct		s_syntax_row
 	t_types			prev_arg_type;
 	char			**args_text;
 	int				arg_types_code;
+	int				code_place;
+	int				code_size;
 }					t_syntax_row;
 
 # define ROW_NUM (row->row_num)
-# define ROW_CODE (row->code_place)
 # define ROW_COM_NUM (row->command_num)
 # define ROW_CNT_MAX (row->command_size)
 # define ROW_CNT_ARG (row->num_current_arg)
@@ -65,6 +67,8 @@ typedef struct		s_syntax_row
 # define PREV_ARG_TYPE (row->prev_arg_type)
 # define ROW_ARGS_TEXT (row->args_text)
 # define ROW_ARG_CODE (row->arg_types_code)
+# define ROW_CODE_PLACE (row->code_place)
+# define ROW_CODE_SIZE (row->code_size)
 
 typedef struct		s_label_compile
 {
@@ -212,7 +216,7 @@ t_label_compile	*ft_init_label_compile(void);
 t_syntax_row	*ft_syn_row_init(void);
 void			ft_fill_strings(t_asm_data *asm_data, t_token *token,\
 t_list *labels);
-int				ft_token_type_value(t_types value);
+int				ft_type_value(t_types value);
 int				ft_is_arg_valid(t_types type, int cur_arg, int com_num,\
 t_token *token);
 void			ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
@@ -227,7 +231,7 @@ void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
 t_syntax_row *row);
 void			ft_check_last_row(t_asm_data *asm_data, int fd, int i);
 void			ft_check_main_params_exists(t_asm_data *asm_data);
-int				ft_count_arg(int arg_type, int arg_num);
+int				ft_cnt_arg(int arg_type, int arg_num, int flag);
 void			ft_add_chain_in_list(t_asm_data *asm_data, t_list *what);
 void			ft_convert_to_binary(t_asm_data *asm_data, char *name);
 char			*ft_add_name(t_asm_data *asm_data, char *str, int *i, int j);

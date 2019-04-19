@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:34:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 17:40:43 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 20:31:53 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 			ft_lstadd_last(asm_data->tokens, chain);
 		else
 			asm_data->tokens = chain;
-		token->row = ASM_NUM_ROW;
+		//token->row = ASM_NUM_ROW;
 		token->str = ft_strdup("\n");
 		token->type = Newline;
 	}
