@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/19 17:50:48 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:39:04 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 // ! задание на сегодня - провести компиляцию
 
 // ! заняться очисткой памяти
 // ! Расставить ошибки по типам
-
-
 
 void	ft_solve_sequence(t_asm_data *asm_data, int fd, char *filename)
 {

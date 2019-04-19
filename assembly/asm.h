@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 19:36:56 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 19:55:14 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_table_ops
 typedef struct		s_syntax_row
 {
 	int				row_num;
+	int				code_place;
 	int				command_num;
 	int				command_size;
 	int				num_current_arg;
@@ -55,6 +56,7 @@ typedef struct		s_syntax_row
 }					t_syntax_row;
 
 # define ROW_NUM (row->row_num)
+# define ROW_CODE (row->code_place)
 # define ROW_COM_NUM (row->command_num)
 # define ROW_CNT_MAX (row->command_size)
 # define ROW_CNT_ARG (row->num_current_arg)
