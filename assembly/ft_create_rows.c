@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 15:37:42 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 15:39:39 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ void	ft_fill_strings(t_asm_data *asm_data, t_token *token, t_list *labels)
 		token->str), TKN_ROW, TKN_COL, 1);
 		return ;
 	}
-	if (ROW_NEWLINE)
-		return ;
 	if (!ASM_SYNTAX_ROW)
 		ASM_SYNTAX_ROW = ft_lstnew(NULL, (sizeof(t_syntax_row)));
 	synt_row = ASM_SYNTAX_ROW;
 	while (synt_row->next)
 		synt_row = synt_row->next;
 	row = (t_syntax_row *)(synt_row->content);
+	if (ROW_NEWLINE)
+		return ;
 	ft_check_row(asm_data, token, labels, row);
 }

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:05:56 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/19 15:07:06 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:33:43 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// ! Прикрутить подсчет типа элемента
 
-// * добавить проверку на тип Unknown
 // ! задание на сегодня - провести компиляцию
 
 // ! заняться очисткой памяти
@@ -91,7 +89,7 @@ int		main(int argc, char *argv[])
 
 	if (argc < 2)
 	{
-		ft_printf("asm: FATAL ERROR: no input files\ncompilation terminated\n");
+		ft_printf("asm: FATAL ERROR: no input files\n");
 		return (0);
 	}
 	i = 0;

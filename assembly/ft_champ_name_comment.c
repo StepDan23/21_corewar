@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:14:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/17 17:55:38 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:34:18 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j)
 	{
 		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
-		if (line[i] == COMMENT_CHAR)
+		if (line[i] == COMMENT_CHAR || line[i] == ANOTHER_COMMENT_CHAR)
 			return (line);
 		if (MACHINE_DOUBLE_QUOTES)
 			i = ft_add_text_in_quotes(asm_data, line, 0);

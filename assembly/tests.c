@@ -50,17 +50,17 @@ void	test_print_rows(t_asm_data *asm_data)
 	current = ASM_SYNTAX_ROW;
 	printf("\n\nTest rows: \naddres = %p\n", current);
 
-	while (current && j < ASM_SYNTAX_ROW_COUNT)
-	{
-		row = (t_syntax_row *)(current->content);
-		i = -1;
-		while (++i < ROW_CNT_ARG - 1)
-			printf("%s ",( ROW_ARGS_TEXT[i]) ? ROW_ARGS_TEXT[i] : "NULL");
-		printf("\nCurrent count = %d, estimated count = %d, arg_code = %d\n", ROW_CNT_ARG - 1, ROW_CNT_MAX, ROW_ARG_CODE);
-		printf("Row num = %d\n", ROW_NUM);
-		current = current->next;
-		j++;
-	}
+	//while (current && j < ASM_SYNTAX_ROW_COUNT)
+	//{
+	//	row = (t_syntax_row *)(current->content);
+	//	i = -1;
+	//	while (++i < ROW_CNT_ARG - 1)
+	//		printf("%s ",( ROW_ARGS_TEXT[i]) ? ROW_ARGS_TEXT[i] : "NULL");
+	//	printf("\nCurrent count = %d, estimated count = %d, arg_code = %d\n", ROW_CNT_ARG - 1, ROW_CNT_MAX, ROW_ARG_CODE);
+	//	printf("Row num = %d\n", ROW_NUM);
+	//	current = current->next;
+	//	j++;
+	//}
 	printf("\n\n");
 
 }

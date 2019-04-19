@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 15:25:23 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:26:01 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,8 @@ void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
 t_syntax_row *row);
 void			ft_check_last_row(t_asm_data *asm_data, int fd, int i);
 void			ft_check_main_params_exists(t_asm_data *asm_data);
+int				ft_count_arg(int arg_type, int arg_num);
+void			ft_add_chain_in_list(t_asm_data *asm_data, t_list *what);
 
 void			test_print_labels(t_asm_data *asm_data, t_list *labels);
 void			ft_print_tokens(t_asm_data *asm_data);

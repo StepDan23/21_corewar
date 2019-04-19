@@ -1,10 +1,9 @@
+.name "zork"
+.comment "I'M ALIIIIVE"
 
-#dsgdsg ваыва
+l2:		sti r1, %:live, %1
+		and r1, %0, r1
 
-.name "name"
-.comment "comment"
-
-
-test:
-	aff r6
-	sti r1, :test2, r2
+live:	
+	live %1
+		zjmp %:live

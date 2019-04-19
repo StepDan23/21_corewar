@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 15:28:37 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 17:25:42 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_syntax_row *row)
 		ROW_CNT_ARG++;
 		return ;
 	}
-	ROW_ARG_CODE += ft_token_type_value(TKN_TYPE);
+	ROW_ARG_CODE += ft_count_arg(ft_token_type_value(TKN_TYPE), ROW_CNT_ARG);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
 	ROW_CNT_ARG++;
 	ROW_WAIT_SEP = 1;
@@ -125,7 +125,7 @@ t_list *labels)
 			while (label_chain && label_chain->content_size != g_label_num)
 				label_chain = label_chain->next;
 			chain->content = (t_label_compile *)(label_chain->content);
-			ft_add_chain_in_linked_list(ASM_LABEL, chain);
+			ft_add_chain_in_list(asm_data, chain);
 			g_label_num++;
 			ASM_NUM_LABEL++;
 		}

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:23:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 16:21:25 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/19 16:45:49 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_find_sym(char *line, char sym)
 	i = 0;
 	while (line[i] && (line[i] != sym) && line[i] != COMMENT_CHAR)
 		i++;
-	if (line[i] && line[i] != COMMENT_CHAR)
+	if (line[i] && line[i] != COMMENT_CHAR && line[i] != ANOTHER_COMMENT_CHAR)
 		return (i);
 	else
 		return (0);
@@ -92,11 +92,11 @@ int		ft_get_word_len(char *line)
 		i += 2;
 	while (line[i] && line[i] != ' ' && line[i] != '\t' && \
 	line[i] != COMMENT_CHAR && line[i] != LABEL_CHAR &&
-	line[i] != SEPARATOR_CHAR)
-		i++;
-	if (line[0] == SEPARATOR_CHAR && i == 0)
+	line[i] != SEPARATOR_CHAR && line[i] != ANOTHER_COMMENT_CHAR)
 		i++;
 	if (line[i] == LABEL_CHAR && i != 0)
+		i++;
+	if (line[0] == SEPARATOR_CHAR && i == 0)
 		i++;
 	if (i > 0)
 		return (i);

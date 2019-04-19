@@ -200,3 +200,10 @@ vm_champs.tar
 op.h.gch
 a.out
 .gitignore
+assembly/examples/turtle.s
+assembly/examples/bee_gees.s
+assembly/examples/bigzork.s
+assembly/examples/fluttershy.s
+assembly/examples/helltrain.s
+assembly/examples/zork.s
+assembly/asm
