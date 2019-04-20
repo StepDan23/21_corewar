@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_syntax_helpers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:11:25 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:55:15 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/20 13:31:04 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int		ft_cnt_arg(int arg_type, int arg_num, int flag)
 
 	res = 0;
 	if (arg_type == T_REGS)
-		res = 1;
+		res = REG_CODE;
 	if (arg_type == T_DIRS)
-		res = 2;
+		res = DIR_CODE;
 	if (arg_type == T_INDS)
-		res = 3;
+		res = IND_CODE;
 	if (arg_num == 1)
 		res = res << 6;
 	if (arg_num == 2)
@@ -56,4 +56,48 @@ void	ft_add_chain_in_list(t_asm_data *asm_data, t_list *what)
 		ASM_LABEL = what;
 	else
 		ft_lstadd_last(ASM_LABEL, what);
+}
+
+int		ft_solve_rows_2(t_asm_data *asm_data, t_syntax_row *row, int i, int counter)
+{
+	int		temp;
+
+	temp = 0;
+	if (ROW_ARG_CODE == 0 && counter == 192)
+		temp = DIR_SIZE / ROW_T_DIR_COEF;
+	else if ((ROW_ARG_CODE & counter) == (1 << (6 - 2 * i)))
+		temp = 1;
+	else if ((ROW_ARG_CODE & counter) == (2 << (6 - 2 * i)))
+		temp = DIR_SIZE / ROW_T_DIR_COEF;
+	else if ((ROW_ARG_CODE & counter) == (3 << (6 - 2 * i)))
+		temp = 2;
+	ROW_CODE_SIZE += temp;
+	(temp) ? ROW_ARGS_SIZES[i++] = temp : 0;
+	return (i);
+}
+
+void	ft_solve_rows_values(t_asm_data *asm_data, int i, int counter)
+{
+	t_list			*chain;
+	t_syntax_row	*row;
+	int				temp;
+
+	if (ERROR_SIZE > 0)
+		return ;
+	chain = ASM_SYNTAX_ROW;
+	while (chain)
+	{
+		row = (t_syntax_row *)(chain->content);
+		counter = 192;
+		i = 0;
+		while (counter > 0 && i < 3)
+		{
+			i = ft_solve_rows_2(asm_data, row, i, counter);
+			counter = counter >> 2;
+		}
+		chain = chain->next;
+		ROW_CODE_SIZE += (ROW_ARG_CODE) ? 2 : 1;
+		ROW_CODE_PLACE += ASM_CODE_SIZE;
+		ASM_CODE_SIZE += ROW_CODE_SIZE;
+	}
 }

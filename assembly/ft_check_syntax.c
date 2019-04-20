@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_syntax.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:44:19 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/20 13:24:57 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_syntax_row *row, t_list *labels)
 	ROW_COM_NUM = (ROW_COM_NUM == -1) ? 0 : ROW_COM_NUM;
 	ROW_CNT_MAX = g_ops->count_of_args[ROW_COM_NUM];
 	ROW_ARGS_TEXT = ft_memalloc(8 * ROW_CNT_MAX);
+	ROW_ARGS_SIZES = ft_memalloc (4 * ROW_CNT_MAX);
+	ROW_T_DIR_COEF = g_ops->t_dir_coefs[ROW_COM_NUM];
 	ASM_SYNTAX_ROW_COUNT++;
 	if (asm_data->syntax_row)
 		ft_lstadd_last(asm_data->syntax_row, synt_row);
@@ -152,8 +154,11 @@ void	ft_check_syntax(t_asm_data *asm_data)
 		token = (t_token *)(token_chain->content);
 	}
 	ft_start_fill_rows(asm_data, token_chain, labels);
+	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
+	ft_solve_rows_values(asm_data, 0, 192);
+
 	test_print_rows(asm_data);
 	test_print_labels(asm_data, labels);
-	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
+	ft_printf("Prog_size = %d\n", asm_data->code_size);
 	ASM_LABEL = labels;
 }

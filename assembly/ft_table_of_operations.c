@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_table_of_operations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:36:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/20 12:06:13 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ int				g_args_codes[REG_NUMBER] = {
 	0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1
 };
 
+int				g_t_dir_coefs[REG_NUMBER] = {
+	1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 1
+};
+
 t_table_ops		*ft_table_operations_init(void)
 {
 	t_table_ops	*operations;
@@ -93,6 +97,7 @@ t_table_ops		*ft_table_operations_init(void)
 	operations->arg2_type = g_arg2_type;
 	operations->arg3_type = g_arg3_type;
 	operations->arg_code_exists = g_args_codes;
+	operations->t_dir_coefs = g_t_dir_coefs;
 	return (operations);
 }
 
@@ -125,8 +130,10 @@ t_syntax_row	*ft_syn_row_init(void)
 	row->prev_arg_type = -5;
 	row->args_text = NULL;
 	row->arg_types_code = 0;
+	row->size_of_args = NULL;
 	row->code_place = 0;
 	row->code_size = 0;
+	row->t_dir_coef = 0;
 	return (row);
 }
 

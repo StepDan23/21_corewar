@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:44:04 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/20 13:24:49 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_table_ops
 	int				*arg2_type;
 	int				*arg3_type;
 	int				*arg_code_exists;
+	int				*t_dir_coefs;
 }					t_table_ops;
 
 # define TABLE_FLAG (g_ops->arg_code_exists)
@@ -54,8 +55,10 @@ typedef struct		s_syntax_row
 	t_types			prev_arg_type;
 	char			**args_text;
 	int				arg_types_code;
+	int				*size_of_args;
 	int				code_place;
 	int				code_size;
+	int				t_dir_coef;
 }					t_syntax_row;
 
 # define ROW_NUM (row->row_num)
@@ -67,8 +70,10 @@ typedef struct		s_syntax_row
 # define PREV_ARG_TYPE (row->prev_arg_type)
 # define ROW_ARGS_TEXT (row->args_text)
 # define ROW_ARG_CODE (row->arg_types_code)
+# define ROW_ARGS_SIZES (row->size_of_args)
 # define ROW_CODE_PLACE (row->code_place)
 # define ROW_CODE_SIZE (row->code_size)
+# define ROW_T_DIR_COEF (row->t_dir_coef)
 
 typedef struct		s_label_compile
 {
@@ -124,10 +129,6 @@ typedef struct	s_errors
 	int			error_type;
 }				t_errors;
 
-# define ERRORS (asm_data->errors)
-# define ERROR_SIZE (asm_data->error_list_size)
-# define ERROR_FLAG (asm_data->error_flag)
-
 # define T_ERROR_TYPE (((t_errors *)(current->content))->error_type)
 # define T_ERROR_STR (((t_errors *)(current->content))->error_str)
 # define T_ERROR_COL (((t_errors *)(current->content))->error_column)
@@ -170,6 +171,7 @@ typedef struct		s_asm_data
 	int				num_syntax_row;
 	t_list			*label_temp;
 	int				num_label_temp;
+	int				code_size;
 }					t_asm_data;
 
 # define ASM_TOKENS (asm_data->tokens)
@@ -177,11 +179,15 @@ typedef struct		s_asm_data
 # define ASM_NUM_TEXT_ROW (asm_data->num_text_row)
 # define ASM_CHAMP_DATA (asm_data->champ_data)
 # define ASM_STATE_MACHINE (asm_data->state_machine)
+# define ERRORS (asm_data->errors)
+# define ERROR_SIZE (asm_data->error_list_size)
+# define ERROR_FLAG (asm_data->error_flag)
 # define ASM_TOKEN_SIZE (asm_data->token_size)
 # define ASM_SYNTAX_ROW (asm_data->syntax_row)
 # define ASM_SYNTAX_ROW_COUNT (asm_data->num_syntax_row)
 # define ASM_LABEL (asm_data->label_temp)
 # define ASM_NUM_LABEL (asm_data->num_label_temp)
+# define ASM_CODE_SIZE (asm_data->code_size)
 
 # define T_REGS 1
 # define T_DIRS 10
@@ -240,7 +246,7 @@ char			*ft_add_null(char *str, int *i);
 char			*ft_add_comment(t_asm_data *asm_data, char *str, int *i, int j);
 char			*ft_str_realloc(char *str, int i);
 char			*ft_str_realloc(char *str, int i);
-
+void			ft_solve_rows_values(t_asm_data *asm_data, int i, int counter);
 
 
 

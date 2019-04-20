@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_compile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:47:02 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/20 00:11:23 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 		i++;
 	temp = ft_strsub(name, 0, i);
 	str = ft_strjoin_orig(temp, ".cor");
-	fd = open(str, O_CREAT, O_APPEND, S_IWRITE | S_IREAD);
+	fd = open(str, O_CREAT, O_APPEND, __S_IWRITE | __S_IREAD);
 	free(str);
 	str = ft_code_create(asm_data);
 	free(temp);
