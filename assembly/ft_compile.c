@@ -6,7 +6,7 @@
 /*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 00:11:23 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/20 13:40:45 by how_r_u          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,30 @@ char	*ft_compile_code(t_asm_data *asm_data, char *str, int *i)
 	return (str);
 }
 
+char	*ft_add_code_size(t_asm_data *asm_data, char *str, int *i)
+{
+	int		j;
+	int		len;
+	char	*hex;
+
+	hex = ft_base_convert(HEXBASE, ASM_CODE_SIZE);
+	len = ft_strlen(hex);
+	j = 0;
+	while (8 - j - len > 0)
+	{
+		str[(*i)++] = '0';
+		j++;
+	}
+	j = 0;
+	while (hex[j])
+	{
+		str[(*i)++] = hex[j];
+		j++;
+	}
+	free(hex);
+	return (str);
+}
+
 char	*ft_code_create(t_asm_data *asm_data)
 {
 	char	*str1;
@@ -45,7 +69,7 @@ char	*ft_code_create(t_asm_data *asm_data)
 	int		i;
 
 	i = 0;
-	str3 = ft_compile_code(asm_data, str3, &i);
+	//str3 = ft_compile_code(asm_data, str3, &i);
 	//ft_printf("str3 = %s, i = %d\n", str3, i);
 
 	i = 0;
@@ -53,12 +77,11 @@ char	*ft_code_create(t_asm_data *asm_data)
 	str1 = ft_add_magic_header(str1, &i);
 	str1 = ft_add_name(asm_data, str1, &i, -1);
 	str1 = ft_add_null(str1, &i);
-	//ft_printf("str = %s, i = %d\n", str1, i);
-	g_temp = i;
-	i = 0;
-	str2 = ft_strnew(100000);
-	str2 = ft_add_comment(asm_data, str1, &i, -1);
-	str2 = ft_add_null(str2, &i);
+	str1 = ft_add_code_size(asm_data, str1, &i);
+	str1 = ft_add_comment(asm_data, str1, &i, -1);
+	str1 = ft_add_null(str1, &i);
+
+	ft_printf("str = %s, i = %d\n", str1, i);
 	//ft_printf("str2 = %s, i = %d\n", str1, i);
 
 	return (str1);
