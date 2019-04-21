@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:52:21 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 15:14:16 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:02:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,21 @@ void			render_tests(t_window *window, t_vm *vm)
 	while (carriers)
 	{
 		ft_printf("__________________________________________________\n");
+		ft_printf("current cycle: %d\n", vm->cycles);
 		ft_printf("carier info: player_id = %d position = %d cycles_wait = %d \n",
 					carriers->player_id, carriers->position, carriers->cycles_to_wait);
 		ft_printf("pos_written = %d\n", carriers->pos_written);
+		ft_printf("code_in_current position: %x %x %x %x\n",
+			VM_MEMORY[carriers->position],
+			VM_MEMORY[carriers->position + 1],
+			VM_MEMORY[carriers->position + 2],
+			VM_MEMORY[carriers->position + 3]);
 		if (carriers->pos_written >= 0)
-			ft_printf("\033[31m code_to_written = %d%d %d%d %d%d %d%d\033[37m\n",
-			VM_MEMORY[carriers->pos_written] / 16, VM_MEMORY[carriers->pos_written] % 16,
-			VM_MEMORY[carriers->pos_written + 1] / 16, VM_MEMORY[carriers->pos_written + 1] % 16,
-			VM_MEMORY[carriers->pos_written + 2] / 16, VM_MEMORY[carriers->pos_written + 2] % 16,
-			VM_MEMORY[carriers->pos_written + 3] / 16, VM_MEMORY[carriers->pos_written + 3] % 16);
+			ft_printf("\033[31m code_to_written = %x %x %x %x\033[37m\n",
+			VM_MEMORY[carriers->pos_written],
+			VM_MEMORY[carriers->pos_written + 1],
+			VM_MEMORY[carriers->pos_written + 2],
+			VM_MEMORY[carriers->pos_written + 3]);
 		carriers = carriers->next;
 		count++;
 		ft_printf("__________________________________________________\n");

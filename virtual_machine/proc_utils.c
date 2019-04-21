@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 19:43:28 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/21 18:41:12 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int		coding_byte_check(unsigned char octet, const t_op op)
 	while (i < op.arg_num)
 	{
 		arg = bit_extracted(octet, 2, 7 - i * 2);
-		if (arg != op.arg_types[i])
+		if (arg == 3)
+			arg = arg + 1;
+		if (!(arg & op.arg_types[i]))
 			return (0);
 		i++;
 	}
