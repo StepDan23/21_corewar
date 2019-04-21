@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/18 20:17:51 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/21 18:41:12 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		get_arg_size(int arg_type, t_op op)
 {
 	if (arg_type == T_REG)
 		return (1);
-	else if (arg_type == T_IND)
+	else if (arg_type == 3)
 		return (2);
 	else if (arg_type == T_DIR)
 		return (op.is_short_dir ? 2 : 4);
