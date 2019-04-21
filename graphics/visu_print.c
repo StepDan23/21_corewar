@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 11:00:02 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:40:40 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		print_start_names(t_window *window, t_vm *vm)
 	while (VM_CHAMPS[i])
 	{
 		x = 9 + 1200 * (i + 1) / (VM_CHAMP_COUNT) - (600 / VM_CHAMP_COUNT) -
-											ft_strlen(VM_CHAMPS[i]->name) * 15;
+											ft_strlen(VM_CHAMPS[i]->name) * 12;
 		y = (i % 2 == 0) ? 280 : 550;
 		print_str(window, VM_CHAMPS[i]->name, x, y);
 		i++;

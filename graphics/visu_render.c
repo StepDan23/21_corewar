@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 15:24:24 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/21 19:17:00 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		render_status_img(t_window *window, t_vm *vm)
 		SDL_RenderCopy(WIN_REND, BACK_END, NULL, &dst);
 		print_str(window, "Press ANY KEY to exit", 371, 800);
 		print_str(window, vm->winner->name,
-						609 - ft_strlen(vm->winner->name) * 15, 550);
+						609 - ft_strlen(vm->winner->name) * 12, 380);
 		print_str(window, "** Finished **", 1245, 40);
 	}
 }
@@ -71,6 +71,7 @@ void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
 	performe_proc(vm, vm->process, op_tab);
 	render_carrier_source(window, vm);
 	update_vm_state(vm);
+render_tests(window, vm);
 	FONT_CURR = FONT_PAUSE;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Press SPACE to continue or S to step up", 178, 800);
@@ -82,9 +83,6 @@ void			render_image(t_window *window, t_vm *vm, t_op op_tab[17])
 {
 	int		speed_cycle;
 
-if (WIN_STATUS != STAT_START && WIN_STATUS != STAT_PAUSE
-										&& WIN_STATUS != STAT_END)
-render_tests(window, vm);
 	speed_cycle = WIN_SPEED / 50;
 	SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
