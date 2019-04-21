@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_syntax.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 13:24:57 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 21:29:17 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_syntax_row *row)
 	ROW_ARG_CODE += ft_cnt_arg(ft_type_value(TKN_TYPE), ROW_CNT_ARG,\
 	TABLE_FLAG[ROW_COM_NUM]);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
+	ROW_ARG_TYPES[ROW_CNT_ARG - 1] = TKN_TYPE;
 	ROW_CNT_ARG++;
 	ROW_WAIT_SEP = 1;
 }
@@ -97,7 +98,8 @@ t_syntax_row *row, t_list *labels)
 	ROW_COM_NUM = (ROW_COM_NUM == -1) ? 0 : ROW_COM_NUM;
 	ROW_CNT_MAX = g_ops->count_of_args[ROW_COM_NUM];
 	ROW_ARGS_TEXT = ft_memalloc(8 * ROW_CNT_MAX);
-	ROW_ARGS_SIZES = ft_memalloc (4 * ROW_CNT_MAX);
+	ROW_ARG_TYPES = ft_memalloc(sizeof(t_types) * ROW_CNT_MAX);
+	ROW_ARGS_SIZES = ft_memalloc(4 * ROW_CNT_MAX);
 	ROW_T_DIR_COEF = g_ops->t_dir_coefs[ROW_COM_NUM];
 	ASM_SYNTAX_ROW_COUNT++;
 	if (asm_data->syntax_row)
@@ -146,6 +148,7 @@ void	ft_check_syntax(t_asm_data *asm_data)
 
 	g_ops = ft_table_operations_init();
 	labels = ft_collect_labels(asm_data, 1, 0);
+	ASM_LABEL = labels;
 	token_chain = ASM_TOKENS;
 	token = (t_token *)(token_chain->content);
 	while (token_chain && (TKN_TYPE == Newline || TKN_TYPE == Whitespace))
@@ -157,8 +160,7 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
 	ft_solve_rows_values(asm_data, 0, 192);
 
-	test_print_rows(asm_data);
+	//test_print_rows(asm_data);
 	test_print_labels(asm_data, labels);
-	ft_printf("Prog_size = %d\n", asm_data->code_size);
-	ASM_LABEL = labels;
+	//ft_printf("Prog_size = %d\n", asm_data->code_size);
 }

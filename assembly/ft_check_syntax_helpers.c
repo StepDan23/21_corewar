@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_syntax_helpers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:11:25 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 13:31:04 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:20:37 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ft_add_chain_in_list(t_asm_data *asm_data, t_list *what)
 		ft_lstadd_last(ASM_LABEL, what);
 }
 
-int		ft_solve_rows_2(t_asm_data *asm_data, t_syntax_row *row, int i, int counter)
+int		ft_solve_rows_2(t_asm_data *asm_data, t_syntax_row *row, int i,\
+int counter)
 {
 	int		temp;
 

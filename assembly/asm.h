@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 13:24:49 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 21:11:49 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct		s_syntax_row
 	char			**args_text;
 	int				arg_types_code;
 	int				*size_of_args;
+	t_types			*arg_types;
 	int				code_place;
 	int				code_size;
 	int				t_dir_coef;
@@ -71,12 +72,14 @@ typedef struct		s_syntax_row
 # define ROW_ARGS_TEXT (row->args_text)
 # define ROW_ARG_CODE (row->arg_types_code)
 # define ROW_ARGS_SIZES (row->size_of_args)
+# define ROW_ARG_TYPES (row->arg_types)
 # define ROW_CODE_PLACE (row->code_place)
 # define ROW_CODE_SIZE (row->code_size)
 # define ROW_T_DIR_COEF (row->t_dir_coef)
 
 typedef struct		s_label_compile
 {
+	t_syntax_row	*row;
 	int				row_num;
 	int				points_to_row;
 	char			*label_text;
@@ -172,6 +175,7 @@ typedef struct		s_asm_data
 	t_list			*label_temp;
 	int				num_label_temp;
 	int				code_size;
+	int				code_iterator;
 }					t_asm_data;
 
 # define ASM_TOKENS (asm_data->tokens)
@@ -188,6 +192,7 @@ typedef struct		s_asm_data
 # define ASM_LABEL (asm_data->label_temp)
 # define ASM_NUM_LABEL (asm_data->num_label_temp)
 # define ASM_CODE_SIZE (asm_data->code_size)
+# define ASM_CODE_ITER (asm_data->code_iterator)
 
 # define T_REGS 1
 # define T_DIRS 10
@@ -247,6 +252,15 @@ char			*ft_add_comment(t_asm_data *asm_data, char *str, int *i, int j);
 char			*ft_str_realloc(char *str, int i);
 char			*ft_str_realloc(char *str, int i);
 void			ft_solve_rows_values(t_asm_data *asm_data, int i, int counter);
+char			*ft_add_code_size(t_asm_data *asm_data, char *str, int *i);
+char			*ft_code_compile(t_asm_data *asm_data, char *str, int *i);
+void			ft_add_number_code(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
+void			ft_add_direct_number(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
+void			ft_add_register(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
+void			ft_add_one_bite(char *str, int *i, int value, t_asm_data *asm_data);
+int				ft_get_negative_value(int value, long size);
+int				ft_get_label_value(t_asm_data *asm_data, char *label_arg);
+
 
 
 

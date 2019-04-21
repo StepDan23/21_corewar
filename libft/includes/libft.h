@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 15:26:57 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/21 20:57:23 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(long long n);
 char				*ft_strrev_bin(char **str);
 char				*ft_base_convert(char *base_str, unsigned long long nbr);
+char				*ft_int_base_convert(char *base_str, unsigned int nbr);
 unsigned char		*ft_strrev_num(unsigned char *s, int len);
 char				*ft_str_addition(char *first, char *second);
 char				*ft_str_mult(char *first, char *second);

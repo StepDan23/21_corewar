@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_table_of_operations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 12:06:13 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 21:25:34 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_label_compile	*ft_init_label_compile(void)
 	label->points_to_row = -5;
 	label->label_text = NULL;
 	label->row_num = 0;
+	label->row = NULL;
 	return (label);
 }
 
@@ -131,6 +132,7 @@ t_syntax_row	*ft_syn_row_init(void)
 	row->args_text = NULL;
 	row->arg_types_code = 0;
 	row->size_of_args = NULL;
+	row->arg_types = NULL;
 	row->code_place = 0;
 	row->code_size = 0;
 	row->t_dir_coef = 0;
@@ -178,9 +180,9 @@ t_syntax_row *row)
 	{
 		label_data = (t_label_compile *)current_label->content;
 		label_data->points_to_row = ROW_NUM;
+		label_data->row = row;
 		last_label = current_label;
 		current_label = current_label->next;
-		free(last_label);
 	}
 	ASM_NUM_LABEL = 0;
 	ASM_LABEL = NULL;

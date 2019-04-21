@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 15:39:39 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/21 17:07:57 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_list *labels, t_syntax_row *row)
 	while (current)
 	{
 		i = 0;
-		while (str[i] == LABEL_TEXT[i] && str[i] && LABEL_TEXT[i] != ':')
+		while (str[i] == LABEL_TEXT[i] && str[i] && LABEL_TEXT[i] != LABEL_CHAR)
 			i++;
-		if (!str[i] && LABEL_TEXT[i] == ':')
+		if (!str[i] && LABEL_TEXT[i] == LABEL_CHAR)
 			return (0);
 		current = current->next;
 	}

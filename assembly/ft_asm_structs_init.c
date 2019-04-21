@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_asm_structs_init.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 11:51:45 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:33:43 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ t_asm_data		*ft_asm_data_init(void)
 	asm_data->label_temp = NULL;
 	asm_data->num_label_temp = 0;
 	asm_data->code_size = 0;
+	asm_data->code_iterator = 0;
 	return (asm_data);
 }

@@ -2,8 +2,5 @@
 .comment "I'M ALIIIIVE"
 
 loop:
-        sti r1, %:live, %1
+        sti r1, %:live, %10
 live:
-        live %0
-        ld %0, r2
-        zjmp %:loop

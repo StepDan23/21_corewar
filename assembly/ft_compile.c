@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_compile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/20 13:40:45 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/21 20:02:54 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,6 @@ char	*ft_compile_code(t_asm_data *asm_data, char *str, int *i)
 	return (str);
 }
 
-char	*ft_add_code_size(t_asm_data *asm_data, char *str, int *i)
-{
-	int		j;
-	int		len;
-	char	*hex;
-
-	hex = ft_base_convert(HEXBASE, ASM_CODE_SIZE);
-	len = ft_strlen(hex);
-	j = 0;
-	while (8 - j - len > 0)
-	{
-		str[(*i)++] = '0';
-		j++;
-	}
-	j = 0;
-	while (hex[j])
-	{
-		str[(*i)++] = hex[j];
-		j++;
-	}
-	free(hex);
-	return (str);
-}
-
 char	*ft_code_create(t_asm_data *asm_data)
 {
 	char	*str1;
@@ -74,14 +50,15 @@ char	*ft_code_create(t_asm_data *asm_data)
 
 	i = 0;
 	str1 = ft_strnew(100000);
-	str1 = ft_add_magic_header(str1, &i);
-	str1 = ft_add_name(asm_data, str1, &i, -1);
-	str1 = ft_add_null(str1, &i);
-	str1 = ft_add_code_size(asm_data, str1, &i);
-	str1 = ft_add_comment(asm_data, str1, &i, -1);
-	str1 = ft_add_null(str1, &i);
+	//str1 = ft_add_magic_header(str1, &i);
+	//str1 = ft_add_name(asm_data, str1, &i, -1);
+	//str1 = ft_add_null(str1, &i);
+	//str1 = ft_add_code_size(asm_data, str1, &i);
+	//str1 = ft_add_comment(asm_data, str1, &i, -1);
+	//str1 = ft_add_null(str1, &i);
+	str1 = ft_code_compile(asm_data, str1, &i);
 
-	ft_printf("str = %s, i = %d\n", str1, i);
+	ft_printf("\nstr = %s, i = %d\n", str1, i);
 	//ft_printf("str2 = %s, i = %d\n", str1, i);
 
 	return (str1);
@@ -99,7 +76,7 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 		i++;
 	temp = ft_strsub(name, 0, i);
 	str = ft_strjoin_orig(temp, ".cor");
-	fd = open(str, O_CREAT, O_APPEND, __S_IWRITE | __S_IREAD);
+	fd = open(str, O_CREAT, O_APPEND, S_IWRITE | S_IREAD);
 	free(str);
 	str = ft_code_create(asm_data);
 	free(temp);
