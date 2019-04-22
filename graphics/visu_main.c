@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/22 17:06:35 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 17:15:43 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int					main(int argc, char **argv)
 		exit(0);
 	make_background(window, vm);
 	init_optab(op_tab);
-// init_tests(vm);
+init_tests(vm);
 	while (WIN_STATUS != STAT_QUIT)
 	{
 		if (vm->end_game)

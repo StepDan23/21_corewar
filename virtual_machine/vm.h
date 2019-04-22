@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 16:47:10 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 17:17:13 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct			s_vm
 	int					cycles_to_dump;
 	int					cycles_die;
 	t_proccess			*process;
-	t_champion			*champion[MAX_PLAYERS];
+	t_champion			*champion[MAX_PLAYERS + 1];
 	int					champion_count;
 	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
