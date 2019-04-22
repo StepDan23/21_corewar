@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 15:16:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:35:33 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:56:48 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_start_compile_sequence(char *file_name)
 		return ;
 	}
 	ft_read_file(fd, file_name);
-	ft_putstr("==================================\n");
+	ft_putendl("=============================================================");
 	close(fd);
 }
 
