@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 16:45:39 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:48:59 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_print_errors(t_asm_data *asm_data)
 		}
 		temp = current;
 		free(((t_errors *)(temp->content))->error_str);
+		free(temp->content);
 		current = current->next;
 		free(temp);
 	}
@@ -52,7 +53,7 @@ void	ft_error_row_col(t_asm_data *asm_data, char *line, int row, int type)
 	t_errors	*error;
 
 	ERROR_SIZE++;
-	chain = ft_lstnew(NULL, sizeof(t_errors));
+	chain = ft_lstnew(NULL, 0);
 	error = ft_error_init(line, row, 0, type);
 	chain->content = error;
 	chain->content_size = ERROR_SIZE;
@@ -73,7 +74,7 @@ int type)
 	t_errors	*error;
 
 	ERROR_SIZE++;
-	chain = ft_lstnew(NULL, sizeof(t_errors));
+	chain = ft_lstnew(NULL, 0);
 	error = ft_error_init(line, token->row, token->col, type);
 	chain->content = error;
 	chain->content_size = ERROR_SIZE;
@@ -93,7 +94,7 @@ void	ft_error_add(t_asm_data *asm_data, char *line, int column, int type)
 	t_errors	*error;
 
 	ERROR_SIZE++;
-	chain = ft_lstnew(NULL, sizeof(t_errors));
+	chain = ft_lstnew(NULL, 0);
 	error = ft_error_init(line, ASM_NUM_ROW, column, type);
 	chain->content = error;
 	chain->content_size = ERROR_SIZE;

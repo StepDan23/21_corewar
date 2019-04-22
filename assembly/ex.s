@@ -3,7 +3,8 @@
 
 loop:
         sti r1, %:live, %1
-
+loop2:
+        sti r1, %:live, %1
 live:
         live %0
         ld %0, r2
@@ -12,4 +13,4 @@ hfgb:
 hjdgf:
 hjdgf2:
 hjsdfdgf2:
-hjdgf42:
+

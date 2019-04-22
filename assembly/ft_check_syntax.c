@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:37:04 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:41:54 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,4 +161,6 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	ASM_LABEL = labels;
 	ft_solve_rows_values(asm_data, 0, 192);
 	g_label_num = 0;
+	free(g_ops);
+	g_ops = NULL;
 }
