@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 12:49:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 19:41:04 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:32:09 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int				get_next_line(const int fd, char **line)
 		free(((t_gnl *)(root->content))->data);
 		free(root->content);
 		free(root);
+		root = NULL;
 	}
 	return (flag);
 }

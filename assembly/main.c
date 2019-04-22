@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 15:16:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:30:29 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:35:33 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,109 +16,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// ! а что если несколько функций в ряд? не приведет ли это к тому что  в файле будет несколько кодов?
-// ! заняться очисткой памяти
-
-void	ft_clear_tokens(t_asm_data *asm_data)
-{
-	t_list	*current;
-	t_list	*last;
-	t_token	*token;
-	
-	current = ASM_TOKENS;
-	while (current)
-	{
-		token = (t_token *)(current->content);
-		free(token->str);
-		last = current;
-		current = current->next;
-		free(last->content);
-		free(last);
-	}
-	ASM_TOKENS = NULL;
-}
-
-void	ft_clear_errors(t_asm_data *asm_data)
-{
-	t_list		*current;
-	t_list		*last;
-	t_errors	*error;
-	int			i;
-
-	i = 0;
-	current = ERRORS;
-	while (i < ERROR_SIZE - 1)
-	{
-		error = (t_errors *)(current->content);
-		free(error->error_str);
-		last = current;
-		current = current->next;
-		free(last->content);
-		free(last);
-		i++;
-	}
-	ERRORS = NULL;
-}
-
-void	ft_clear_rows(t_asm_data *asm_data)
-{
-	t_list			*current;
-	t_list			*last;
-	t_syntax_row	*row;
-	int				i;
-
-	current = ASM_SYNTAX_ROW;
-	while (current)
-	{
-		row = (t_syntax_row *)(current->content);
-		i = 0;
-		while (i < ROW_CNT_MAX)
-			free(ROW_ARGS_TEXT[i++]);
-		free(ROW_ARGS_TEXT);
-		free(ROW_ARGS_SIZES);
-		free(ROW_ARG_TYPES);
-		last = current;
-		current = current->next;
-		free(last->content);
-		free(last);
-	}
-	ASM_SYNTAX_ROW = NULL;
-}
-
-void	ft_clear_labels(t_asm_data *asm_data)
-{
-	t_list				*current;
-	t_list				*last;
-	t_label_compile		*label;
-
-	current = ASM_LABEL;
-	while (current)
-	{
-		label = (t_label_compile *)(current->content);
-		free(label->label_text);
-		last = current;
-		current = current->next;
-		free(last->content);
-		free(last);
-	}
-	ASM_LABEL = NULL;
-}
-
-void	ft_clear_memory(t_asm_data *asm_data)
-{
-	free(ASM_CHAMP_DATA->champ_name);
-	free(ASM_CHAMP_DATA->champ_comment);
-	free(ASM_CHAMP_DATA);
-	ft_clear_tokens(asm_data);
-	free(ASM_STATE_MACHINE);
-	ft_clear_errors(asm_data);
-	ft_clear_rows(asm_data);
-	ft_clear_labels(asm_data);
-}
-
 void	ft_solve_sequence(t_asm_data *asm_data, int fd, char *filename)
 {
-	//todo проверить строку после завершения разработки
 	asm_data->count_symbols += ASM_NUM_ROW - 10;
 	ft_check_last_row(asm_data, fd, 20);
 	ft_check_syntax(asm_data);

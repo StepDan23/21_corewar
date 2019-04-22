@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:18:26 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:38:04 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,8 @@ t_list				*ft_collect_labels(t_asm_data *asm_data, int i, int j);
 void				ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_syntax_row *row);
 void				ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
-void				ft_merge_in_ecstasy(t_asm_data *asm_data, t_syntax_row *row);
+void				ft_merge_in_ecstasy(t_asm_data *asm_data,\
+t_syntax_row *row);
 void				ft_check_last_row(t_asm_data *asm_data, int fd, int i);
 void				ft_check_main_params_exists(t_asm_data *asm_data);
 int					ft_cnt_arg(int arg_type, int arg_num, int flag);
@@ -273,6 +274,8 @@ int j);
 void				ft_add_space_or_newline(int fd, int *i);
 void				ft_row_wrapper(t_syntax_row *row);
 void				ft_write_arg_text(int fd, int size, char *hex, int *i);
+void				ft_clear_memory(t_asm_data *asm_data);
+void				ft_clear_label_temp(t_asm_data *asm_data);
 
 void				test_print_labels(t_asm_data *asm_data, t_list *labels);
 void				ft_print_tokens(t_asm_data *asm_data);

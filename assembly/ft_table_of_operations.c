@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 18:17:46 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:23:54 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_syntax_row *row)
 		label_data->row = row;
 		last_label = current_label;
 		current_label = current_label->next;
+		free(last_label);
 	}
 	ASM_NUM_LABEL = 0;
 	ASM_LABEL = NULL;

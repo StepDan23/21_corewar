@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:29:09 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:37:04 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,9 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	}
 	ft_start_fill_rows(asm_data, token_chain, labels);
 	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
+	if (ASM_NUM_LABEL)
+		ft_clear_label_temp(asm_data);
 	ASM_LABEL = labels;
 	ft_solve_rows_values(asm_data, 0, 192);
-
-	// test_print_rows(asm_data);
-	// test_print_labels(asm_data, labels);
-	// ft_printf("Prog_size = %d\n", asm_data->code_size);
+	g_label_num = 0;
 }

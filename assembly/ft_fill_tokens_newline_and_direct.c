@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:27:45 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:37:15 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ t_token *token)
 	long long	temp;
 
 	token->type = Unknown;
-	//if (!ft_string_contain_only_num(line))
-	//{
-	//	ft_error_add(asm_data, ft_strjoin_orig("Chars in Direct value ",\
-	//	token->str), token->col, 1);
-	//	return ;
-	//}
 	if (line[0] == '+')
 	{
 		ft_error_add(asm_data, ft_strjoin_orig("Direct Num contains plus ",\
@@ -71,4 +65,18 @@ t_token *token)
 		token->str), token->col, 2);
 	else
 		token->type = Direct_number;
+}
+
+void	ft_clear_label_temp(t_asm_data *asm_data)
+{
+	t_list	*current;
+	t_list	*last;
+
+	current = ASM_LABEL;
+	while (current)
+	{
+		last = current;
+		current = current->next;
+		free(last);
+	}
 }
