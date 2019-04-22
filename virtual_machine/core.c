@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 17:20:13 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 18:17:56 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	update_vm_state(t_vm *vm)
 		vm->live_exec = 0;
 		champions_reset_lives(vm->champion, vm->champion_count);
 	}
-	vm->cycles++;
+	if (vm->end_game != 1)
+		vm->cycles++;
 	vm->cycles_to_die--;
 }
 
@@ -117,6 +118,7 @@ t_vm	*init_vm_test(int argc, char *argv[])
 		exit(1);
 	}
 	vm->champion[vm->champion_count] = NULL;
+	vm->p_total = vm->champion_count;
 	vm->winner = vm->champion[0];
 	read_all_champs(vm->champion, vm->champion_count);
 	vm_spread_champs(vm, vm->champion);
