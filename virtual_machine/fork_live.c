@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/22 15:42:14 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 16:48:10 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	live(t_vm *vm, t_proccess *proccess)
 	vm->live_exec++;
 	players = vm->champion;
 	i = 0;
-	while (players[i])
+	while (i < vm->champion_count)
 	{
 		if (players[i]->id == -number)
 		{

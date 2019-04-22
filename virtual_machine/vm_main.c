@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/18 20:03:14 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/22 16:47:25 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int		main(int argc, char *argv[])
 		exit(1);
 	}
 	vm->winner = vm->champion[0];
-	read_all_champs(vm->champion);
+	read_all_champs(vm->champion, vm->champion_count);
 	vm_spread_champs(vm, vm->champion);
-	introduce_players(vm->champion);
+	introduce_players(vm->champion, vm->champion_count);
 	init_optab(op_tab);
 	while (!vm->end_game)
 	{

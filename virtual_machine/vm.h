@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 16:10:30 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 16:47:10 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ typedef struct			s_op
 t_champion				*new_champ(int number, char *filename);
 void					champion_free(t_champion *hero);
 
-void					read_all_champs(t_champion **champs);
+void					read_all_champs(t_champion **champs, int count);
 int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
 int						read_magic(int fd);
@@ -236,5 +236,5 @@ void					init_optab(t_op op_tab[17]);
 void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
 void					update_vm_state(t_vm *vm);
 void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
-void					introduce_players(t_champion **players);
+void					introduce_players(t_champion **players, int count);
 #endif
