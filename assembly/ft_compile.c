@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 20:02:54 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 14:57:11 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,18 @@
 
 int		g_temp = 0;
 
-// добавил место в памяти для строки в структуре t_syntax_row
-// добавить проверку определения размера в байтах для каждой строки
-
-char	*ft_compile_code(t_asm_data *asm_data, char *str, int *i)
+void	ft_code_create(t_asm_data *asm_data, int fd)
 {
-	t_list			*row_list;
-	t_syntax_row	*row;
-	int		j;
-
-	j = 0;
-	row_list = ASM_SYNTAX_ROW;
-	while (j < ASM_SYNTAX_ROW_COUNT)
-	{
-		row = (t_syntax_row *)(row_list->content);
-		j++;
-		row_list = row_list->next;
-	}
-	return (str);
-}
-
-char	*ft_code_create(t_asm_data *asm_data)
-{
-	char	*str1;
-	char	*str2;
-	char	*str3;
 	int		i;
 
 	i = 0;
-	//str3 = ft_compile_code(asm_data, str3, &i);
-	//ft_printf("str3 = %s, i = %d\n", str3, i);
-
-	i = 0;
-	str1 = ft_strnew(100000);
-	//str1 = ft_add_magic_header(str1, &i);
-	//str1 = ft_add_name(asm_data, str1, &i, -1);
-	//str1 = ft_add_null(str1, &i);
-	//str1 = ft_add_code_size(asm_data, str1, &i);
-	//str1 = ft_add_comment(asm_data, str1, &i, -1);
-	//str1 = ft_add_null(str1, &i);
-	str1 = ft_code_compile(asm_data, str1, &i);
-
-	ft_printf("\nstr = %s, i = %d\n", str1, i);
-	//ft_printf("str2 = %s, i = %d\n", str1, i);
-
-	return (str1);
+	ft_add_null(&i, fd);
+	ft_add_name(asm_data, fd, &i, -1);
+	ft_add_null(&i, fd);
+	ft_add_code_size(asm_data, fd, &i);
+	ft_add_comment(asm_data, fd, &i, -1);
+	ft_add_null(&i, fd);
+	ft_code_compile(asm_data, fd, &i);
 }
 
 void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
@@ -75,10 +42,12 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 	while (name[i] != '.')
 		i++;
 	temp = ft_strsub(name, 0, i);
-	str = ft_strjoin_orig(temp, ".cor");
-	fd = open(str, O_CREAT, O_APPEND, S_IWRITE | S_IREAD);
+	str = ft_strjoin_orig(temp, ".txt");
+	fd = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (fd < 3)
+		exit(ft_printf("cant't create file %s.cor\n", temp));
 	free(str);
-	str = ft_code_create(asm_data);
 	free(temp);
+	ft_code_create(asm_data, fd);
 	close(fd);
 }

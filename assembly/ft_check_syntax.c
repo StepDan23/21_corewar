@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 21:29:17 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:18:18 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ t_table_ops	*g_ops = NULL;
 
 size_t		g_label_num = 0;
 
-int		ft_is_arg_valid(t_types type, int cur_arg, int com_num, t_token *token)
+int		ft_is_arg_valid(int cur_arg, int com_num, t_token *token)
 {
 	int		value;
 	int		token_value;
 
+	value = 0;
 	if (cur_arg == 1)
 		value = g_ops->arg1_type[com_num];
 	else if (cur_arg == 2)
@@ -54,26 +55,25 @@ int		ft_is_arg_valid(t_types type, int cur_arg, int com_num, t_token *token)
 		return (0);
 }
 
-void	ft_row_args_check(t_asm_data *asm_data, t_token *token, t_list *labels,\
+void	ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_syntax_row *row)
 {
 	if (ROW_WAIT_SEP)
 	{
-		ft_error_token(asm_data, ft_strdup("Two args in row "),\
-		TKN_ROW, TKN_COL, 1);
+		ft_error_token(asm_data, ft_strdup("Two args in row "), token, 1);
 		ROW_CNT_ARG++;
 		return ;
 	}
 	if (ROW_CNT_ARG - 1 >= ROW_CNT_MAX)
 	{
 		ft_error_token(asm_data, ft_strdup("Extra param for command "),\
-		TKN_ROW, TKN_COL, 1);
+		token, 1);
 		return ;
 	}
-	if (!ft_is_arg_valid(TKN_TYPE, ROW_CNT_ARG, ROW_COM_NUM, token))
+	if (!ft_is_arg_valid(ROW_CNT_ARG, ROW_COM_NUM, token))
 	{
 		ft_error_token(asm_data, ft_strdup("Wrong type of arg "),\
-		TKN_ROW, TKN_COL, 1);
+		token, 1);
 		ROW_CNT_ARG++;
 		return ;
 	}
@@ -81,14 +81,13 @@ t_syntax_row *row)
 	TABLE_FLAG[ROW_COM_NUM]);
 	ROW_ARGS_TEXT[ROW_CNT_ARG - 1] = ft_strdup(TKN_STR);
 	ROW_ARG_TYPES[ROW_CNT_ARG - 1] = TKN_TYPE;
-	ROW_CNT_ARG++;
-	ROW_WAIT_SEP = 1;
+	ft_row_wrapper(row);
 }
 
-void	ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
-t_syntax_row *row, t_list *labels)
+void	ft_add_new_command_row(t_asm_data *asm_data, t_token *token)
 {
 	t_list			*synt_row;
+	t_syntax_row	*row;
 
 	row = ft_syn_row_init();
 	synt_row = ft_lstnew(NULL, (sizeof(t_syntax_row)));
@@ -107,7 +106,7 @@ t_syntax_row *row, t_list *labels)
 	else
 		asm_data->syntax_row = synt_row;
 	if (ASM_NUM_LABEL)
-		ft_merge_in_ecstasy(asm_data, labels, row);
+		ft_merge_in_ecstasy(asm_data, row);
 	MACHINE_SYNT_ROW = 1;
 }
 
@@ -148,7 +147,6 @@ void	ft_check_syntax(t_asm_data *asm_data)
 
 	g_ops = ft_table_operations_init();
 	labels = ft_collect_labels(asm_data, 1, 0);
-	ASM_LABEL = labels;
 	token_chain = ASM_TOKENS;
 	token = (t_token *)(token_chain->content);
 	while (token_chain && (TKN_TYPE == Newline || TKN_TYPE == Whitespace))
@@ -158,9 +156,10 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	}
 	ft_start_fill_rows(asm_data, token_chain, labels);
 	ft_check_syntax_rows(asm_data, asm_data->syntax_row);
+	ASM_LABEL = labels;
 	ft_solve_rows_values(asm_data, 0, 192);
 
-	//test_print_rows(asm_data);
-	test_print_labels(asm_data, labels);
-	//ft_printf("Prog_size = %d\n", asm_data->code_size);
+	// test_print_rows(asm_data);
+	// test_print_labels(asm_data, labels);
+	// ft_printf("Prog_size = %d\n", asm_data->code_size);
 }

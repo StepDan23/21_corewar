@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:00:35 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 18:33:43 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 16:25:42 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token			*ft_token_init(void)
 		exit(1);
 	token->col = 0;
 	token->row = 0;
-	token->str = 0;
+	token->str = NULL;
 	token->type = 0;
 	return (token);
 }

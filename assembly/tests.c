@@ -6,7 +6,6 @@
 void	ft_print_tokens(t_asm_data *asm_data)
 {
 	t_list	*current;
-	t_list	*temp;
 	t_token	*token;
 
 	printf("\n\n");
@@ -38,6 +37,7 @@ void	test_print_labels(t_asm_data *asm_data, t_list *labels)
 		current = current->next;
 	}
 	printf("\n\n");
+	current = asm_data->label_temp;
 }
 
 void	test_print_rows(t_asm_data *asm_data)

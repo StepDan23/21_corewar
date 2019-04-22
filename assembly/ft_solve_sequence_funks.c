@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:34:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 20:31:53 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 15:55:09 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 			ft_lstadd_last(asm_data->tokens, chain);
 		else
 			asm_data->tokens = chain;
-		//token->row = ASM_NUM_ROW;
 		token->str = ft_strdup("\n");
 		token->type = Newline;
 	}
@@ -54,4 +53,10 @@ void	ft_check_main_params_exists(t_asm_data *asm_data)
 	if (!MACHINE_VALID_CODE)
 		ft_error_add(asm_data, ft_strdup("No commands were founed. Add one "),\
 		0, 3);
+}
+
+void	ft_row_wrapper(t_syntax_row *row)
+{
+	ROW_WAIT_SEP = 1;
+	ROW_CNT_ARG++;
 }

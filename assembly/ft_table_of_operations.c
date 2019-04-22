@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 21:25:34 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:14:51 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,7 @@ t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j)
 	return (root);
 }
 
-void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
-t_syntax_row *row)
+void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_syntax_row *row)
 {
 	t_list			*current_label;
 	t_list			*last_label;

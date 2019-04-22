@@ -6,15 +6,15 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 21:11:49 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:18:26 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
-#include "libft.h"
-#include "op.h"
+# include "libft.h"
+# include "op.h"
 
 typedef enum		e_types
 {
@@ -107,15 +107,15 @@ typedef struct		s_token
 # define TKN_COL (token->col)
 # define TKN_ROW (token->row)
 
-typedef struct	s_champ_data
+typedef struct		s_champ_data
 {
-	char		*champ_name;
-	int			name_row;
-	int			name_column;
-	char		*champ_comment;
-	int			comment_row;
-	int			comment_column;
-}				t_champ_data;
+	char			*champ_name;
+	int				name_row;
+	int				name_column;
+	char			*champ_comment;
+	int				comment_row;
+	int				comment_column;
+}					t_champ_data;
 
 # define CHAMP_NAME (asm_data->champ_data->champ_name)
 # define CHAMP_COMMENT (asm_data->champ_data->champ_comment)
@@ -124,29 +124,29 @@ typedef struct	s_champ_data
 # define CHAMP_COMMENT_ROW (asm_data->champ_data->comment_row)
 # define CHAMP_COMMENT_COL (asm_data->champ_data->comment_column)
 
-typedef struct	s_errors
+typedef struct		s_errors
 {
-	char		*error_str;
-	int			error_row;
-	int			error_column;
-	int			error_type;
-}				t_errors;
+	char			*error_str;
+	int				error_row;
+	int				error_column;
+	int				error_type;
+}					t_errors;
 
 # define T_ERROR_TYPE (((t_errors *)(current->content))->error_type)
 # define T_ERROR_STR (((t_errors *)(current->content))->error_str)
 # define T_ERROR_COL (((t_errors *)(current->content))->error_column)
 # define T_ERROR_ROW (((t_errors *)(current->content))->error_row)
 
-typedef struct	s_machine
+typedef struct		s_machine
 {
-	int			wait_name;
-	int			wait_comment;
-	int			double_quotes;
-	int			took_name_and_comment;
-	int			syntax_row_exists;
-	int			new_line;
-	int			one_valid_command;
-}				t_machine;
+	int				wait_name;
+	int				wait_comment;
+	int				double_quotes;
+	int				took_name_and_comment;
+	int				syntax_row_exists;
+	int				new_line;
+	int				one_valid_command;
+}					t_machine;
 
 # define MACHINE_WAIT_NAME (asm_data->state_machine->wait_name)
 # define MACHINE_WAIT_COMMENT (asm_data->state_machine->wait_comment)
@@ -155,9 +155,11 @@ typedef struct	s_machine
 # define MACHINE_SYNT_ROW (asm_data->state_machine->syntax_row_exists)
 # define MACHINE_NEW_LINE (asm_data->state_machine->new_line)
 # define MACHINE_VALID_CODE (asm_data->state_machine->one_valid_command)
+
 /*
 ** if error flag == 1/2/3 - ошибка лексическая/синтаксическая/семантическая
 */
+
 typedef struct		s_asm_data
 {
 	int				count_symbols;
@@ -198,75 +200,82 @@ typedef struct		s_asm_data
 # define T_DIRS 10
 # define T_INDS 100
 
-t_asm_data		*ft_asm_data_init(void);
-t_token			*ft_token_init(void);
-char			*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j);
-t_errors		*ft_error_init(char *str, int row, int col, int type);
-void			ft_error_add(t_asm_data *asm_data, char *line, int column,\
-int type);
-void	ft_error_token(t_asm_data *asm_data, char *line, int row, int column,\
-int type);
-void			ft_print_errors(t_asm_data *asm_data);
-char			*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j);
-void			ft_fill_token(t_asm_data *asm_data, char *line, t_token *token);
-void			ft_add_new_str_token(t_asm_data *asm_data);
-void			ft_fill_token_direct_labels(t_asm_data *asm_data, char *line,\
-t_token *token);
-void			ft_fill_token_direct_digits(t_asm_data *asm_data, char *line,\
-t_token *token);
-int				ft_find_sym(char *line, char sym);
-int				ft_check_label_symbols(char *line);
-void			ft_check_syntax(t_asm_data *asm_data);
-int				ft_get_word_len(char *line);
-int				ft_string_contain_only_num(char	*str);
-int				ft_line_is_command(char *line);
-void			ft_current_func_divis(t_asm_data *asm_data, char *line, int i,\
+t_asm_data			*ft_asm_data_init(void);
+t_token				*ft_token_init(void);
+char				*ft_lexer_champ_data(t_asm_data *asm_data, char *line,\
 int j);
-t_table_ops		*ft_table_operations_init(void);
-t_label_compile	*ft_init_label_compile(void);
-t_syntax_row	*ft_syn_row_init(void);
-void			ft_fill_strings(t_asm_data *asm_data, t_token *token,\
-t_list *labels);
-int				ft_type_value(t_types value);
-int				ft_is_arg_valid(t_types type, int cur_arg, int com_num,\
+t_errors			*ft_error_init(char *str, int row, int col, int type);
+void				ft_error_add(t_asm_data *asm_data, char *line, int column,\
+int type);
+void				ft_error_token(t_asm_data *asm_data, char *line,\
+t_token *token, int type);
+void				ft_error_row_col(t_asm_data *asm_data, char *line, int row,\
+int type);
+void				ft_print_errors(t_asm_data *asm_data);
+char				*ft_lexer_champ_code(t_asm_data *asm_data, char *line,\
+int j);
+void				ft_fill_token(t_asm_data *asm_data, char *line,\
 t_token *token);
-void			ft_add_new_command_row(t_asm_data *asm_data, t_token *token,\
-t_syntax_row *row, t_list *labels);
-void			ft_fill_row(t_asm_data *asm_data, t_token *token,\
+void				ft_add_new_str_token(t_asm_data *asm_data);
+void				ft_fill_token_direct_labels(t_asm_data *asm_data,\
+char *line, t_token *token);
+void				ft_fill_token_direct_digits(t_asm_data *asm_data,\
+char *line, t_token *token);
+int					ft_find_sym(char *line, char sym);
+int					ft_check_label_symbols(char *line);
+void				ft_check_syntax(t_asm_data *asm_data);
+int					ft_get_word_len(char *line);
+int					ft_string_contain_only_num(char	*str);
+int					ft_line_is_command(char *line);
+void				ft_current_func_divis(t_asm_data *asm_data, char *line,\
+int i, int j);
+t_table_ops			*ft_table_operations_init(void);
+t_label_compile		*ft_init_label_compile(void);
+t_syntax_row		*ft_syn_row_init(void);
+void				ft_fill_strings(t_asm_data *asm_data, t_token *token,\
+t_list *labels);
+int					ft_type_value(t_types value);
+int					ft_is_arg_valid(int cur_arg, int com_num,\
+t_token *token);
+void				ft_add_new_command_row(t_asm_data *asm_data,\
+t_token *token);
+void				ft_fill_row(t_asm_data *asm_data, t_token *token,\
 t_list *labels, t_syntax_row *row);
-t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j);
-void			ft_row_args_check(t_asm_data *asm_data, t_token *token,\
-t_list *labels, t_syntax_row *row);
-void			ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
-void			ft_merge_in_ecstasy(t_asm_data *asm_data, t_list *labels,\
+t_list				*ft_collect_labels(t_asm_data *asm_data, int i, int j);
+void				ft_row_args_check(t_asm_data *asm_data, t_token *token,\
 t_syntax_row *row);
-void			ft_check_last_row(t_asm_data *asm_data, int fd, int i);
-void			ft_check_main_params_exists(t_asm_data *asm_data);
-int				ft_cnt_arg(int arg_type, int arg_num, int flag);
-void			ft_add_chain_in_list(t_asm_data *asm_data, t_list *what);
-void			ft_convert_to_binary(t_asm_data *asm_data, char *name);
-char			*ft_add_name(t_asm_data *asm_data, char *str, int *i, int j);
-char			*ft_add_magic_header(char *str, int *i);
-char			*ft_add_null(char *str, int *i);
-char			*ft_add_comment(t_asm_data *asm_data, char *str, int *i, int j);
-char			*ft_str_realloc(char *str, int i);
-char			*ft_str_realloc(char *str, int i);
-void			ft_solve_rows_values(t_asm_data *asm_data, int i, int counter);
-char			*ft_add_code_size(t_asm_data *asm_data, char *str, int *i);
-char			*ft_code_compile(t_asm_data *asm_data, char *str, int *i);
-void			ft_add_number_code(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
-void			ft_add_direct_number(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
-void			ft_add_register(t_asm_data *asm_data, t_syntax_row *row, char *str, int *i, int j);
-void			ft_add_one_bite(char *str, int *i, int value, t_asm_data *asm_data);
-int				ft_get_negative_value(int value, long size);
-int				ft_get_label_value(t_asm_data *asm_data, char *label_arg);
+void				ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows);
+void				ft_merge_in_ecstasy(t_asm_data *asm_data, t_syntax_row *row);
+void				ft_check_last_row(t_asm_data *asm_data, int fd, int i);
+void				ft_check_main_params_exists(t_asm_data *asm_data);
+int					ft_cnt_arg(int arg_type, int arg_num, int flag);
+void				ft_add_chain_in_list(t_asm_data *asm_data, t_list *what);
+void				ft_convert_to_binary(t_asm_data *asm_data, char *name);
+void				ft_add_name(t_asm_data *asm_data, int fd, int *i, int j);
+void				ft_add_magic_header(int fd, int *i);
+void				ft_add_null(int *i, int fd);
+void				ft_add_comment(t_asm_data *asm_data, int fd, int *i, int j);
+char				*ft_str_realloc(char *str, int i);
+void				ft_solve_rows_values(t_asm_data *asm_data, int i,\
+int counter);
+void				ft_add_code_size(t_asm_data *asm_data, int fd, int *i);
+void				ft_code_compile(t_asm_data *asm_data, int fd, int *i);
+void				ft_add_number_code(t_syntax_row *row, int fd, int *i,\
+int j);
+void				ft_add_direct_number(t_syntax_row *row, int fd, int *i,\
+int j);
+void				ft_add_register(t_syntax_row *row, int fd, int *i, int j);
+void				ft_add_one_bite(int fd, int *i, int value);
+int					ft_get_negative_value(int value, long size);
+int					ft_get_label_value(t_asm_data *asm_data, char *label_arg);
+char				*ft_add_label(t_asm_data *asm_data, t_syntax_row *row,\
+int j);
+void				ft_add_space_or_newline(int fd, int *i);
+void				ft_row_wrapper(t_syntax_row *row);
+void				ft_write_arg_text(int fd, int size, char *hex, int *i);
 
-
-
-
-
-void			test_print_labels(t_asm_data *asm_data, t_list *labels);
-void			ft_print_tokens(t_asm_data *asm_data);
-void			test_print_rows(t_asm_data *asm_data);
+void				test_print_labels(t_asm_data *asm_data, t_list *labels);
+void				ft_print_tokens(t_asm_data *asm_data);
+void				test_print_rows(t_asm_data *asm_data);
 
 #endif

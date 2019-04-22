@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:11:25 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 18:20:37 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:11:05 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@ int		ft_type_value(t_types value)
 {
 	int		res;
 
+	res = 0;
 	if (value == Register)
 		res = T_REGS;
 	else if (value == Direct_number || value == Direct_label)
 		res = T_DIRS;
 	else if (value == Number || value == Label_arg)
 		res = T_INDS;
-	else
-		ft_printf("Strange type of arg = %d\n", value);
 	return (res);
 }
 
@@ -58,8 +57,7 @@ void	ft_add_chain_in_list(t_asm_data *asm_data, t_list *what)
 		ft_lstadd_last(ASM_LABEL, what);
 }
 
-int		ft_solve_rows_2(t_asm_data *asm_data, t_syntax_row *row, int i,\
-int counter)
+int		ft_solve_rows_2(t_syntax_row *row, int i, int counter)
 {
 	int		temp;
 
@@ -81,7 +79,6 @@ void	ft_solve_rows_values(t_asm_data *asm_data, int i, int counter)
 {
 	t_list			*chain;
 	t_syntax_row	*row;
-	int				temp;
 
 	if (ERROR_SIZE > 0)
 		return ;
@@ -93,7 +90,7 @@ void	ft_solve_rows_values(t_asm_data *asm_data, int i, int counter)
 		i = 0;
 		while (counter > 0 && i < 3)
 		{
-			i = ft_solve_rows_2(asm_data, row, i, counter);
+			i = ft_solve_rows_2(row, i, counter);
 			counter = counter >> 2;
 		}
 		chain = chain->next;

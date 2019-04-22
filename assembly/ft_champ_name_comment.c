@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:14:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 16:34:18 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:04:58 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		ft_get_name_or_comment(t_asm_data *asm_data, char *line, int i, int k)
 	else
 	{
 		ft_error_add(asm_data, ft_strdup("Some unidentified error \
-oqqured while set name or comment: "), temp + k, 2);
+oqqured while set name or comment: "), k, 2);
 		j = ft_strlen(line) - 1;
 	}
 	return (j);
@@ -55,7 +55,6 @@ oqqured while set name or comment: "), temp + k, 2);
 int		ft_get_name_or_comment_flag(t_asm_data *asm_data, char *line,\
 int i, int j)
 {
-
 	if (line[0] == NAME_CMD_STRING[0] && !ft_strncmp(line, NAME_CMD_STRING,\
 	ft_strlen(NAME_CMD_STRING)))
 	{
@@ -112,7 +111,6 @@ char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j)
 {
 	int		i;
 	int		line_len;
-	t_token	*token;
 
 	if ((line_len = ft_strlen(line)) == 0)
 		return (line);
