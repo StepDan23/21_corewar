@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 14:57:11 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:54:07 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 	while (name[i] != '.')
 		i++;
 	temp = ft_strsub(name, 0, i);
-	str = ft_strjoin_orig(temp, ".txt");
+	str = ft_strjoin_orig(temp, ".cor");
 	fd = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 3)
 		exit(ft_printf("cant't create file %s.cor\n", temp));

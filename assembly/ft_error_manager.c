@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:48:59 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:53:53 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_print_errors(t_asm_data *asm_data)
 		free(temp);
 	}
 	if (ERROR_SIZE > 0)
-		exit(ft_printf("ERRORS was founded. Fix your champ's code\n"));
+		ft_printf("ERRORS was founded. Fix your champ's code\n");
 }
 
 void	ft_error_row_col(t_asm_data *asm_data, char *line, int row, int type)

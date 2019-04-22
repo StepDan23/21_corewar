@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 19:29:58 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:09:27 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:52:15 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_add_null(int *i, int fd)
 	while (j < 8)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('-', fd);
+		ft_putchar_fd('0', fd);
 		(*i)++;
 		j++;
 	}
