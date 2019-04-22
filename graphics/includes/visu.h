@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 10:31:52 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/22 12:08:56 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # define COL_GREEN		0x32, 0xCD, 0x32, 0xFF
 # define COL_L_GREEN	0x19, 0x66, 0x19, 0xFF
 # define COL_BLUE		0x41, 0x69, 0xE1, 0xFF
-# define COL_L_BLUE		0x20, 0x34, 0x70, 0xFF
+# define COL_L_BLUE		0x20, 0x45, 0xB1, 0xFF
 # define COL_RED		0xE3, 0x42, 0x34, 0xFF
-# define COL_L_RED		0x71, 0x21, 0x1A, 0xFF
+# define COL_L_RED		0xB1, 0x15, 0x10, 0xFF
 # define COL_YELOW		0xFF, 0xD7, 0x00, 0xFF
-# define COL_L_YELOW	0x7F, 0x6B, 0x00, 0xFF
+# define COL_L_YELOW	0xCF, 0x8B, 0x00, 0xFF
 # define COL_WHITE		0xFF, 0xFF, 0xFF, 0xFF
 # define COL_BLACK		0x00, 0x00, 0x00, 0xFF
 # define COL_GREY		0x30, 0x30, 0x30, 0xFF

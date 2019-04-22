@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 11:32:42 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/21 19:13:33 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			render_carrier_source(t_window *window, t_vm *vm)
 		if (proc->pos_written >= 0)
 			while (++i < 4)
 				render_source_back(window, vm,
-							proc->player_id + 250, proc->pos_written + i);
+							proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
 		proc = proc->next;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);

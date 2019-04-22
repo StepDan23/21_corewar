@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 22:36:07 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/22 11:10:54 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ int					main(int argc, char **argv)
 		exit(0);
 	make_background(window, vm);
 	init_optab(op_tab);
-	init_tests(vm);
+init_tests(vm);
 	while (WIN_STATUS != STAT_QUIT)
 	{
+		if (vm->end_game)
+			WIN_STATUS = STAT_END;
 		render_image(window, vm, op_tab);
 		SDL_RenderPresent(WIN_REND);
 		win_events(window);

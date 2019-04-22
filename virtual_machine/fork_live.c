@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/18 19:54:11 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/21 17:40:33 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	live(t_vm *vm, t_proccess *proccess)
 		}
 		i++;
 	}
-	P_POS = (P_POS + 4) % MEM_SIZE;
+	P_POS = (P_POS + 5) % MEM_SIZE;
 }
 
 void	aff(t_vm *vm, t_proccess *proccess)

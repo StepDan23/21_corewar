@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_tests.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:56:09 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/18 19:54:11 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/21 17:40:39 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1211,6 +1211,35 @@ void	aff_test(t_vm *vm, t_proccess *proccess)
 	aff(vm, proccess);
 }
 
+void	live_performe_test(t_vm *vm, t_proccess *proccess)
+{
+	t_op		op_tab[17];
+	init_optab(op_tab);
+	proccess_init_reg(P_REG);
+	vm_init_memory(vm->memory);
+	champions_add("lol", 1, vm->champion);
+	vm->process->id = 0;
+	P_POS = 0;
+	vm->memory[0] = 0x01; //live
+	vm->memory[1] = 0x54; // Байт аргументов 01010100 (REG + REG + REG)
+	vm->memory[2] = 0x02; //00001010
+	vm->memory[3] = 0x03; //00001011
+	vm->memory[4] = 0x10; //00001100
+	int i = 0;
+	while (i < 10)
+	{
+		performe_proc(vm, vm->process, op_tab);
+		update_vm_state(vm);
+		i++;
+	}
+	if (P_POS == 5)
+		ft_printf("live_performe_test [01] \x1b[32mOK\x1b[0m\n");
+	else
+		ft_printf("live_performe_test [01] \x1b[31mFAIL\x1b[0m\n");
+	ft_printf("%d %x\n", P_POS, VM_M[P_POS]);
+	ft_printf("--------------------------\n");
+}
+
 int		main(void)
 {
 	t_vm *vm = vm_new();
@@ -1235,5 +1264,8 @@ int		main(void)
 	live_test(vm, proccess);
 	addsub_test(vm, proccess);
 	aff_test(vm, proccess);
+
+	ft_printf("\nIntegrated tests:\n");
+	live_performe_test(vm, proccess);
 	return (0);
 }
