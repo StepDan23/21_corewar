@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:30:07 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:07:24 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows)
 			ROW_NUM, 2);
 		if (ROW_CNT_MAX != ROW_CNT_ARG - 1)
 			ft_error_row_col(asm_data, ft_strdup("Wrong count of args "),\
-			ROW_NUM, 2);
+			ROW_NUM, 3);
 		rows = rows->next;
 		MACHINE_VALID_CODE++;
 	}

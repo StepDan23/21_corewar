@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:41:54 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:07:05 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_syntax_row *row)
 	if (!ft_is_arg_valid(ROW_CNT_ARG, ROW_COM_NUM, token))
 	{
 		ft_error_token(asm_data, ft_strdup("Wrong type of arg "),\
-		token, 2);
+		token, 3);
 		ROW_CNT_ARG++;
 		return ;
 	}

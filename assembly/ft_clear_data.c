@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 19:31:28 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:32:55 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:05:53 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,6 @@ void	ft_clear_tokens(t_asm_data *asm_data)
 		free(last);
 	}
 	ASM_TOKENS = NULL;
-}
-
-void	ft_clear_errors(t_asm_data *asm_data)
-{
-	t_list		*current;
-	t_list		*last;
-	t_errors	*error;
-	int			i;
-
-	i = 0;
-	current = ERRORS;
-	while (i < ERROR_SIZE - 1)
-	{
-		error = (t_errors *)(current->content);
-		free(error->error_str);
-		last = current;
-		current = current->next;
-		free(last->content);
-		free(last);
-		i++;
-	}
-	ERRORS = NULL;
 }
 
 void	ft_clear_rows(t_asm_data *asm_data)
@@ -105,7 +83,6 @@ void	ft_clear_memory(t_asm_data *asm_data)
 	free(ASM_CHAMP_DATA);
 	ft_clear_tokens(asm_data);
 	free(ASM_STATE_MACHINE);
-	ft_clear_errors(asm_data);
 	ft_clear_rows(asm_data);
 	ft_clear_labels(asm_data);
 }

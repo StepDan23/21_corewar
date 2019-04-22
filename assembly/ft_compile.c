@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:54:07 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 21:17:41 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
 int		g_temp = 0;
 
 void	ft_code_create(t_asm_data *asm_data, int fd)
@@ -22,7 +23,7 @@ void	ft_code_create(t_asm_data *asm_data, int fd)
 	int		i;
 
 	i = 0;
-	ft_add_null(&i, fd);
+	ft_add_magic_header(fd, &i);
 	ft_add_name(asm_data, fd, &i, -1);
 	ft_add_null(&i, fd);
 	ft_add_code_size(asm_data, fd, &i);
@@ -47,7 +48,8 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 	if (fd < 3)
 		exit(ft_printf("cant't create file %s.cor\n", temp));
 	free(str);
-	free(temp);
 	ft_code_create(asm_data, fd);
 	close(fd);
+	ft_printf("Writing output file to %s.cor\n", temp);
+	free(temp);
 }
