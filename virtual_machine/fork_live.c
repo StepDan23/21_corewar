@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:33 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:42:14 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	live(t_vm *vm, t_proccess *proccess)
 		{
 			vm->winner = players[i];
 			players[i]->lives_in_period++;
-			players[i]->last_live = vm->cycles;
+			players[i]->last_live = vm->cycles + 1;
 			ft_printf("A process shows that player %d (%s) is alive\n",
 						-number, players[i]->name);
 		}
