@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:25 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/22 15:51:22 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,18 @@ void	introduce_players(t_champion **players)
 	}
 }
 
+void	champions_reset_lives(t_champion **champs, int count)
+{
+	int	i;
+
+	i = 0;
+	while(i < count)
+	{
+		champs[i]->lives_in_period = 0;
+		i++;
+	}
+}
+
 void	update_vm_state(t_vm *vm)
 {
 	if (!vm->cycles_to_die)
@@ -81,6 +93,7 @@ void	update_vm_state(t_vm *vm)
 			vm->checkups++;
 		vm->cycles_to_die = vm->cycles_die;
 		vm->live_exec = 0;
+		champions_reset_lives(vm->champion, vm->champion_count);
 	}
 	vm->cycles++;
 	vm->cycles_to_die--;
