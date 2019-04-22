@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/17 11:00:02 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/22 11:52:10 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,20 @@ void		print_start_names(t_window *window, t_vm *vm)
 	int			x;
 	int			y;
 
-	FONT_COLOR = (SDL_Color){COL_BLACK};
+
 	i = 0;
+	FONT_COLOR = (SDL_Color){COL_L_BLUE};
+	if (VM_CHAMP_COUNT == 1)
+	{
+		print_str(window, "What? Only one player???", 313, 110);
+		print_str(window, "Okay then...", 472, 200);
+	}
+	FONT_COLOR = (SDL_Color){COL_BLACK};
 	while (VM_CHAMPS[i])
 	{
 		x = 9 + 1200 * (i + 1) / (VM_CHAMP_COUNT) - (600 / VM_CHAMP_COUNT) -
-											ft_strlen(VM_CHAMPS[i]->name) * 15;
-		y = (i % 2 == 0) ? 280 : 550;
+											ft_strlen(VM_CHAMPS[i]->name) * 13;
+		y = (i % 2 == 0) ? 290 : 540;
 		print_str(window, VM_CHAMPS[i]->name, x, y);
 		i++;
 	}
