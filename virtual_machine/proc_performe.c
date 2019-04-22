@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/18 20:17:35 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 16:19:45 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,14 @@ int		get_new_pos(int pos, t_op op, unsigned int octet)
 
 void	set_new_op(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 {
+	int		valid_op_code;
+
 	P_CT = vm->memory[P_POS];
-	if (P_CT < 17 && P_CT > 0)
+	valid_op_code = P_CT < 17 && P_CT > 0;
+	if (valid_op_code)
 		P_CTW = op_tab[P_CT].cycles_to_wait;
+	if (valid_op_code && op_tab[P_CT].coding_byte)
+		proccess->arg_byte = vm->memory[(P_POS + 1) % MEM_SIZE];
 }
 
 /*
@@ -101,23 +106,23 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 	init_f(f);
 	if (op_tab[P_CT].coding_byte)
 	{
-		if (coding_byte_check(VM_M[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
+		if (coding_byte_check(proccess->arg_byte, op_tab[P_CT]))
 		{
 			if (has_register(VM_M[(P_POS + 1) % MEM_SIZE]) &&\
 				!valid_reg(VM_M[(P_POS + 1) % MEM_SIZE],
 							VM_M, P_POS + 1, op_tab[P_CT]))
 				P_POS = get_new_pos(P_POS, op_tab[P_CT],
-									VM_M[(P_POS + 1) % MEM_SIZE]);
+									proccess->arg_byte);
 			else
 			{
 				f[P_CT](vm, proccess);
 				P_POS = get_new_pos(P_POS, op_tab[P_CT],
-									VM_M[(P_POS + 1) % MEM_SIZE]);
+									proccess->arg_byte);
 			}
 		}
 		else
 			P_POS = get_new_pos(P_POS, op_tab[P_CT],
-								VM_M[(P_POS + 1) % MEM_SIZE]);
+								proccess->arg_byte);
 	}
 	else
 		f[P_CT](vm, proccess);

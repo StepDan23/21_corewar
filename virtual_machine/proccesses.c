@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 15:38:32 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 16:05:58 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_proccess	*proccess_new(int id, int player_id, int pos)
 	new_p->cycles_to_wait = 0;
 	new_p->value_written = -1;
 	new_p->pos_written = -1;
+	new_p->arg_byte = 0;
 	return (new_p);
 }
 
