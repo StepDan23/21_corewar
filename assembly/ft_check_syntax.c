@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:18:18 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:29:09 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,20 @@ t_syntax_row *row)
 {
 	if (ROW_WAIT_SEP)
 	{
-		ft_error_token(asm_data, ft_strdup("Two args in row "), token, 1);
+		ft_error_token(asm_data, ft_strdup("Two args in row "), token, 2);
 		ROW_CNT_ARG++;
 		return ;
 	}
 	if (ROW_CNT_ARG - 1 >= ROW_CNT_MAX)
 	{
 		ft_error_token(asm_data, ft_strdup("Extra param for command "),\
-		token, 1);
+		token, 2);
 		return ;
 	}
 	if (!ft_is_arg_valid(ROW_CNT_ARG, ROW_COM_NUM, token))
 	{
 		ft_error_token(asm_data, ft_strdup("Wrong type of arg "),\
-		token, 1);
+		token, 2);
 		ROW_CNT_ARG++;
 		return ;
 	}
@@ -91,6 +91,7 @@ void	ft_add_new_command_row(t_asm_data *asm_data, t_token *token)
 
 	row = ft_syn_row_init();
 	synt_row = ft_lstnew(NULL, (sizeof(t_syntax_row)));
+	free(synt_row->content);
 	synt_row->content = row;
 	ROW_NUM = (!ROW_NUM) ? token->row : ROW_NUM;
 	ROW_COM_NUM = ft_line_is_command(token->str);
@@ -123,8 +124,7 @@ t_list *labels)
 		if (token->type == Label)
 		{
 			MACHINE_VALID_CODE++;
-			chain = ft_lstnew(NULL, sizeof(t_label_compile));
-			free(chain->content);
+			chain = ft_lstnew(NULL, 0);
 			label_chain = labels;
 			while (label_chain && label_chain->content_size != g_label_num)
 				label_chain = label_chain->next;
@@ -146,7 +146,7 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	t_list		*token_chain;
 
 	g_ops = ft_table_operations_init();
-	labels = ft_collect_labels(asm_data, 1, 0);
+	labels = ft_collect_labels(asm_data, 0, 0);
 	token_chain = ASM_TOKENS;
 	token = (t_token *)(token_chain->content);
 	while (token_chain && (TKN_TYPE == Newline || TKN_TYPE == Whitespace))

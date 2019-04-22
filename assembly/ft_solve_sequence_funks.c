@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:34:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 15:55:09 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:09:08 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 	if (str[i] == '\n')
 	{
 		chain = ft_lstnew(NULL, sizeof(t_token));
+		free(chain->content);
 		token = ft_token_init();
 		asm_data->token_size += 1;
 		chain->content = token;

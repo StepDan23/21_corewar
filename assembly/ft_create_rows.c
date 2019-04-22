@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:18:32 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:30:07 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list *labels, t_syntax_row *row)
 		current = current->next;
 	}
 	ft_error_token(asm_data, ft_strjoin_orig("Label argument not in Label's \
-list ", TKN_STR), token, 1);
+list ", TKN_STR), token, 3);
 	ROW_CNT_ARG++;
 	return (1);
 }
@@ -48,10 +48,10 @@ void	ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows)
 			continue ;
 		if (!ROW_NEWLINE)
 			ft_error_row_col(asm_data, ft_strdup("No Newline in Row "),\
-			ROW_NUM, 1);
+			ROW_NUM, 2);
 		if (ROW_CNT_MAX != ROW_CNT_ARG - 1)
 			ft_error_row_col(asm_data, ft_strdup("Wrong count of args "),\
-			ROW_NUM, 1);
+			ROW_NUM, 2);
 		rows = rows->next;
 		MACHINE_VALID_CODE++;
 	}
@@ -75,7 +75,7 @@ t_syntax_row *row)
 	if (TKN_TYPE == Separator && PREV_ARG_TYPE == Separator)
 	{
 		ft_error_token(asm_data, ft_strdup("Extra separator in row "), token,\
-		1);
+		2);
 		return ;
 	}
 	if (TKN_TYPE == Newline && PREV_ARG_TYPE == Separator &&\
@@ -83,7 +83,7 @@ t_syntax_row *row)
 	{
 		ROW_NEWLINE = 1;
 		ft_error_token(asm_data, ft_strdup("Separator before Newline "),\
-		token, 1);
+		token, 2);
 		return ;
 	}
 	if (ROW_WAIT_SEP && TKN_TYPE == Separator)
@@ -113,7 +113,7 @@ void	ft_fill_strings(t_asm_data *asm_data, t_token *token, t_list *labels)
 	if (!MACHINE_SYNT_ROW && token->type >= 4)
 	{
 		ft_error_token(asm_data, ft_strjoin(ft_strdup("NO command for arg "),\
-		token->str), token, 1);
+		token->str), token, 2);
 		return ;
 	}
 	if (!ASM_SYNTAX_ROW)

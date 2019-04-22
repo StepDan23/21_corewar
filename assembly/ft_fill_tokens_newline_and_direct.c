@@ -6,11 +6,12 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 16:26:03 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:27:45 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+#include <stdlib.h>
 
 void	ft_add_new_str_token(t_asm_data *asm_data)
 {
@@ -18,6 +19,7 @@ void	ft_add_new_str_token(t_asm_data *asm_data)
 	t_list	*chain;
 
 	chain = ft_lstnew(NULL, sizeof(t_token));
+	free(chain->content);
 	token = ft_token_init();
 	chain->content = token;
 	if (ASM_TOKENS == NULL)
@@ -66,7 +68,7 @@ t_token *token)
 	temp = ft_atol(line);
 	if (temp < -MEM_SIZE || temp > MEM_SIZE)
 		ft_error_add(asm_data, ft_strjoin_orig("Wrong value in Direct ",\
-		token->str), token->col, 1);
+		token->str), token->col, 2);
 	else
 		token->type = Direct_number;
 }

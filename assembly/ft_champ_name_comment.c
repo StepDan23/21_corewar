@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:14:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:04:58 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:27:09 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ int i, int j)
 	ft_strlen(NAME_CMD_STRING)))
 	{
 		(MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME) ? (ft_error_add(asm_data,\
-		ft_strdup("CHAMP's CMD alredy was given"), i + j, 2)) : 0;
+		ft_strdup("CHAMP's CMD alredy was given"), i + j, 3)) : 0;
 		(MACHINE_NAME_COMMENT & 1) ? ft_error_add(asm_data,
-		ft_strdup("Name already set"), i + j, 2) : (MACHINE_WAIT_NAME = 1);
+		ft_strdup("Name already set"), i + j, 3) : (MACHINE_WAIT_NAME = 1);
 		return (i + ft_strlen(NAME_CMD_STRING) - 1);
 	}
 	if (line[0] == COMMENT_CMD_STRING[0] && !ft_strncmp(line,\
 	COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
 	{
 		(MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME) ? (ft_error_add(asm_data,\
-ft_strdup("CHAMP's CMD alredy was given"), i + j, 2)) : 0;
+ft_strdup("CHAMP's CMD alredy was given"), i + j, 3)) : 0;
 		(MACHINE_NAME_COMMENT & 2) ? ft_error_add(asm_data,\
-ft_strdup("Comment was set earlier"), i + j, 2) : (MACHINE_WAIT_COMMENT = 1);
+ft_strdup("Comment was set earlier"), i + j, 3) : (MACHINE_WAIT_COMMENT = 1);
 		return (i + ft_strlen(COMMENT_CMD_STRING) - 1);
 	}
 	if (MACHINE_WAIT_COMMENT || MACHINE_WAIT_NAME)

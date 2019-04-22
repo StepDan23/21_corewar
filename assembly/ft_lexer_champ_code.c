@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:12:32 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/19 16:34:54 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:58:07 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ char	*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j)
 		word_len = ft_get_word_len(&line[i]);
 		if (line[i] == COMMENT_CHAR || line[i] == ANOTHER_COMMENT_CHAR)
 			return (line);
-		chain = ft_lstnew(NULL, sizeof(t_token));
+		chain = ft_lstnew(NULL, 0);
 		token = ft_token_init();
 		chain->content = token;
-		asm_data->token_size += 1;
-		ft_lstadd_last((asm_data->tokens), chain);
-		token->row = ASM_NUM_ROW;
-		token->col = i + j;
+		ASM_TOKEN_SIZE += 1;
+		ft_lstadd_last(ASM_TOKENS, chain);
+		TKN_ROW = ASM_NUM_ROW;
+		TKN_COL = i + j;
 		ft_fill_token(asm_data, ft_strsub(line, i, word_len), token);
 		i += word_len;
 	}

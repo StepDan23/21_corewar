@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:59:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:14:51 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:17:46 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ t_list			*ft_collect_labels(t_asm_data *asm_data, int i, int j)
 			label = ft_init_label_compile();
 			label->row_num = ((t_token *)(current->content))->row;
 			label->label_text = ft_strdup(((t_token *)(current->content))->str);
-			chain = ft_lstnew(NULL, sizeof(t_label_compile));
+			chain = ft_lstnew(NULL, 0);
 			chain->content = label;
 			chain->content_size = j++;
 			if (!root)

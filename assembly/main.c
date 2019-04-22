@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 15:16:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:03:46 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:30:29 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 // ! а что если несколько функций в ряд? не приведет ли это к тому что  в файле будет несколько кодов?
 // ! заняться очисткой памяти
-// ! Расставить ошибки по типам
 
 void	ft_clear_tokens(t_asm_data *asm_data)
 {
@@ -26,7 +25,7 @@ void	ft_clear_tokens(t_asm_data *asm_data)
 	t_list	*last;
 	t_token	*token;
 	
-	current = asm_data->tokens;
+	current = ASM_TOKENS;
 	while (current)
 	{
 		token = (t_token *)(current->content);

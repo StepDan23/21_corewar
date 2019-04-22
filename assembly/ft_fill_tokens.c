@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:40:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/18 19:03:39 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 19:28:26 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_fill_token_command(t_asm_data *asm_data, char *line, t_token *token)
 	}
 	token->type = Unknown;
 	ft_error_add(asm_data, ft_strjoin_orig("Unknown type of token ",\
-	token->str), token->col, 1);
+	token->str), token->col, 2);
 }
 
 void	ft_fill_token_reg(t_asm_data *asm_data, char *line, t_token *token)
@@ -40,13 +40,13 @@ void	ft_fill_token_reg(t_asm_data *asm_data, char *line, t_token *token)
 		token->type = Unknown;
 		if (!line[1])
 			ft_error_add(asm_data, ft_strjoin_orig("No value in reg ",\
-			token->str), token->col, 1);
+			token->str), token->col, 2);
 		else if (!ft_string_contain_only_num(&line[1]))
 			ft_error_add(asm_data, ft_strjoin_orig("Detected Char in reg  ",\
 			token->str), token->col, 1);
 		else if (temp < 0 || temp > REG_NUMBER)
 			ft_error_add(asm_data, ft_strjoin_orig("Wrong reg num ",\
-			token->str), token->col, 1);
+			token->str), token->col, 2);
 		else
 			token->type = Register;
 		return ;
@@ -66,7 +66,7 @@ void	ft_fill_token_direct(t_asm_data *asm_data, char *line, t_token *token)
 		{
 			token->type = Unknown;
 			ft_error_add(asm_data, ft_strjoin_orig("Unknown value in \
-DIRECT_ADDR ", token->str), token->col, 1);
+DIRECT_ADDR ", token->str), token->col, 2);
 		}
 		return ;
 	}
@@ -83,7 +83,7 @@ void	ft_fill_token_digits(t_asm_data *asm_data, char *line, t_token *token)
 			token->str), token->col, 1);
 		else if (ft_atol(line) > MEM_SIZE)
 			ft_error_add(asm_data, ft_strjoin_orig("Value is greater than \
-MEM_SIZE ", token->str), token->col, 1);
+MEM_SIZE ", token->str), token->col, 2);
 		else if (!ft_string_contain_only_num(line))
 			ft_error_add(asm_data, ft_strjoin_orig("Detected chars in number ",\
 			token->str), token->col, 1);
