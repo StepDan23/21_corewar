@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 17:17:13 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 14:07:15 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct			s_proccess
 	int					player_id;
 	int					id;
 	unsigned int		registers[REG_NUMBER];
-	int					is_live;
+	int					last_live;
 	int					command_type;
 	unsigned int		arg_byte;
 	int					cycles_to_wait;
