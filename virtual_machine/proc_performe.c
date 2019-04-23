@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_performe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/22 20:12:53 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 20:30:30 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,10 @@ void	init_f(void (*f[17])(t_vm *, t_proccess *))
 **	Выполняет операцию и перемещает каретку на новую позицию
 */
 
-void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
+void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17], void (*f[17])(t_vm *, t_proccess *))
 {
-	void (*f[17])(t_vm *, t_proccess *);
 	unsigned int	arg_types;
 
-	init_f(f);
 	if (op_tab[P_CT].coding_byte)
 	{
 		if (coding_byte_check(VM_M[(P_POS + 1) % MEM_SIZE], op_tab[P_CT]))
@@ -139,8 +137,10 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17])
 void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 {
 	t_proccess	*proccess;
+	void (*f[17])(t_vm *, t_proccess *);
 
 	proccess = head;
+	init_f(f);
 	while (proccess)
 	{
 		if (!P_CTW)
@@ -149,13 +149,11 @@ void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 			P_CTW--;
 		if (!P_CTW && P_CT < 17 && P_CT > 0)
 		{
-			performe_action(vm, proccess, op_tab);
-			if (P_CT != 3 && P_CT != 11)
-				proccess->pos_written = -1;
+			proccess->pos_written = -1;
+			performe_action(vm, proccess, op_tab, f);
 		}
 		else if (!P_CTW)
 		{
-			proccess->value_written = 0;
 			proccess->pos_written = -1;
 			P_POS = (P_POS + 1) % MEM_SIZE;
 		}

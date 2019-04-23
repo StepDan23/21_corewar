@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 15:54:01 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 19:49:59 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	vm_delete(t_vm *vm)
 		free(vm->champion[i]);
 		i++;
 	}
-	ft_printf("lol %d", vm->champion_count);
 	curr = vm->process;
 	while (curr)
 	{
@@ -99,18 +98,10 @@ void	vm_dump_memory(t_vm *vm)
 {
 	int	i;
 
-	i = -1;
-	while (++i < 32)
-		ft_printf("%02d ", i + 1);
-	ft_printf("\n");
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		if (vm->memory[i])
-			ft_printf("\e[32m");
 		ft_printf("%02hhx ", vm->memory[i]);
-		if (vm->memory[i])
-			ft_printf("\e[39m");
 		if ((i + 1) % 32 == 0 && i)
 			ft_printf("\n");
 		i++;

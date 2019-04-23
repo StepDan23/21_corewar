@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 15:46:06 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 20:27:28 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		main(int argc, char *argv[])
 		do_cyrcle(vm, op_tab);
 		if (vm->cycles == vm->cycles_to_dump)
 			vm_dump_memory(vm);
+		ft_printf("%d\n", vm->cycles);
 	}
 	ft_printf("Winner is %s!\n", vm->winner->name);
 	vm_delete(vm);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 15:45:56 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 20:19:24 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ typedef struct			s_proccess
 	unsigned int		registers[REG_NUMBER];
 	int					last_live;
 	int					command_type;
-	unsigned int		arg_byte;
 	int					cycles_to_wait;
 	struct s_proccess	*next;
-	int					value_written;
 	int					pos_written;
 }						t_proccess;
 
