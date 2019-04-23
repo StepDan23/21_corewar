@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/15 18:08:18 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 14:07:15 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ typedef struct			s_proccess
 	int					player_id;
 	int					id;
 	unsigned int		registers[REG_NUMBER];
-	int					is_live;
+	int					last_live;
 	int					command_type;
+	unsigned int		arg_byte;
 	int					cycles_to_wait;
 	struct s_proccess	*next;
 	int					value_written;
@@ -74,7 +75,6 @@ typedef struct			s_champion
 **	cycles - кол-во выполненных циклов
 **	cycles_to_die - кол-во оставшихся циклов до проверки процессов на live
 **	cycles_to_dump - кол-во циклов до дампа памяти
-**	dump - периодичность дампа памяти в циклах
 **	cycles_die - периодичность проверки на live в циклах
 **	*process - список живых процессов (кареток)
 **	*champion - список чемпионов (пока хз с этим)
@@ -84,15 +84,14 @@ typedef struct			s_champion
 **	p_total - общее число кареток
 */
 
-typedef struct			vm
+typedef struct			s_vm
 {
 	int					cycles;
 	int					cycles_to_die;
 	int					cycles_to_dump;
-	int					dump;
 	int					cycles_die;
 	t_proccess			*process;
-	t_champion			**champion;
+	t_champion			*champion[MAX_PLAYERS + 1];
 	int					champion_count;
 	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
@@ -100,7 +99,10 @@ typedef struct			vm
 	unsigned int		checkups;
 	int					p_num[4];
 	int					p_total;
+	int					end_game;
 }						t_vm;
+
+# define VM_M vm->memory
 
 /*
 **	Декларации опкодов операций
@@ -160,7 +162,7 @@ typedef struct			s_op
 t_champion				*new_champ(int number, char *filename);
 void					champion_free(t_champion *hero);
 
-void					read_all_champs(t_champion **champs);
+void					read_all_champs(t_champion **champs, int count);
 int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
 int						read_magic(int fd);
@@ -170,9 +172,18 @@ void					print_error_exit(int code);
 
 int						is_all_digit(char *str);
 int						count_avaliable(t_vm *vm);
+int						args_read(int ac, char **av, t_vm *vm);
+int						check_n(t_vm *vm, char *param);
+int						manage_flag(t_vm *vm, char *flag, char *param);
+int						check_filename(char *file);
+int						flags_check(int ac, int i, char **av);
 int						champion_count(int ac, char **av);
+int						champion_number(t_champion **arr);
+int						n_champion(int ac, char **av, t_vm *vm);
+int						w_champion(int ac, char **av, t_vm *vm);
+int						args_check(int ac, char **av);
 
-t_vm					*vm_new(int dump);
+t_vm					*vm_new(void);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
 void					vm_dump_memory(unsigned char *memory);
 
@@ -182,17 +193,21 @@ void					proccess_check_live(t_vm *vm, t_proccess **head);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
-int						manage_flag(t_vm *vm, char *flag, char *param, int *count);
+// int						manage_flag(t_vm *vm, char *flag, char *param,
+									// int *count);
 
-void					champions_add(char *filename, int num, t_champion **head);
+void					champions_add(char *filename, int num,
+									t_champion **head);
 
 int						coding_byte_check(unsigned char octet, const t_op op);
-void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
-int						valid_reg(unsigned char octet, unsigned char *memory, int pos, t_op op);
+void					performe_proc(t_vm *vm, t_proccess *head,
+									t_op op_tab[17]);
+int						valid_reg(unsigned char octet, unsigned char *memory,
+								int pos, t_op op);
 int						get_arg_size(int arg_type, t_op op);
 int						coding_byte_check(unsigned char octet, const t_op op);
 int						has_register(unsigned char octet);
-int						bit_extracted(int number, int k, int p) ;
+int						bit_extracted(int number, int k, int p);
 int						get_4bytes(unsigned char *memory, int pos);
 int						get_2bytes(unsigned char *memory, int pos);
 int						get_realtive_addr(int from, int to);
@@ -217,4 +232,9 @@ void					live(t_vm *vm, t_proccess *proccess);
 void					aff(t_vm *vm, t_proccess *proccess);
 
 t_vm					*init_vm_test(int argc, char *argv[]);
+void					init_optab(t_op op_tab[17]);
+void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
+void					update_vm_state(t_vm *vm);
+void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
+void					introduce_players(t_champion **players, int count);
 #endif
