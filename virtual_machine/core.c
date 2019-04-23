@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 18:59:41 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 17:25:41 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	update_vm_state(t_vm *vm)
 		if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
-			vm->checkups = 0;
+			vm->checkups = 1;
 			if (vm->cycles_die <= 0)
 				vm->end_game = 1;
 		}
