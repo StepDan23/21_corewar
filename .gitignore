@@ -220,3 +220,5 @@ assembly/examples/zork1.cor
 assembly/ex1.cor
 assembly/.s
 assembly/.cor
+assembly/dizasm.h.gch
+assembly/dizasm

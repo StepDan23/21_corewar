@@ -1,5 +1,9 @@
 
 FLAGS = # -Wall -Werror -Wextra
+
+diz:
+	gcc ft_dizasm.c dizasm.h ../op.h ../libft/libft.a -I ../libft/includes/ -o dizasm
+
 all: lib
 	gcc $(FLAGS) main.c ft_asm_structs_init.c ft_error_manager.c ft_champ_name_comment.c \
 	ft_lexer_champ_code.c ft_fill_tokens.c ft_fill_tokens_newline_and_direct.c \
