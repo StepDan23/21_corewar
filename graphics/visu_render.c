@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/22 12:10:18 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/23 16:45:36 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,13 @@ void			render_image(t_window *window, t_vm *vm, t_op op_tab[17])
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
 									(WIN_HEIG / (float)SCREEN_HEIGHT));
 	render_carrier(window, vm);
+	render_live(window);
 	render_status_val(window, vm);
 	if (WIN_STATUS == STAT_RUNN)
 	{
 		FONT_CURR = FONT_PAUSE;
 		print_str(window, "** Running **", 1244, 40);
-		while (speed_cycle >= 0)
+		while (speed_cycle >= 0 && !vm->end_game)
 		{
 			performe_proc(vm, vm->process, op_tab);
 			render_carrier_source(window, vm);

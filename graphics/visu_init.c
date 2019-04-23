@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 20:32:44 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/23 16:11:28 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void		init_win_consts(t_window *window, t_vm *vm)
 			MEM_CODE[i] = 4;
 		else
 			MEM_CODE[i] = 0;
+		MEM_CARR[i] = 0;
 	}
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	WIN_WID = SCREEN_WIDTH;

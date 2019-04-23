@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/22 12:08:56 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/23 17:51:06 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_window
 	TTF_Font		*f_status;
 	TTF_Font		*f_arena;
 	unsigned char	mem_code[MEM_SIZE + 1];
+	unsigned char	mem_carr[MEM_SIZE + 1];
 	SDL_Color		color;
 	Sint32			width;
 	Sint32			height;
@@ -70,6 +71,7 @@ typedef struct		s_window
 # define FONT_STAT			(window->f_status)
 # define FONT_ARENA			(window->f_arena)
 # define MEM_CODE			(window->mem_code)
+# define MEM_CARR			(window->mem_carr)
 # define FONT_COLOR			(window->color)
 # define WIN_WID			(window->width)
 # define WIN_HEIG			(window->height)
@@ -120,6 +122,7 @@ void				render_image(t_window *window, t_vm *vm, t_op op_tab[17]);
 */
 void				render_carrier(t_window *window, t_vm *vm);
 void				render_carrier_source(t_window *window, t_vm *vm);
+void				render_live(t_window *window);
 //tests
 void				render_tests(t_window *window, t_vm *vm);
 void				init_tests(t_vm *vm);
