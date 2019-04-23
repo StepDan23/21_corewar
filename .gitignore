@@ -222,3 +222,5 @@ assembly/.s
 assembly/.cor
 assembly/dizasm.h.gch
 assembly/dizasm
+ex.txt
+ex.cor
