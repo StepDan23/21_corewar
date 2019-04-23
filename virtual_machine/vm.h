@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 14:07:15 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 15:45:56 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ int						args_check(int ac, char **av);
 
 t_vm					*vm_new(void);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
-void					vm_dump_memory(unsigned char *memory);
+void					vm_dump_memory(t_vm *vm);
+void					vm_delete(t_vm *vm);
 
 t_proccess				*proccess_new(int id, int player_id, int pos);
 void					proccess_add(t_proccess **head, t_proccess *new_p);
