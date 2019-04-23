@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:33 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/22 19:42:06 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_fork(t_vm *vm, t_proccess *proccess)
 		i++;
 	}
 	vm->process->carry = P_C;
-	P_POS = (P_POS + 2) % MEM_SIZE;
+	P_POS = (P_POS + 3) % MEM_SIZE;
 	vm->p_total++;
 	vm->p_num[P_PI]++;
 }
@@ -63,7 +63,7 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 		i++;
 	}
 	vm->process->carry = P_C;
-	P_POS = (P_POS + 2) % MEM_SIZE;
+	P_POS = (P_POS + 3) % MEM_SIZE;
 	vm->p_total++;
 	vm->p_num[P_PI]++;
 }
@@ -88,13 +88,13 @@ void	live(t_vm *vm, t_proccess *proccess)
 	vm->live_exec++;
 	players = vm->champion;
 	i = 0;
-	while (players[i])
+	while (i < vm->champion_count)
 	{
 		if (players[i]->id == -number)
 		{
 			vm->winner = players[i];
 			players[i]->lives_in_period++;
-			players[i]->last_live = vm->cycles;
+			players[i]->last_live = vm->cycles + 1;
 			ft_printf("A process shows that player %d (%s) is alive\n",
 						-number, players[i]->name);
 		}

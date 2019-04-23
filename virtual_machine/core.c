@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:25 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/22 18:59:41 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,29 @@ void	init_optab(t_op op_tab[17])
 	init_optab2(op_tab);
 }
 
-void	introduce_players(t_champion **players)
+void	introduce_players(t_champion **players, int count)
 {
 	int	i;
 
 	ft_printf("Introducing contestants...\n");
 	i = 0;
-	while (players[i])
+	while (i < count)
 	{
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",\
 		players[i]->id, players[i]->size, players[i]->name,
 								players[i]->comment);
+		i++;
+	}
+}
+
+void	champions_reset_lives(t_champion **champs, int count)
+{
+	int	i;
+
+	i = 0;
+	while(i < count)
+	{
+		champs[i]->lives_in_period = 0;
 		i++;
 	}
 }
@@ -81,8 +93,10 @@ void	update_vm_state(t_vm *vm)
 			vm->checkups++;
 		vm->cycles_to_die = vm->cycles_die;
 		vm->live_exec = 0;
+		champions_reset_lives(vm->champion, vm->champion_count);
 	}
-	vm->cycles++;
+	if (vm->end_game != 1)
+		vm->cycles++;
 	vm->cycles_to_die--;
 }
 
@@ -95,22 +109,18 @@ void	do_cyrcle(t_vm *vm, t_op op_tab[17])
 t_vm	*init_vm_test(int argc, char *argv[])
 {
 	t_vm		*vm;
-	int			i;
 
 	vm = vm_new();
-	vm->champion[argc - 1] = NULL;
-	i = 1;
-	while (i < argc)
+	args_read(argc, argv, vm);
+	if (!vm->champion_count)
 	{
-		champions_add(argv[i], i, vm->champion);
-		vm->p_total++;
-		ft_printf("%s\n", vm->champion[i - 1]->filename);
-		vm->p_num[vm->champion[i - 1]->id]++;
-		vm->champion_count++;
-		i++;
+		ft_printf("Count of champions must be between 2 and %d.\n", MAX_PLAYERS);
+		exit(1);
 	}
+	vm->champion[vm->champion_count] = NULL;
+	vm->p_total = vm->champion_count;
 	vm->winner = vm->champion[0];
-	read_all_champs(vm->champion);
+	read_all_champs(vm->champion, vm->champion_count);
 	vm_spread_champs(vm, vm->champion);
 	return (vm);
 }
