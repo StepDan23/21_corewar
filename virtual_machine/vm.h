@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 20:19:24 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/23 21:01:48 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct			s_vm
 	int					p_num[4];
 	int					p_total;
 	int					end_game;
+	int					bit_flags;
 }						t_vm;
 
 # define VM_M vm->memory

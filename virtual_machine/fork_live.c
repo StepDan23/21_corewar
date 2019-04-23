@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 19:38:32 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/23 23:00:00 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ void	live(t_vm *vm, t_proccess *proccess)
 		vm->winner = players[-number - 1];
 		players[-number - 1]->lives_in_period++;
 		players[-number - 1]->last_live = vm->cycles + 1;
+		if ((vm->bit_flags & 1))
+			ft_printf("A process shows that player %d (%s) is alive\n",
+								-number, players[-number - 1]->name);
 	}
 	P_POS = (P_POS + 5) % MEM_SIZE;
 }

@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 19:49:59 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/23 23:00:35 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_vm	*vm_new(void)
 	vm->p_total = 0;
 	vm->champion_count = 0;
 	vm->end_game = 0;
+	vm->bit_flags = 1;
 	vm_init_memory(vm->memory);
 	vm_init_proccess_counter(vm);
 	return (vm);

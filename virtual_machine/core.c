@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 17:25:41 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 23:08:15 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,45 @@ void	do_cyrcle(t_vm *vm, t_op op_tab[17])
 	update_vm_state(vm);
 }
 
+void	print_help(void)
+{
+	ft_printf("Usage:\n\t[args...]\
+[-n][number][filename.cor]|[filename.cor]\n");
+	ft_printf("Args:\n\ts - silent. No live operation prints\n");
+	ft_printf("\thelp - help message\n");
+	ft_printf("\t[-n][number] - set player's number to [number]\n");
+	ft_printf("\t[filename.cor] - path to champion.\n");
+}
+
+int		get_extra_args(int argc, char *argv[],t_vm *vm)
+{
+	int	i;
+
+	i = 1;
+	if (argc <= 1)
+		return (0);
+	while (ft_strequ(argv[i], "-s") || ft_strequ(argv[i], "--help"))
+	{
+		if (ft_strequ(argv[i], "-s"))
+			vm->bit_flags ^= 1;
+		else if (ft_strequ(argv[i], "--help"))
+		{
+			print_help();
+			exit(0);
+		}
+		i++;
+	}
+	return (i);
+}
+
 t_vm	*init_vm_test(int argc, char *argv[])
 {
-	t_vm		*vm;
+	t_vm	*vm;
+	int		extra_args;
 
 	vm = vm_new();
-	args_read(argc, argv, vm);
+	extra_args = get_extra_args(argc, argv, vm);
+	args_read(argc - extra_args + 1, argv + extra_args - 1, vm);
 	if (!vm->champion_count)
 	{
 		ft_printf("Count of champions must be between 2 and %d.\n", MAX_PLAYERS);

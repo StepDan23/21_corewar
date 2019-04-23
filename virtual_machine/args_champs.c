@@ -33,6 +33,8 @@ int		w_champion(int ac, char **av, t_vm *vm)
 		}
 		else if (ft_strequ(av[i], "-dump"))
 			i += 2;
+		else if (ft_strequ(av[i], "-s"))
+			i++;
 		if (i < ac)
 		{
 			num = champion_number(vm->champion);
