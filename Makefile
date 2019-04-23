@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+         #
+#    By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 18:31:12 by mmcclure          #+#    #+#              #
-#    Updated: 2019/04/17 15:30:56 by mmcclure         ###   ########.fr        #
+#    Updated: 2019/04/17 15:53:11 by fkuhn            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,12 @@ $(LIB):
 
 clean:
 	make -C ./libft/ clean
+	make -C ./virtual_machine/ clean
 	rm -f
 
 fclean:
 	make -C ./libft/ fclean
+	make -C ./virtual_machine/ fclean
 	rm -f $(NAME)
 
 re: fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proccesses.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/21 17:40:15 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/22 16:05:58 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_proccess	*proccess_new(int id, int player_id, int pos)
 	new_p->cycles_to_wait = 0;
 	new_p->value_written = -1;
 	new_p->pos_written = -1;
+	new_p->arg_byte = 0;
 	return (new_p);
 }
 
@@ -84,6 +85,8 @@ void		proccess_kill(t_proccess **head, t_proccess *ps)
 ** Удаляет процессы у которых live = 0
 */
 
+#include "libft.h"
+
 void		proccess_check_live(t_vm *vm, t_proccess **head)
 {
 	t_proccess	*curr;
@@ -105,6 +108,6 @@ void		proccess_check_live(t_vm *vm, t_proccess **head)
 			curr->is_live = 0;
 		curr = next;
 	}
-	if (head == NULL)
+	if (*head == NULL)
 		vm->end_game = 1;
 }

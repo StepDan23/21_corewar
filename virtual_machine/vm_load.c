@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/15 19:34:32 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/22 16:45:26 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,14 @@ int		vm_index_to_load(int total, int curr)
 void	vm_spread_champs(t_vm *vm, t_champion **champs)
 {
 	int			i;
-	int			champs_num;
 	t_proccess	*proccess;
 
-	champs_num = count_champs(champs);
 	i = 0;
-	while (champs[i])
+	while (i < vm->champion_count)
 	{
-		vm_load_champ(vm->memory, champs[i], vm_index_to_load(champs_num, i));
+		vm_load_champ(vm->memory, champs[i], vm_index_to_load(vm->champion_count, i));
 		proccess = proccess_new(i, champs[i]->id,
-								vm_index_to_load(champs_num, i));
+								vm_index_to_load(vm->champion_count, i));
 		if (!proccess)
 		{
 			ft_printf("Error: %s\n", strerror(errno));
