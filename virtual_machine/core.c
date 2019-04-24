@@ -96,7 +96,7 @@ t_vm	*init_vm_test(int argc, char *argv[])
 
 	vm = vm_new();
 	extra_args = get_extra_args(argc, argv, vm);
-	args_read(argc - extra_args, argv + extra_args - 1, vm);
+	args_read(argc - extra_args + 1, argv + extra_args - 1, vm);
 	if (!vm->champion_count)
 	{
 		ft_printf("Count of champions must be between 2 and %d.\n",
