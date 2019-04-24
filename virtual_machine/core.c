@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 23:08:15 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/24 14:27:44 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	update_vm_state(t_vm *vm)
 {
 	if (!vm->cycles_to_die)
 	{
-		proccess_check_live(vm, &vm->process);
 		if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
@@ -94,6 +93,7 @@ void	update_vm_state(t_vm *vm)
 		vm->cycles_to_die = vm->cycles_die;
 		vm->live_exec = 0;
 		champions_reset_lives(vm->champion, vm->champion_count);
+		proccess_check_live(vm, &vm->process);
 	}
 	if (vm->end_game != 1)
 		vm->cycles++;
@@ -152,7 +152,7 @@ t_vm	*init_vm_test(int argc, char *argv[])
 	}
 	vm->champion[vm->champion_count] = NULL;
 	vm->p_total = vm->champion_count;
-	vm->winner = vm->champion[0];
+	vm->winner = vm->champion[vm->champion_count - 1];
 	read_all_champs(vm->champion, vm->champion_count);
 	vm_spread_champs(vm, vm->champion);
 	return (vm);

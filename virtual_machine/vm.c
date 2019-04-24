@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 23:00:35 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/24 14:39:41 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_vm	*vm_new(void)
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->cycles_to_dump = -1;
 	vm->live_exec = 0;
-	vm->checkups = 0;
+	vm->checkups = 1;
 	vm->p_total = 0;
 	vm->champion_count = 0;
 	vm->end_game = 0;

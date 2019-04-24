@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proccesses.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 20:19:35 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/24 13:18:47 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		proccess_check_live(t_vm *vm, t_proccess **head)
 	while (curr)
 	{
 		next = curr->next;
-		if (vm->cycles - curr->last_live > vm->cycles_die)
+		if (vm->cycles - curr->last_live >= vm->cycles_die)
 		{
 			vm->p_total--;
 			vm->p_num[curr->player_id]--;
