@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 15:16:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:56:48 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:47:10 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// ! неправильно обрабатываются файлы из иных папок
+
 void	ft_solve_sequence(t_asm_data *asm_data, int fd, char *filename)
 {
 	asm_data->count_symbols += ASM_NUM_ROW - 10;
-	ft_check_last_row(asm_data, fd, 20);
+	ft_check_last_row(asm_data, fd, 0);
 	ft_check_syntax(asm_data);
 	ft_check_main_params_exists(asm_data);
 	if (asm_data->error_list_size > 0)

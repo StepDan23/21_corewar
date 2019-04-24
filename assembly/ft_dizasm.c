@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dizasm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 21:20:50 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 01:04:56 by how_r_u          ###   ########.fr       */
+/*   Updated: 2019/04/24 14:09:20 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,184 +38,44 @@ char	g_comms[REG_NUMBER][6] = {
 int		g_count_of_args[REG_NUMBER] = {1, 2, 2, 3, 3, 3, 3, 3, 1, 3,\
 	3, 1, 2, 3, 1, 1};
 
-void	ft_init_machine(t_machine *machine)
+int				g_args_codes[REG_NUMBER] = {
+	0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1
+};
+
+int				g_t_dir_coefs[REG_NUMBER] = {
+	1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 2, 2, 1
+};
+
+int		ft_size_of_arg(t_machine *machine, int arg_type, int command)
 {
-	M_HEADER = 1;
-	M_NAME = 0;
-	M_FIRST_NULL = 0;
-	M_SIZE = 0;
-	M_COMMENT = 0;
-	M_SECOND_NULL = 0;
-	M_CHAMP_CODE = 0;
-	M_TEMP = 0;
-	M_COUNT = 0;
+	int		size;
+
+	size = 0;
+	if (arg_type == 0 || arg_type > 3)
+		return (0);
+	else if (arg_type == 1)
+		return (1);
+	else if (arg_type == 2)
+		return (DIR_SIZE / g_t_dir_coefs[command]);
+	else
+		return (2);
 }
 
-void	ft_dizasm_name(int fd_write)
+void	ft_solve_code(t_machine *machine, int bite, int fd_write)
 {
-	static int	flag = 0;
+	static int	command_num = 0;
 
-	if (!flag)
+	if (M_START_ROW)
 	{
-		ft_putstr_fd(NAME_CMD_STRING, fd_write);
-		ft_putstr_fd(" \"", fd_write);
-		flag = 1;
-	}
-}
-
-void	ft_dizasm_comment(int fd_write)
-{
-	static int	flag = 0;
-
-	if (!flag)
-	{
-		ft_putstr_fd(COMMENT_CMD_STRING, fd_write);
-		ft_putstr_fd(" \"", fd_write);
-		flag = 1;
-	}
-}
-
-void	ft_solve_code(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-	static int	size_of_comment = 0;
-	static int	res = 0;
-
-	if (M_CHAMP_CODE)
-	{
-		ft_print_command();
-		ft_print_args();
-		//добавить флаг строки. Если строка закончена, то моно сделать переход на новую
-
-	}
-}
-
-void	ft_solve_second_null(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-
-	if (M_SECOND_NULL)
-	{
-		i++;
-		if (i == 8)
-		{
-			M_SECOND_NULL = 0;
-			M_CHAMP_CODE = 1;
-		}
+		command_num = bite - 1;
+		ft_putstr_fd(g_comms[command_num], fd_write);
+		ft_putchar_fd(' ', fd_write);
+		M_TYPE_BITE = g_args_codes[command_num];
+		M_START_ROW = 0;
+		M_TYPE_SET = 1;
 		return ;
 	}
-	ft_solve_code(machine, value, fd_write);
-}
-
-void	ft_solve_comment(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-	static int	size_of_comment = 0;
-	static int	res = 0;
-
-	if (M_COMMENT)
-	{
-		ft_dizasm_comment(fd_write);
-		res += value * ((size_of_comment == 0) ? 16 : 1);
-		size_of_comment++;
-		if (size_of_comment == 2)
-		{
-			(res > 0) ? ft_putchar_fd(res, fd_write) : 0;
-			res = 0;
-			size_of_comment = 0;
-		}
-		i++;
-		if (i == COMMENT_LENGTH * 2)
-		{
-			M_COMMENT = 0;
-			M_SECOND_NULL = 1;
-			ft_putstr_fd("\"\n\n", fd_write);
-		}
-		return ;
-	}
-	ft_solve_second_null(machine, value, fd_write);
-}
-
-void	ft_solve_size(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-
-	if (M_SIZE)
-	{
-		i++;
-		if (i == 8)
-		{
-			M_SIZE = 0;
-			M_COMMENT = 1;
-		}
-		return ;
-	}
-	ft_solve_comment(machine, value, fd_write);
-}
-
-void	ft_solve_first_null(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-
-	if (M_FIRST_NULL)
-	{
-		i++;
-		if (i == 8)
-		{
-			M_FIRST_NULL = 0;
-			M_SIZE = 1;
-		}
-		return ;
-	}
-	ft_solve_size(machine, value, fd_write);
-}
-
-void	ft_solve_name(t_machine *machine, int value, int fd_write)
-{
-	static int	i = 0;
-	static int	size_of_name = 0;
-	static int	res = 0;
-
-	if (M_NAME)
-	{
-		ft_dizasm_name(fd_write);
-		res += value * ((size_of_name == 0) ? 16 : 1);
-		size_of_name++;
-		if (size_of_name == 2)
-		{
-			(res > 0) ? ft_putchar_fd(res, fd_write) : 0;
-			res = 0;
-			size_of_name = 0;
-		}
-		i++;
-		if (i == PROG_NAME_LENGTH * 2)
-		{
-			M_NAME = 0;
-			M_FIRST_NULL = 1;
-			ft_putstr_fd("\"\n", fd_write);
-		}
-		return ;
-	}
-	ft_solve_first_null(machine, value, fd_write);
-}
-
-void	ft_solve_strings(t_machine *machine, int value, int fd_write)
-{
-	static int		i = 0;
-
-	if (value == ' ')
-		return ;
-	if (M_HEADER)
-	{
-		i++;
-		if (i == 8)
-		{
-			M_HEADER = 0;
-			M_NAME = 1;
-		}
-		return ;
-	}
-	ft_solve_name(machine, value, fd_write);
+	ft_solve_arg_types(machine, bite, fd_write, command_num);
 }
 
 void	ft_read_cor_file(int fd_read, int fd_write, int value)
@@ -239,7 +99,7 @@ void	ft_read_cor_file(int fd_read, int fd_write, int value)
 			else if (line[k] == ' ')
 				value = ' ';
 			k++;
-			ft_solve_strings(&machine, value, fd_write);
+			ft_solve_header(&machine, value, fd_write);
 		}
 		free(line);
 		str_num++;

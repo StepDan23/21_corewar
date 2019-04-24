@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 14:48:42 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/02/08 15:42:02 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 13:34:32 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char		*ft_itoa(long long n)
 
 	i = 0;
 	j = 1;
-	if (!(new_str = ft_strnew(ft_intlen(n))))
+	if (!(new_str = ft_strnew((n == 0) ? 1 : ft_intlen(n))))
 		return (NULL);
 	if (n == 0)
 		return (ft_helper(new_str));

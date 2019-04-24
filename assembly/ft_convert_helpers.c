@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:10:16 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:07:10 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:40:36 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_get_negative_value(int value, long size)
 {
 	value = -value;
 	value = ~value;
-	value = value | 1;
+	value = value + 1;
 	size = ft_power(256, size) - 1;
 	value = (int)(value & size);
 	return (value);

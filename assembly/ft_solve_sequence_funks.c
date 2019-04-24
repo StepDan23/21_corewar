@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 14:34:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:36:01 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:51:20 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,15 @@ void	ft_check_last_row(t_asm_data *asm_data, int fd, int i)
 	t_list		*chain;
 	t_token		*token;
 
-	str = ft_strnew(31);
-	lseek(fd, (off_t)(asm_data->count_symbols - 10), 0);
-	read(fd, str, 30);
+	i = asm_data->count_symbols / 2;
+	str = ft_strnew(i + 50);
+	lseek(fd, (off_t)(i), 0);
+	i = read(fd, str, i + 45);
+	str[i] = '\0';
 	while (str[i] == 0 || str[i] == ' ' || str[i] == '\t')
 		i--;
 	if (str[i] == '\n')
-	{
-		chain = ft_lstnew(NULL, 0);
-		token = ft_token_init();
-		asm_data->token_size += 1;
-		chain->content = token;
-		if (asm_data->tokens)
-			ft_lstadd_last(asm_data->tokens, chain);
-		else
-			asm_data->tokens = chain;
-		token->str = ft_strdup("\n");
-		token->type = Newline;
-	}
+		ft_add_new_str_token(asm_data);
 	else
 		ft_error_add(asm_data, ft_strdup("Add newline after last row "), 0, 2);
 	free(str);
