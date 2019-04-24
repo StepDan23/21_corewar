@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   visu_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:52:21 by mmcclure          #+#    #+#             */
 /*   Updated: 2019/04/24 10:25:35 by mmcclure         ###   ########.fr       */
@@ -29,6 +29,7 @@ void			render_tests(t_window *window, t_vm *vm)
 		ft_printf("last live: %d\n", carriers->last_live);
 		ft_printf("MEM_CARR: %d\n", MEM_CARR[carriers->position - 5]);
 		ft_printf("Carrrier ID: %d\n", carriers->id);
+
 		ft_printf("Carrrier carry: %d\n", carriers->carry);
 		ft_printf("carier info: player_id = %d position = %d cycles_wait = %d \n",
 					carriers->player_id, carriers->position, carriers->cycles_to_wait);

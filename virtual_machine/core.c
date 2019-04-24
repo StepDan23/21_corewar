@@ -97,7 +97,8 @@ void	update_vm_state(t_vm *vm)
 		vm->live_exec = 0;
 		champions_reset_lives(vm->champion, vm->champion_count);
 	}
-	vm->cycles++;
+	if (vm->end_game != 1)
+		vm->cycles++;
 	vm->cycles_to_die--;
 }
 
