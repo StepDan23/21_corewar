@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 14:11:29 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 18:55:12 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void		render_status_val(t_window *window, t_vm *vm)
 	height = 380;
 	while (VM_CHAMPS[i] != NULL)
 	{
-		print_nbr(window, VM_CHAMPS[i]->last_live, 1325, height += 60);
+		print_nbr(window, VM_CHAMPS[i]->last_live + 1, 1325, height += 60);
 		print_nbr(window, VM_CHAMPS[i]->lives_in_period, 1435, height += 30);
 		height += 30;
 		i++;
@@ -95,7 +95,7 @@ void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
 	render_carriers_source(window, vm);
 	recount_tacts(window, vm);
 	update_vm_state(vm);
-render_tests(window, vm);
+// render_tests(window, vm);
 	FONT_CURR = FONT_PAUSE;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Press SPACE to continue or S to step up", 178, 820);

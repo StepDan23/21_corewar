@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 17:57:05 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:36:01 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void			render_carriers_source(t_window *window, t_vm *vm)
 {
 	t_proccess	*proc;
 	int			i;
+	int			player_id;
 
 	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
 	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
@@ -117,13 +118,12 @@ void			render_carriers_source(t_window *window, t_vm *vm)
 			while (++i < 4)
 				render_source_back(window, vm,
 					proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
-		if (proc->last_live == vm->cycles + 1) // нужен критерий для is_live
+		if (proc->last_live == vm->cycles && vm->cycles)
 		{
-			MEM_CARR[proc->position - 5] =
-							250 + MEM_CODE[proc->position - 4] % 5;
-			// ft_printf("\033[31m cycle = %d last live %d cycle to wait = %d\033[37m\n", vm->cycles, proc->last_live, proc->cycles_to_wait);
+			player_id = -get_4bytes(VM_MEMORY, proc->position - 4);
+			if (player_id > 0 && player_id <= VM_CHAMP_COUNT)
+				MEM_CARR[proc->position - 5] = 250 + player_id;
 		}
-	// ft_printf("\033[31m cycle = %d last live %d cycle to wait = %d\033[37m\n", vm->cycles, proc->last_live, proc->cycles_to_wait);
 		proc = proc->next;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);
