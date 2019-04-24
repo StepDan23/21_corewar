@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:52:21 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 16:41:36 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 10:25:35 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			render_tests(t_window *window, t_vm *vm)
 		ft_printf("__________________________________________________\n");
 		ft_printf("current cycle: %d\n", vm->cycles);
 		ft_printf("last live: %d\n", carriers->last_live);
-		ft_printf("MEM_CARR: %d\n", MEM_CARR[carriers->position]);
+		ft_printf("MEM_CARR: %d\n", MEM_CARR[carriers->position - 5]);
 		ft_printf("Carrrier ID: %d\n", carriers->id);
 		ft_printf("Carrrier carry: %d\n", carriers->carry);
 		ft_printf("carier info: player_id = %d position = %d cycles_wait = %d \n",

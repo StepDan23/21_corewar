@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 16:11:28 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 14:27:03 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ t_window		*init_win(t_vm *vm)
 	if (!(window = (t_window*)malloc(sizeof(t_window))))
 		return (NULL);
 	init_win_consts(window, vm);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0 ||
-						SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
 		ft_printf("Init_Error: %s\n", SDL_GetError());
 		return (NULL);

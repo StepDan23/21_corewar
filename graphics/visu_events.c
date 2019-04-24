@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:36:11 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 18:40:36 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:57:06 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,23 @@
 static void		event_space(t_window *window)
 {
 	if (WIN_STATUS == STAT_START)
+	{
 		WIN_STATUS = STAT_RUNN;
+//music speedup
+//main theme play
+	}
 	else if (WIN_STATUS == STAT_RUNN)
+	{
 		WIN_STATUS = STAT_PAUSE;
+//music slowdown
+//main theme pause
+	}
 	else if (WIN_STATUS == STAT_PAUSE)
+	{
 		WIN_STATUS = STAT_RUNN;
+//music speedup
+//main theme play
+	}
 }
 
 static void		event_speed(t_window *window, SDL_Keycode key)

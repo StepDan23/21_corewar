@@ -6,13 +6,13 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 18:19:16 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:18:31 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 
-static void		make_carr_color(t_window *window, unsigned char	id)
+static void		make_carr_color(t_window *window, unsigned char id)
 {
 	FONT_COLOR = (SDL_Color){COL_BLACK};
 	if (id > 4)
@@ -35,7 +35,7 @@ static void		make_carr_color(t_window *window, unsigned char	id)
 		SDL_SetRenderDrawColor(WIN_REND, COL_YELOW);
 }
 
-void			render_carrier(t_window *window, t_vm *vm)
+void			render_carriers(t_window *window, t_vm *vm)
 {
 	SDL_Rect	rect;
 	t_proccess	*proc;
@@ -62,7 +62,7 @@ void			render_carrier(t_window *window, t_vm *vm)
 	}
 }
 
-void			render_live(t_window *window)
+void			render_lives(t_window *window)
 {
 	SDL_Rect	rect;
 	int			i;
@@ -74,7 +74,7 @@ void			render_live(t_window *window)
 		{
 			rect = (SDL_Rect){12 + i % 64 * 18.7,
 					20 + 13.5 * (int)(i / 64), 17, 15};
-			make_carr_color(window, MEM_CODE[i]);
+			make_carr_color(window, MEM_CARR[i]);
 			SDL_RenderFillRect(WIN_REND, &rect);
 			FONT_COLOR = (SDL_Color){COL_WHITE};
 			print_str(window, "01", 14 + i % 64 * 18.7,
@@ -82,7 +82,7 @@ void			render_live(t_window *window)
 		}
 }
 
-static void		render_source_back(t_window *window, t_vm *vm, int id, int pos)
+void			render_source_back(t_window *window, t_vm *vm, int id, int pos)
 {
 	char		*hex;
 	char		str[3];
@@ -101,7 +101,7 @@ static void		render_source_back(t_window *window, t_vm *vm, int id, int pos)
 						20 + 13.5 * (int)(pos / 64));
 }
 
-void			render_carrier_source(t_window *window, t_vm *vm)
+void			render_carriers_source(t_window *window, t_vm *vm)
 {
 	t_proccess	*proc;
 	int			i;
@@ -110,27 +110,20 @@ void			render_carrier_source(t_window *window, t_vm *vm)
 	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
 	proc = vm->process;
 	FONT_CURR = FONT_ARENA;
-	i = -1;
-	while (++i < MEM_SIZE)
-	{
-		if (MEM_CARR[i] > 5)
-			MEM_CARR[i] -= 5;
-		if (MEM_CODE[i] > 5)
-		{
-			MEM_CODE[i] -= 5;
-			if (MEM_CODE[i] < 5)
-				render_source_back(window, vm, MEM_CODE[i], i);
-		}
-	}
 	while (proc)
 	{
 		i = -1;
 		if (proc->pos_written >= 0)
 			while (++i < 4)
 				render_source_back(window, vm,
-							proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
-		if (proc->last_live == vm->cycles && vm->cycles) // нужен критерий для is_live
-			MEM_CARR[proc->position - 5] = 250 + proc->player_id;
+					proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
+		if (proc->last_live == vm->cycles + 1) // нужен критерий для is_live
+		{
+			MEM_CARR[proc->position - 5] =
+							250 + MEM_CODE[proc->position - 4] % 5;
+			// ft_printf("\033[31m cycle = %d last live %d cycle to wait = %d\033[37m\n", vm->cycles, proc->last_live, proc->cycles_to_wait);
+		}
+	// ft_printf("\033[31m cycle = %d last live %d cycle to wait = %d\033[37m\n", vm->cycles, proc->last_live, proc->cycles_to_wait);
 		proc = proc->next;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);

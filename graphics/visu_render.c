@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 16:45:36 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 14:11:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void		render_status_img(t_window *window, t_vm *vm)
 		SDL_RenderCopy(WIN_REND, BACK_END, NULL, &dst);
 		print_str(window, "CONGRATILATIONS TO", 364, 200);
 		print_str(window, "Press ANY KEY to exit", 371, 820);
-		print_str(window, vm->winner->name,
-						609 - ft_strlen(vm->winner->name) * 12, 350);
 		print_str(window, "** Finished **", 1245, 40);
+		FONT_COLOR = get_player_color(WINNER_ID);
+		print_str(window, WINNER_NAME, 609 - ft_strlen(WINNER_NAME) * 12, 350);
 	}
 }
 
@@ -67,10 +67,33 @@ static void		render_status_val(t_window *window, t_vm *vm)
 	}
 }
 
+static void		recount_tacts(t_window *window, t_vm *vm)
+{
+	int			i;
+
+	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
+	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
+	FONT_CURR = FONT_ARENA;
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		if (MEM_CARR[i] > 5)
+			MEM_CARR[i] -= 5;
+		if (MEM_CODE[i] > 5)
+		{
+			MEM_CODE[i] -= 5;
+			if (MEM_CODE[i] < 5)
+				render_source_back(window, vm, MEM_CODE[i], i);
+		}
+	}
+	SDL_SetRenderTarget(WIN_REND, NULL);
+}
+
 void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
 {
 	performe_proc(vm, vm->process, op_tab);
-	render_carrier_source(window, vm);
+	render_carriers_source(window, vm);
+	recount_tacts(window, vm);
 	update_vm_state(vm);
 render_tests(window, vm);
 	FONT_CURR = FONT_PAUSE;
@@ -84,23 +107,23 @@ void			render_image(t_window *window, t_vm *vm, t_op op_tab[17])
 {
 	int		speed_cycle;
 
-	speed_cycle = WIN_SPEED / 50;
+	speed_cycle = (WIN_SPEED % 500 == 0) ? WIN_SPEED / 50 + 1 : WIN_SPEED / 50;
 	SDL_RenderCopy(WIN_REND, WIN_BACK, NULL, NULL);
 	SDL_RenderSetScale(WIN_REND, (WIN_WID / (float)SCREEN_WIDTH),
 									(WIN_HEIG / (float)SCREEN_HEIGHT));
-	render_carrier(window, vm);
-	render_live(window);
+	render_carriers(window, vm);
+	render_lives(window);
 	render_status_val(window, vm);
 	if (WIN_STATUS == STAT_RUNN)
 	{
 		FONT_CURR = FONT_PAUSE;
 		print_str(window, "** Running **", 1244, 40);
-		while (speed_cycle >= 0 && !vm->end_game)
+		while (--speed_cycle >= 0 && !vm->end_game)
 		{
 			performe_proc(vm, vm->process, op_tab);
-			render_carrier_source(window, vm);
+			render_carriers_source(window, vm);
+			recount_tacts(window, vm);
 			update_vm_state(vm);
-			speed_cycle--;
 		}
 	}
 	else if (WIN_STATUS == STAT_STEP)
