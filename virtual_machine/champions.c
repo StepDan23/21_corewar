@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   champions.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:08:53 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/24 17:41:05 by ttreutel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include <stdlib.h>
 #include "libft.h"
@@ -18,14 +30,8 @@ void		champions_add(char *filename, int id, t_champion **head)
 	new_champ->size = 0;
 	new_champ->last_live = 0;
 	new_champ->last_live = 0;
+	new_champ->lives_in_period = 0;
 	head[id - 1] = new_champ;
-	// if (*head == NULL)
-	// {
-		// *head = new_champ;
-		// return ;
-	// }
-	// new_champ->next = *head;
-	// *head = new_champ;
 }
 
 void		champion_free(t_champion *hero)
@@ -33,4 +39,36 @@ void		champion_free(t_champion *hero)
 	if (hero->code)
 		free(hero->code);
 	free(hero);
+}
+
+int			champion_number(t_champion **arr)
+{
+	t_champion	*hero;
+	int			num;
+	int			i;
+
+	i = 0;
+	num = 1;
+	hero = arr[i];
+	while (i < MAX_PLAYERS)
+	{
+		if (hero)
+		{
+			if (num == hero->id)
+				num++;
+		}
+		hero = arr[++i];
+	}
+	return (num);
+}
+
+int			plus_i(int i, char **av)
+{
+	if (ft_strequ(av[i], "-n"))
+		return (3);
+	else if (ft_strequ(av[i], "-dump"))
+		return (2);
+	else if (ft_strequ(av[i], "-s"))
+		return (1);
+	return (0);
 }

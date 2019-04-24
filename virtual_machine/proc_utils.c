@@ -6,7 +6,7 @@
 /*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 20:14:57 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/12 21:18:56 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:41:12 by artemiy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 **	bit_extracted(01101100, 2, 5) вернет 0b10 (2)
 */
 
-int		bit_extracted(int number, int k, int p) 
-{ 
-	return (((1 << k) - 1) & (number >> (p - 1))); 
-} 
+int		bit_extracted(int number, int k, int p)
+{
+	return (((1 << k) - 1) & (number >> (p - 1)));
+}
 
 /*
 **	has_register
@@ -58,7 +58,9 @@ int		coding_byte_check(unsigned char octet, const t_op op)
 	while (i < op.arg_num)
 	{
 		arg = bit_extracted(octet, 2, 7 - i * 2);
-		if (arg != op.arg_types[i])
+		if (arg == 3)
+			arg = arg + 1;
+		if (!(arg & op.arg_types[i]))
 			return (0);
 		i++;
 	}
