@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 20:32:44 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:33:47 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void		init_win_consts(t_window *window, t_vm *vm)
 			MEM_CODE[i] = 4;
 		else
 			MEM_CODE[i] = 0;
+		MEM_CARR[i] = 0;
 	}
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	WIN_WID = SCREEN_WIDTH;
@@ -47,8 +48,8 @@ t_window		*init_win(t_vm *vm)
 	if (!(window = (t_window*)malloc(sizeof(t_window))))
 		return (NULL);
 	init_win_consts(window, vm);
-	if (SDL_Init(SDL_INIT_VIDEO) < 0 ||
-						SDL_Init(SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
+	WIN_VOLUME = 128;
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
 		ft_printf("Init_Error: %s\n", SDL_GetError());
 		return (NULL);
