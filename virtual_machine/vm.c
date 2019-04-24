@@ -6,14 +6,13 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/24 15:04:48 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 16:57:15 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
-#include "tests.h"
 
 void	vm_init_memory(unsigned char *memory)
 {
