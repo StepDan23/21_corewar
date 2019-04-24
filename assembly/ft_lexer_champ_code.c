@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:12:32 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 18:58:07 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:31:45 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*ft_lexer_champ_code(t_asm_data *asm_data, char *line, int j)
 	t_list	*chain;
 
 	i = 0;
-	ft_putendl(line);
 	if (!MACHINE_NEW_LINE)
 		ft_add_new_str_token(asm_data);
 	while (line[i])

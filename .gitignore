@@ -225,3 +225,4 @@ assembly/dizasm
 ex.txt
 ex.cor
 assembly/asm_orig
+assembly/a.out.dSYM/Contents/Info.plist

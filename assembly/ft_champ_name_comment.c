@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:14:19 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 19:27:09 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:31:52 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ char	*ft_lexer_champ_data(t_asm_data *asm_data, char *line, int j)
 
 	if ((line_len = ft_strlen(line)) == 0)
 		return (line);
-	ft_putendl(line);
 	i = 0;
 	while (i < line_len)
 	{

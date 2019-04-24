@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:09:07 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 21:07:05 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:16:29 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	t_list		*labels;
 	t_list		*token_chain;
 
+	if (ASM_TOKEN_SIZE < 2)
+		return ;
 	g_ops = ft_table_operations_init();
 	labels = ft_collect_labels(asm_data, 0, 0);
 	token_chain = ASM_TOKENS;
@@ -152,7 +154,7 @@ void	ft_check_syntax(t_asm_data *asm_data)
 	while (token_chain && (TKN_TYPE == Newline || TKN_TYPE == Whitespace))
 	{
 		token_chain = token_chain->next;
-		token = (t_token *)(token_chain->content);
+		token = (token_chain) ? (t_token *)(token_chain->content) : NULL;
 	}
 	ft_start_fill_rows(asm_data, token_chain, labels);
 	ft_check_syntax_rows(asm_data, asm_data->syntax_row);

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:37:15 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:07:49 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	ft_add_new_str_token(t_asm_data *asm_data)
 	t_token	*token;
 	t_list	*chain;
 
-	chain = ft_lstnew(NULL, sizeof(t_token));
-	free(chain->content);
+	chain = ft_lstnew(NULL, 0);
 	token = ft_token_init();
 	chain->content = token;
 	if (ASM_TOKENS == NULL)

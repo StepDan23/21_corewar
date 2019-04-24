@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 16:08:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:53:53 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:19:52 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	ft_print_errors(t_asm_data *asm_data)
 				ft_putstr("LEXICAL ERROR: ");
 			else if (ERROR_FLAG == 2)
 				ft_putstr("SYNTAX_ERROR: ");
-			(T_ERROR_COL) ? ft_printf("%s see -> row %d, col %d\n", T_ERROR_STR\
-			, T_ERROR_ROW, T_ERROR_COL) : ft_printf("%s see -> row: %d\n",\
+			(T_ERROR_COL) ? ft_printf("%s: row %d, col %d\n", T_ERROR_STR\
+			, T_ERROR_ROW, T_ERROR_COL) : ft_printf("%s: row: %d\n",\
 			T_ERROR_STR, T_ERROR_ROW);
 		}
 		temp = current;
@@ -43,8 +43,7 @@ void	ft_print_errors(t_asm_data *asm_data)
 		current = current->next;
 		free(temp);
 	}
-	if (ERROR_SIZE > 0)
-		ft_printf("ERRORS was founded. Fix your champ's code\n");
+	(ERROR_SIZE > 0) ? ft_printf("There was ERROR(S). Fix your code\n") : 0;
 }
 
 void	ft_error_row_col(t_asm_data *asm_data, char *line, int row, int type)

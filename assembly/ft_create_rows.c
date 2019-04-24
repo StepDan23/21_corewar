@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 21:07:24 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:17:32 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_fill_strings(t_asm_data *asm_data, t_token *token, t_list *labels)
 	}
 	if (!MACHINE_SYNT_ROW && token->type >= 4)
 	{
-		ft_error_token(asm_data, ft_strjoin(ft_strdup("NO command for arg "),\
+		ft_error_token(asm_data, ft_strjoin_orig("NO command for arg ",\
 		token->str), token, 2);
 		return ;
 	}
