@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_champs.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:07:36 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/24 17:41:05 by ttreutel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -26,13 +38,13 @@ int		w_champion(int ac, char **av, t_vm *vm)
 	i = 1;
 	while (i < ac)
 	{
+		i += plus_i(i, av);
 		if (ft_strequ(av[i], "-n"))
-		{
-			i += 3;
 			continue;
-		}
 		else if (ft_strequ(av[i], "-dump"))
-			i += 2;
+			continue;
+		else if (ft_strequ(av[i], "-s"))
+			continue;
 		if (i < ac)
 		{
 			num = champion_number(vm->champion);
@@ -48,7 +60,7 @@ int		args_check(int ac, char **av)
 	int			i;
 
 	i = 1;
-	while(i < ac)
+	while (i < ac)
 	{
 		if (ft_strequ(av[i], "-n") || ft_strequ(av[i], "-dump"))
 		{
@@ -58,7 +70,6 @@ int		args_check(int ac, char **av)
 				i++;
 			else
 				i++;
-
 		}
 		else if (!check_filename(av[i]))
 			exit(1);
@@ -103,7 +114,8 @@ int		champion_count(int ac, char **av)
 	{
 		if (av[i][0] != '-' && !is_all_digit(av[i]) && check_filename(av[i]))
 			count++;
-		else if ((av[i][0] != '-' && !is_all_digit(av[i])) && !check_filename(av[i]))
+		else if ((av[i][0] != '-' && !is_all_digit(av[i]))\
+						&& !check_filename(av[i]))
 		{
 			ft_printf("filename %s invalid\n", av[i]);
 			return (0);
@@ -112,4 +124,3 @@ int		champion_count(int ac, char **av)
 	}
 	return (count);
 }
-

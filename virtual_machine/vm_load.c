@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/22 16:45:26 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 15:48:37 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	vm_spread_champs(t_vm *vm, t_champion **champs)
 	i = 0;
 	while (i < vm->champion_count)
 	{
-		vm_load_champ(vm->memory, champs[i], vm_index_to_load(vm->champion_count, i));
+		vm_load_champ(vm->memory, champs[i],
+								vm_index_to_load(vm->champion_count, i));
 		proccess = proccess_new(i, champs[i]->id,
 								vm_index_to_load(vm->champion_count, i));
 		if (!proccess)
@@ -84,4 +85,14 @@ void	vm_spread_champs(t_vm *vm, t_champion **champs)
 		proccess_add(&vm->process, proccess);
 		i++;
 	}
+}
+
+void	print_help(void)
+{
+	ft_printf("Usage:\n\t[args...]\
+[-n][number][filename.cor]|[filename.cor]\n");
+	ft_printf("Args:\n\ts - silent. No live operation prints\n");
+	ft_printf("\thelp - help message\n");
+	ft_printf("\t[-n][number] - set player's number to [number]\n");
+	ft_printf("\t[filename.cor] - path to champion.\n");
 }

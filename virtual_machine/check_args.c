@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:32:50 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/24 15:38:45 by fkuhn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -21,12 +33,11 @@ int		args_read(int ac, char **av, t_vm *vm)
 		}
 		n_champion(ac, av, vm);
 		w_champion(ac, av, vm);
-		j = 1;
-		while (j < ac)
+		j = 0;
+		while (++j < ac)
 		{
 			if (ft_strequ(av[j], "-dump"))
 				manage_flag(vm, av[j], av[j + 1]);
-			j++;
 		}
 	}
 	return (1);
@@ -71,16 +82,10 @@ int		check_n(t_vm *vm, char *param)
 	int			id;
 
 	if (!is_all_digit(param))
-	{
-		ft_printf("-n parameter isn't number. %s\n", param);
-		exit(1);
-	}
+		number_format_err(param);
 	n = ft_atoi(param);
 	if (n > vm->champion_count || n < 1)
-	{
-		ft_printf("-n invalid number for champion %s.\n", param);
-		exit(1);
-	}
+		ivalid_number_err(param);
 	champ = vm->champion[0];
 	id = 0;
 	while (id < MAX_PLAYERS)
@@ -88,10 +93,7 @@ int		check_n(t_vm *vm, char *param)
 		if (champ != NULL)
 		{
 			if (champ->id == n)
-			{
-				ft_printf("There is champion with same number.\n");
-				exit(1);
-			}
+				same_number_err();
 		}
 		champ = vm->champion[++id];
 	}

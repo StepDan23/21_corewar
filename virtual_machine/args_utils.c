@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:08:33 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/24 15:48:49 by fkuhn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
@@ -14,28 +27,41 @@ int		is_all_digit(char *str)
 	return (1);
 }
 
-//int		count_avaliable(t_vm *vm)
-//{
-//	t_champion		*tmp;
-//	unsigned int	count;
-//
-//	count = 1;
-//	tmp = vm->champion;
-//	if (tmp == NULL)
-//		return (count);
-//	while (count)
-//	{
-//		while (tmp)
-//		{
-//			if ((unsigned int)tmp->id == count)
-//			{
-//				tmp = vm->champion;
-//				count++;
-//				continue;
-//			}
-//			tmp = tmp->next;
-//		}
-//		return (count);
-//	}
-//	return (count);
-//}
+void	number_format_err(char *param)
+{
+	ft_printf("-n parameter isn't number. %s\n", param);
+	exit(1);
+}
+
+void	ivalid_number_err(char *param)
+{
+	ft_printf("-n invalid number for champion %s.\n", param);
+	exit(1);
+}
+
+void	same_number_err(void)
+{
+	ft_printf("There is champion with same number.\n");
+	exit(1);
+}
+
+int		get_extra_args(int argc, char *argv[], t_vm *vm)
+{
+	int	i;
+
+	i = 1;
+	if (argc <= 1)
+		return (0);
+	while (ft_strequ(argv[i], "-s") || ft_strequ(argv[i], "--help"))
+	{
+		if (ft_strequ(argv[i], "-s"))
+			vm->bit_flags ^= 1;
+		else if (ft_strequ(argv[i], "--help"))
+		{
+			print_help();
+			exit(0);
+		}
+		i++;
+	}
+	return (i);
+}
