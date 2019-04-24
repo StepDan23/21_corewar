@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 15:16:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 11:47:10 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 14:59:18 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// ! неправильно обрабатываются файлы из иных папок
+// ! в случае неправильного токена типа номер система крашится
 
 void	ft_solve_sequence(t_asm_data *asm_data, int fd, char *filename)
 {

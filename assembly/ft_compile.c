@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 17:49:53 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 11:06:19 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 15:11:01 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_convert_to_binary(t_asm_data *asm_data, char *name)
 	char	*temp;
 
 	i = 0;
+	if (name[i] == '.' && ft_strlen(name) > 5)
+		i++;
 	while (name[i] != '.')
 		i++;
 	temp = ft_strsub(name, 0, i);
