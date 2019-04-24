@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 12:18:31 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:57:05 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void			render_carriers(t_window *window, t_vm *vm)
 	while (proc)
 	{
 		pos = proc->position;
-		rect = (SDL_Rect){12 + pos % 64 * 18.7,
-							20 + 13.5 * (int)(pos / 64), 17, 15};
+		rect = (SDL_Rect){13 + pos % 64 * 18.7,
+							20 + 13.5 * (int)(pos / 64), 16, 15};
 		make_carr_color(window, MEM_CODE[pos]);
 		SDL_RenderFillRect(WIN_REND, &rect);
 		str[0] = hex[VM_MEMORY[pos] / 16];
@@ -72,8 +72,8 @@ void			render_lives(t_window *window)
 	while (++i < MEM_SIZE)
 		if (MEM_CARR[i] > 5)
 		{
-			rect = (SDL_Rect){12 + i % 64 * 18.7,
-					20 + 13.5 * (int)(i / 64), 17, 15};
+			rect = (SDL_Rect){13 + i % 64 * 18.7,
+					20 + 13.5 * (int)(i / 64), 16, 15};
 			make_carr_color(window, MEM_CARR[i]);
 			SDL_RenderFillRect(WIN_REND, &rect);
 			FONT_COLOR = (SDL_Color){COL_WHITE};
@@ -91,8 +91,8 @@ void			render_source_back(t_window *window, t_vm *vm, int id, int pos)
 	hex = "0123456789abcdef";
 	FONT_COLOR = get_player_color(id);
 	MEM_CODE[pos] = id;
-	rect = (SDL_Rect){12 + pos % 64 * 18.7,
-				20 + 13.5 * (int)(pos / 64), 17, 15};
+	rect = (SDL_Rect){13 + pos % 64 * 18.7,
+				20 + 13.5 * (int)(pos / 64), 16, 15};
 	SDL_RenderFillRect(WIN_REND, &rect);
 	str[0] = hex[VM_MEMORY[pos] / 16];
 	str[1] = hex[VM_MEMORY[pos] % 16];

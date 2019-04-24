@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 15:10:21 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:34:05 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,18 @@ typedef struct		s_window
 	TTF_Font		*f_pause;
 	TTF_Font		*f_status;
 	TTF_Font		*f_arena;
-	Mix_Chunk		*a_play;
+	Mix_Chunk		*a_main;
 	Mix_Chunk		*a_slow;
 	Mix_Chunk		*a_speed;
 	Mix_Chunk		*a_start;
+	Mix_Chunk		*a_end;
 	unsigned char	mem_code[MEM_SIZE + 1];
 	unsigned char	mem_carr[MEM_SIZE + 1];
 	SDL_Color		color;
 	Sint32			width;
 	Sint32			height;
 	char			status;
+	unsigned char	volume;
 	int				speed;
 }					t_window;
 
@@ -75,16 +77,18 @@ typedef struct		s_window
 # define FONT_PAUSE			(window->f_pause)
 # define FONT_STAT			(window->f_status)
 # define FONT_ARENA			(window->f_arena)
-# define AUDIO_PLAY			(window->a_play)
+# define AUDIO_MAIN			(window->a_main)
 # define AUDIO_SLOW			(window->a_slow)
 # define AUDIO_SPEED		(window->a_speed)
 # define AUDIO_START		(window->a_start)
+# define AUDIO_END			(window->a_end)
 # define MEM_CODE			(window->mem_code)
 # define MEM_CARR			(window->mem_carr)
 # define FONT_COLOR			(window->color)
 # define WIN_WID			(window->width)
 # define WIN_HEIG			(window->height)
 # define WIN_STATUS			(window->status)
+# define WIN_VOLUME			(window->volume)
 # define WIN_SPEED			(window->speed)
 
 /*

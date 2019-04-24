@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:31:09 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 15:16:26 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:41:31 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static int				load_text_start_end(t_window *window, int players_count)
 
 static int				load_sounds(t_window *window)
 {
-	Mix_Chunk *gScratch = NULL;
-
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0)
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		return (0);
-	AUDIO_PLAY = Mix_LoadWAV("graphics/music/play.wav");
+	AUDIO_MAIN = Mix_LoadWAV("graphics/music/play1.wav");
 	AUDIO_START = Mix_LoadWAV("graphics/music/start.wav");
 	AUDIO_SPEED = Mix_LoadWAV("graphics/music/speedup.wav");
 	AUDIO_SLOW = Mix_LoadWAV("graphics/music/slowdown.wav");
-	if (!AUDIO_PLAY || !AUDIO_SLOW || !AUDIO_SPEED || !AUDIO_START)
+	AUDIO_END = Mix_LoadWAV("graphics/music/end_of_game.wav");
+	if (!AUDIO_MAIN || !AUDIO_SLOW || !AUDIO_SPEED ||
+									!AUDIO_START || !AUDIO_END)
 	{
 		ft_printf("Failed to load sound effects!\n");
 		return (0);
