@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_last.c                                   :+:      :+:    :+:   */
+/*   ft_add_chain_in_linked_list.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 19:21:12 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/16 19:39:56 by lshanaha         ###   ########.fr       */
+/*   Created: 2019/04/19 15:25:45 by lshanaha          #+#    #+#             */
+/*   Updated: 2019/04/19 17:19:57 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_last(t_list *alst, t_list *new)
+void	ft_add_chain_in_linked_list(t_list *where, t_list *what)
 {
-	if (new == NULL || alst == NULL)
-		return ;
-	if (alst == NULL)
-	{
-		new->next = NULL;
-		alst = new;
-	}
+	if (!where)
+		where = what;
 	else
-	{
-		while ((alst)->next)
-			(alst) = (alst)->next;
-		(alst)->next = new;
-	}
+		ft_lstadd_last(where, what);
 }

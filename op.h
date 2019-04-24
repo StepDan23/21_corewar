@@ -6,7 +6,11 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/04/18 19:54:11 by ttreutel         ###   ########.fr       */
+=======
+/*   Updated: 2019/04/20 12:29:16 by how_r_u          ###   ########.fr       */
+>>>>>>> asm_branch
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +35,24 @@
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
+<<<<<<< HEAD
 # define COMMENT_CHAR			'#'
 # define LABEL_CHAR				':'
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
+=======
+#define MAX_ARGS_NUMBER			4
+#define MAX_PLAYERS				4
+#define MEM_SIZE				(4*1024)
+#define IDX_MOD					(MEM_SIZE / 8)
+#define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+
+#define COMMENT_CHAR			'#'
+#define ANOTHER_COMMENT_CHAR	';'
+#define LABEL_CHAR				':'
+#define DIRECT_CHAR				'%'
+#define SEPARATOR_CHAR			','
+>>>>>>> asm_branch
 
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_last_letter_in_str.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: how_r_u <how_r_u@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 21:44:50 by how_r_u           #+#    #+#             */
-/*   Updated: 2019/04/10 21:47:46 by how_r_u          ###   ########.fr       */
+/*   Created: 2019/04/19 18:15:59 by lshanaha          #+#    #+#             */
+/*   Updated: 2019/04/19 18:16:00 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	ft_get_last_letter_in_str(char *str)
 
 	if (!str)
 		return (0);
-	while(*str)
+	while (*str)
 	{
 		letter = *str;
 		str++;
