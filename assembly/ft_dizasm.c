@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 21:20:50 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 14:09:20 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:50:41 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,9 @@ void	ft_open_s_file(int fd_read, char *file_name)
 	fd_write = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_write < 3)
 		exit(ft_printf("cant't create file %s.s\n", str));
-	free(str);
 	ft_read_cor_file(fd_read, fd_write, 0);
+	ft_printf("Data write at %s\n", str);
+	free(str);
 }
 
 int		main(int argc, char *argv[])
