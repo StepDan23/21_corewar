@@ -178,6 +178,7 @@ int						flags_check(int ac, int i, char **av);
 int						champion_count(int ac, char **av);
 int						champion_number(t_champion **arr);
 int						n_champion(int ac, char **av, t_vm *vm);
+int						plus_i(int i, char **av);
 int						w_champion(int ac, char **av, t_vm *vm);
 int						args_check(int ac, char **av);
 void					number_format_err(char *param);

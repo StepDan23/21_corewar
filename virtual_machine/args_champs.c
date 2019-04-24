@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 15:07:36 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 15:08:16 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 17:41:05 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ int		w_champion(int ac, char **av, t_vm *vm)
 	i = 1;
 	while (i < ac)
 	{
+		i += plus_i(i, av);
 		if (ft_strequ(av[i], "-n"))
-		{
-			i += 3;
 			continue;
-		}
 		else if (ft_strequ(av[i], "-dump"))
-			i += 2;
+			continue;
 		else if (ft_strequ(av[i], "-s"))
-			i++;
+			continue;
 		if (i < ac)
 		{
 			num = champion_number(vm->champion);

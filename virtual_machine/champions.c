@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 15:08:53 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 15:08:54 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 17:41:05 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ int			champion_number(t_champion **arr)
 		hero = arr[++i];
 	}
 	return (num);
+}
+
+int			plus_i(int i, char **av)
+{
+	if (ft_strequ(av[i], "-n"))
+		return (3);
+	else if (ft_strequ(av[i], "-dump"))
+		return (2);
+	else if (ft_strequ(av[i], "-s"))
+		return (1);
+	return (0);
 }
