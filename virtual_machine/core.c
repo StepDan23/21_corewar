@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 14:27:44 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 15:42:02 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	init_optab2(t_op op_tab[17])
 	op_tab[12] = (t_op){"fork", 1, {T_DIR, 0, 0}, 12, 800, "fork", 0, 1};
 	op_tab[13] = (t_op){"lld", 2, {T_DIR | T_IND, T_REG, 0}, 13, 10,
 													"long load", 1, 0};
-	op_tab[14] = (t_op){"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG},
-											14, 50, "long load index", 1, 1};
+	op_tab[14] = (t_op){"lldi", 3,
+						{T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG},
+						14, 50, "long load index", 1, 1};
 	op_tab[15] = (t_op){"lfork", 1, {T_DIR, 0, 0}, 15, 1000, "long fork",
 																		0, 1};
 	op_tab[16] = (t_op){"aff", 1, {T_REG, 0, 0}, 16, 2, "aff", 1, 0};
@@ -41,28 +42,16 @@ void	init_optab(t_op op_tab[17])
 																		0};
 	op_tab[5] = (t_op){"sub", 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction",
 																		1, 0};
-	op_tab[6] = (t_op){"and", 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG},
-							6, 6, "et (and  r1, r2, r3   r1&r2 -> r3", 1, 0};
-	op_tab[7] = (t_op){"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
+	op_tab[6] = (t_op){"and", 3,
+						{T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG},
+						6, 6, "et (and  r1, r2, r3   r1&r2 -> r3", 1, 0};
+	op_tab[7] = (t_op){"or", 3,
+						{T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
 						7, 6, "ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0};
-	op_tab[8] = (t_op){"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
-							8, 6, "ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0};
+	op_tab[8] = (t_op){"xor", 3,
+						{T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
+						8, 6, "ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0};
 	init_optab2(op_tab);
-}
-
-void	introduce_players(t_champion **players, int count)
-{
-	int	i;
-
-	ft_printf("Introducing contestants...\n");
-	i = 0;
-	while (i < count)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",\
-		players[i]->id, players[i]->size, players[i]->name,
-								players[i]->comment);
-		i++;
-	}
 }
 
 void	champions_reset_lives(t_champion **champs, int count)
@@ -70,7 +59,7 @@ void	champions_reset_lives(t_champion **champs, int count)
 	int	i;
 
 	i = 0;
-	while(i < count)
+	while (i < count)
 	{
 		champs[i]->lives_in_period = 0;
 		i++;
@@ -100,43 +89,6 @@ void	update_vm_state(t_vm *vm)
 	vm->cycles_to_die--;
 }
 
-void	do_cyrcle(t_vm *vm, t_op op_tab[17])
-{
-	performe_proc(vm, vm->process, op_tab);
-	update_vm_state(vm);
-}
-
-void	print_help(void)
-{
-	ft_printf("Usage:\n\t[args...]\
-[-n][number][filename.cor]|[filename.cor]\n");
-	ft_printf("Args:\n\ts - silent. No live operation prints\n");
-	ft_printf("\thelp - help message\n");
-	ft_printf("\t[-n][number] - set player's number to [number]\n");
-	ft_printf("\t[filename.cor] - path to champion.\n");
-}
-
-int		get_extra_args(int argc, char *argv[],t_vm *vm)
-{
-	int	i;
-
-	i = 1;
-	if (argc <= 1)
-		return (0);
-	while (ft_strequ(argv[i], "-s") || ft_strequ(argv[i], "--help"))
-	{
-		if (ft_strequ(argv[i], "-s"))
-			vm->bit_flags ^= 1;
-		else if (ft_strequ(argv[i], "--help"))
-		{
-			print_help();
-			exit(0);
-		}
-		i++;
-	}
-	return (i);
-}
-
 t_vm	*init_vm_test(int argc, char *argv[])
 {
 	t_vm	*vm;
@@ -147,7 +99,8 @@ t_vm	*init_vm_test(int argc, char *argv[])
 	args_read(argc - extra_args + 1, argv + extra_args - 1, vm);
 	if (!vm->champion_count)
 	{
-		ft_printf("Count of champions must be between 2 and %d.\n", MAX_PLAYERS);
+		ft_printf("Count of champions must be between 2 and %d.\n",
+													MAX_PLAYERS);
 		exit(1);
 	}
 	vm->champion[vm->champion_count] = NULL;

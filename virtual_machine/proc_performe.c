@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_performe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 23:26:48 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 20:47:55 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/24 15:14:42 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	init_f(void (*f[17])(t_vm *, t_proccess *))
 **	Выполняет операцию и перемещает каретку на новую позицию
 */
 
-void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17], void (*f[17])(t_vm *, t_proccess *))
+void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17],
+						void (*f[17])(t_vm *, t_proccess *))
 {
 	unsigned int	arg_types;
 	t_op			op;
@@ -135,7 +136,7 @@ void	performe_action(t_vm *vm, t_proccess *proccess, t_op op_tab[17], void (*f[1
 void	performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17])
 {
 	t_proccess	*proccess;
-	void (*f[17])(t_vm *, t_proccess *);
+	void		(*f[17])(t_vm *, t_proccess *);
 
 	proccess = head;
 	init_f(f);

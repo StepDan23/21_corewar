@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/24 14:39:41 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 15:04:48 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ void	vm_init_memory(unsigned char *memory)
 	while (i < MEM_SIZE)
 	{
 		memory[i] = 0;
-		i++;
-	}
-}
-
-void	vm_init_proccess_counter(t_vm *vm)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		vm->p_num[i] = 0;
 		i++;
 	}
 }
@@ -65,15 +53,14 @@ t_vm	*vm_new(void)
 	vm->end_game = 0;
 	vm->bit_flags = 1;
 	vm_init_memory(vm->memory);
-	vm_init_proccess_counter(vm);
 	return (vm);
 }
 
 void	vm_delete(t_vm *vm)
 {
-	int	i;
-	t_proccess *curr;
-	t_proccess *next;
+	int			i;
+	t_proccess	*curr;
+	t_proccess	*next;
 
 	if (vm == NULL)
 		return ;

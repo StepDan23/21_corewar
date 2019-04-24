@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:07:50 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 13:18:47 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 15:40:37 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void		proccess_check_live(t_vm *vm, t_proccess **head)
 		if (vm->cycles - curr->last_live >= vm->cycles_die)
 		{
 			vm->p_total--;
-			vm->p_num[curr->player_id]--;
 			proccess_kill(head, curr);
 		}
 		curr = next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artemiy <artemiy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/23 21:01:48 by artemiy          ###   ########.fr       */
+/*   Updated: 2019/04/24 15:44:16 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct			s_vm
 	unsigned char		memory[MEM_SIZE];
 	unsigned int		live_exec;
 	unsigned int		checkups;
-	int					p_num[4];
 	int					p_total;
 	int					end_game;
 	int					bit_flags;
@@ -181,6 +180,12 @@ int						champion_number(t_champion **arr);
 int						n_champion(int ac, char **av, t_vm *vm);
 int						w_champion(int ac, char **av, t_vm *vm);
 int						args_check(int ac, char **av);
+void					number_format_err(char *param);
+void					ivalid_number_err(char *param);
+void					same_number_err(void);
+int						get_extra_args(int argc, char *argv[], t_vm *vm);
+void					print_help(void);
+
 
 t_vm					*vm_new(void);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
@@ -193,8 +198,6 @@ void					proccess_check_live(t_vm *vm, t_proccess **head);
 
 int						check_filename(char *file);
 int						check_args(int ac, char **av, t_vm *vm);
-// int						manage_flag(t_vm *vm, char *flag, char *param,
-									// int *count);
 
 void					champions_add(char *filename, int num,
 									t_champion **head);
@@ -233,7 +236,8 @@ void					aff(t_vm *vm, t_proccess *proccess);
 
 t_vm					*init_vm_test(int argc, char *argv[]);
 void					init_optab(t_op op_tab[17]);
-void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
+void					performe_proc(t_vm *vm, t_proccess *head,
+										t_op op_tab[17]);
 void					update_vm_state(t_vm *vm);
 void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
 void					introduce_players(t_champion **players, int count);

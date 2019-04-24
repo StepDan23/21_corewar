@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_champs.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:07:36 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/24 15:08:16 by fkuhn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -50,7 +62,7 @@ int		args_check(int ac, char **av)
 	int			i;
 
 	i = 1;
-	while(i < ac)
+	while (i < ac)
 	{
 		if (ft_strequ(av[i], "-n") || ft_strequ(av[i], "-dump"))
 		{
@@ -60,7 +72,6 @@ int		args_check(int ac, char **av)
 				i++;
 			else
 				i++;
-
 		}
 		else if (!check_filename(av[i]))
 			exit(1);
@@ -105,7 +116,8 @@ int		champion_count(int ac, char **av)
 	{
 		if (av[i][0] != '-' && !is_all_digit(av[i]) && check_filename(av[i]))
 			count++;
-		else if ((av[i][0] != '-' && !is_all_digit(av[i])) && !check_filename(av[i]))
+		else if ((av[i][0] != '-' && !is_all_digit(av[i]))\
+						&& !check_filename(av[i]))
 		{
 			ft_printf("filename %s invalid\n", av[i]);
 			return (0);
@@ -114,4 +126,3 @@ int		champion_count(int ac, char **av)
 	}
 	return (count);
 }
-
