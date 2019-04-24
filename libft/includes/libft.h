@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/12 14:48:27 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/21 20:57:23 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct		s_gnl{
 	int					fd;
 }					t_gnl;
 
-# define BUFF_SIZE 100
+# define BUFF_SIZE 1000
 
 typedef struct		s_fmt {
 	char				flags;
@@ -167,7 +167,8 @@ char				*ft_strrchr (const char *str, int ch);
 char				*ft_strstr(const char *strb, const char *stra);
 char				*ft_strnstr(const char *hay, const char *needle,\
 size_t len);
-int 				ft_d_strstr(const char *str, const char *needle, char stop_symbol);
+int 				ft_d_strstr(const char *str, const char *needle,\
+char stop_symbol);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
@@ -178,6 +179,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(long long n);
 char				*ft_strrev_bin(char **str);
 char				*ft_base_convert(char *base_str, unsigned long long nbr);
+char				*ft_int_base_convert(char *base_str, unsigned int nbr);
 unsigned char		*ft_strrev_num(unsigned char *s, int len);
 char				*ft_str_addition(char *first, char *second);
 char				*ft_str_mult(char *first, char *second);
@@ -185,13 +187,15 @@ char				*ft_power2(int power);
 char				*ft_power5(int power);
 
 void				ft_lstadd(t_list **alst, t_list *list);
-void				ft_lstadd_last(t_list **alst, t_list *list);
+void				ft_lstadd_last(t_list *alst, t_list *list);
 void				ft_lstclear(t_list *lst);
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstnew(void const *content, size_t content_size);
+void				ft_add_chain_in_linked_list(t_list *where, t_list *what);
+
 
 t_btree				*ft_btree_create_node(void *item);
 void				ft_btree_apply_prefix(t_btree *root, void (*appf)(void *));

@@ -6,17 +6,14 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/21 19:13:33 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 19:36:01 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 
-static void		make_carr_color(t_window *window, t_proccess *proc)
+static void		make_carr_color(t_window *window, unsigned char id)
 {
-	unsigned char	id;
-
-	id = window->mem_code[proc->position];
 	FONT_COLOR = (SDL_Color){COL_BLACK};
 	if (id > 4)
 	{
@@ -38,7 +35,7 @@ static void		make_carr_color(t_window *window, t_proccess *proc)
 		SDL_SetRenderDrawColor(WIN_REND, COL_YELOW);
 }
 
-void			render_carrier(t_window *window, t_vm *vm)
+void			render_carriers(t_window *window, t_vm *vm)
 {
 	SDL_Rect	rect;
 	t_proccess	*proc;
@@ -54,18 +51,38 @@ void			render_carrier(t_window *window, t_vm *vm)
 	{
 		pos = proc->position;
 		rect = (SDL_Rect){13 + pos % 64 * 18.7,
-							20 + 13.5 * (int)(pos / 64), 15, 15};
-		make_carr_color(window, proc);
+							20 + 13.5 * (int)(pos / 64), 16, 15};
+		make_carr_color(window, MEM_CODE[pos]);
 		SDL_RenderFillRect(WIN_REND, &rect);
 		str[0] = hex[VM_MEMORY[pos] / 16];
 		str[1] = hex[VM_MEMORY[pos] % 16];
-		print_str(window, str, 13 + pos % 64 * 18.7,
+		print_str(window, str, 14 + pos % 64 * 18.7,
 							20 + 13.5 * (int)(pos / 64));
 		proc = proc->next;
 	}
 }
 
-static void		render_source_back(t_window *window, t_vm *vm, int id, int pos)
+void			render_lives(t_window *window)
+{
+	SDL_Rect	rect;
+	int			i;
+
+	FONT_CURR = FONT_ARENA;
+	i = -1;
+	while (++i < MEM_SIZE)
+		if (MEM_CARR[i] > 5)
+		{
+			rect = (SDL_Rect){13 + i % 64 * 18.7,
+					20 + 13.5 * (int)(i / 64), 16, 15};
+			make_carr_color(window, MEM_CARR[i]);
+			SDL_RenderFillRect(WIN_REND, &rect);
+			FONT_COLOR = (SDL_Color){COL_WHITE};
+			print_str(window, "01", 14 + i % 64 * 18.7,
+							20 + 13.5 * (int)(i / 64));
+		}
+}
+
+void			render_source_back(t_window *window, t_vm *vm, int id, int pos)
 {
 	char		*hex;
 	char		str[3];
@@ -75,39 +92,38 @@ static void		render_source_back(t_window *window, t_vm *vm, int id, int pos)
 	FONT_COLOR = get_player_color(id);
 	MEM_CODE[pos] = id;
 	rect = (SDL_Rect){13 + pos % 64 * 18.7,
-				20 + 13.5 * (int)(pos / 64), 15, 15};
+				20 + 13.5 * (int)(pos / 64), 16, 15};
 	SDL_RenderFillRect(WIN_REND, &rect);
 	str[0] = hex[VM_MEMORY[pos] / 16];
 	str[1] = hex[VM_MEMORY[pos] % 16];
 	str[2] = '\0';
-	print_str(window, str, 13 + pos % 64 * 18.7,
+	print_str(window, str, 14 + pos % 64 * 18.7,
 						20 + 13.5 * (int)(pos / 64));
 }
 
-void			render_carrier_source(t_window *window, t_vm *vm)
+void			render_carriers_source(t_window *window, t_vm *vm)
 {
 	t_proccess	*proc;
 	int			i;
+	int			player_id;
 
 	SDL_SetRenderTarget(WIN_REND, WIN_BACK);
 	SDL_SetRenderDrawColor(WIN_REND, COL_GREY);
 	proc = vm->process;
 	FONT_CURR = FONT_ARENA;
-	i = -1;
-	while (++i < MEM_SIZE)
-		if (MEM_CODE[i] > 5)
-		{
-			MEM_CODE[i] -= 5;
-			if (MEM_CODE[i] < 5)
-				render_source_back(window, vm, MEM_CODE[i], i);
-		}
 	while (proc)
 	{
 		i = -1;
 		if (proc->pos_written >= 0)
 			while (++i < 4)
 				render_source_back(window, vm,
-							proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
+					proc->player_id + 250, (proc->pos_written + i) % MEM_SIZE);
+		if (proc->last_live == vm->cycles && vm->cycles)
+		{
+			player_id = -get_4bytes(VM_MEMORY, proc->position - 4);
+			if (player_id > 0 && player_id <= VM_CHAMP_COUNT)
+				MEM_CARR[proc->position - 5] = 250 + player_id;
+		}
 		proc = proc->next;
 	}
 	SDL_SetRenderTarget(WIN_REND, NULL);

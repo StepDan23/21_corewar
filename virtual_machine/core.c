@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 17:16:27 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 20:09:31 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	update_vm_state(t_vm *vm)
 			vm->cycles_die -= CYCLE_DELTA;
 			vm->checkups = 1;
 			if (vm->cycles_die <= 0)
+			{
 				vm->end_game = 1;
+				vm->cycles++;
+			}
 		}
 		else
 			vm->checkups++;

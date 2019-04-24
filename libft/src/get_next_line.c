@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 12:49:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/03/14 13:07:57 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:32:09 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_list	*ft_search(t_list *root, int fd)
 	if (!root)
 	{
 		root = ft_lstnew(NULL, 0);
-		ft_lstadd_last(&start, root);
+		ft_lstadd_last(start, root);
 	}
 	if (!(root->content))
 	{
@@ -119,6 +119,7 @@ int				get_next_line(const int fd, char **line)
 		free(((t_gnl *)(root->content))->data);
 		free(root->content);
 		free(root);
+		root = NULL;
 	}
 	return (flag);
 }

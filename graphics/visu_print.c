@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:41:52 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/22 11:52:10 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:41:29 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void		print_start_names(t_window *window, t_vm *vm)
 	int			i;
 	int			x;
 	int			y;
-
 
 	i = 0;
 	FONT_COLOR = (SDL_Color){COL_L_BLUE};
