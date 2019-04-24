@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/22 18:59:41 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/23 18:33:03 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ void	update_vm_state(t_vm *vm)
 	if (!vm->cycles_to_die)
 	{
 		proccess_check_live(vm, &vm->process);
+		if (vm->end_game == 1)
+			return ;
 		if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
-			vm->checkups = 0;
+			vm->checkups = 1;
 			if (vm->cycles_die <= 0)
 				vm->end_game = 1;
 		}

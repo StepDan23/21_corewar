@@ -18,6 +18,7 @@ void		champions_add(char *filename, int id, t_champion **head)
 	new_champ->size = 0;
 	new_champ->last_live = 0;
 	new_champ->last_live = 0;
+	new_champ->lives_in_period = 0;
 	head[id - 1] = new_champ;
 }
 

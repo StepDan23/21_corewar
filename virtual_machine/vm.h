@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/18 20:06:01 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/23 15:45:56 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ typedef struct			s_proccess
 	int					player_id;
 	int					id;
 	unsigned int		registers[REG_NUMBER];
-	int					is_live;
+	int					last_live;
 	int					command_type;
+	unsigned int		arg_byte;
 	int					cycles_to_wait;
 	struct s_proccess	*next;
 	int					value_written;
@@ -90,7 +91,7 @@ typedef struct			s_vm
 	int					cycles_to_dump;
 	int					cycles_die;
 	t_proccess			*process;
-	t_champion			*champion[MAX_PLAYERS];
+	t_champion			*champion[MAX_PLAYERS + 1];
 	int					champion_count;
 	t_champion			*winner;
 	unsigned char		memory[MEM_SIZE];
@@ -161,7 +162,7 @@ typedef struct			s_op
 t_champion				*new_champ(int number, char *filename);
 void					champion_free(t_champion *hero);
 
-void					read_all_champs(t_champion **champs);
+void					read_all_champs(t_champion **champs, int count);
 int						read_champ(t_champion *champ);
 int						read_4bytes(int fd);
 int						read_magic(int fd);
@@ -184,7 +185,8 @@ int						args_check(int ac, char **av);
 
 t_vm					*vm_new(void);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
-void					vm_dump_memory(unsigned char *memory);
+void					vm_dump_memory(t_vm *vm);
+void					vm_delete(t_vm *vm);
 
 t_proccess				*proccess_new(int id, int player_id, int pos);
 void					proccess_add(t_proccess **head, t_proccess *new_p);
@@ -235,5 +237,5 @@ void					init_optab(t_op op_tab[17]);
 void					performe_proc(t_vm *vm, t_proccess *head, t_op op_tab[17]);
 void					update_vm_state(t_vm *vm);
 void					do_cyrcle(t_vm *vm, t_op op_tab[17]);
-void					introduce_players(t_champion **players);
+void					introduce_players(t_champion **players, int count);
 #endif
