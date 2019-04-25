@@ -42,7 +42,7 @@ $(NAME): $(OBJ)
 	ranlib $(NAME)
 
 $(OBJ):
-	gcc $(FLAGS) ./src/*.c
+	gcc $(CC_FLAGS) $(FLAGS) ./src/*.c
 
 
 #
