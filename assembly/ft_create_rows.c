@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 12:55:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:05:32 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_list *labels, t_syntax_row *row)
 	int		i;
 
 	str = &TKN_STR[1];
+	if (TKN_TYPE == Direct_label && *str)
+		str = &str[1];
 	current = labels;
 	while (current)
 	{
