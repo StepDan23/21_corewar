@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:10:16 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:22:16 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:30:44 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 void	ft_add_space_or_newline(int fd, int *i)
 {
-	if (*i != 0 && *i % 32 == 0)
-		ft_putchar_fd('\n', fd);
-	else if (*i != 0 && *i % 4 == 0)
-		ft_putchar_fd(' ', fd);
+	//if (*i != 0 && *i % 32 == 0)
+	//	ft_putchar_fd('\n', fd);
+	//else if (*i != 0 && *i % 4 == 0)
+	//	ft_putchar_fd(' ', fd);
 }
 
 void	ft_add_one_bite(int fd, int *i, int value)

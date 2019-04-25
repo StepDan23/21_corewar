@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 13:54:25 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 14:09:19 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:27:35 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	ft_solve_arg2(t_machine *machine, int bite, int fd_write)
 		{
 			ft_place_arg_value(machine, value, fd_write, M_ARG2);
 			ft_putchar_fd((M_ARG3) ? SEPARATOR_CHAR : '\n', fd_write);
-			if (M_ARG3)
-				ft_putchar_fd(' ', fd_write);
-			else
+			//if (M_ARG3)
+			//	ft_putchar_fd(' ', fd_write);
+			//else
 				M_START_ROW = 1;
 			value = 0;
 			M_ARG2_SIZE = 0;
@@ -83,9 +83,9 @@ void	ft_solve_arg1(t_machine *machine, int bite, int fd_write)
 		{
 			ft_place_arg_value(machine, value, fd_write, M_ARG1);
 			ft_putchar_fd((M_ARG2) ? SEPARATOR_CHAR : '\n', fd_write);
-			if (M_ARG2)
-				ft_putchar_fd(' ', fd_write);
-			else
+			//if (M_ARG2)
+			//	ft_putchar_fd(' ', fd_write);
+			//else
 				M_START_ROW = 1;
 			value = 0;
 			M_ARG1_SIZE = 0;
