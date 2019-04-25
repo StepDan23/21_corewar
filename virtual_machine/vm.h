@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:14:39 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 15:44:16 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/25 15:39:22 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ void					ivalid_number_err(char *param);
 void					same_number_err(void);
 int						get_extra_args(int argc, char *argv[], t_vm *vm);
 void					print_help(void);
-
 
 t_vm					*vm_new(void);
 void					vm_spread_champs(t_vm *vm, t_champion **champs);
