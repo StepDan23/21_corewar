@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 15:08:53 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 17:41:05 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/25 15:02:19 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ void		champions_add(char *filename, int id, t_champion **head)
 	new_champ->last_live = 0;
 	new_champ->lives_in_period = 0;
 	head[id - 1] = new_champ;
-}
-
-void		champion_free(t_champion *hero)
-{
-	if (hero->code)
-		free(hero->code);
-	free(hero);
 }
 
 int			champion_number(t_champion **arr)

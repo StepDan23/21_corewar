@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/25 13:41:10 by ttreutel         ###   ########.fr       */
+/*   Updated: 2019/04/25 15:05:05 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	update_vm_state(t_vm *vm)
 {
 	if (!vm->cycles_to_die)
 	{
+		proccess_check_live(vm, &vm->process);
 		if (vm->live_exec >= NBR_LIVE || vm->checkups >= MAX_CHECKS)
 		{
 			vm->cycles_die -= CYCLE_DELTA;
@@ -85,7 +86,6 @@ void	update_vm_state(t_vm *vm)
 		vm->cycles_to_die = vm->cycles_die;
 		vm->live_exec = 0;
 		champions_reset_lives(vm->champion, vm->champion_count);
-		proccess_check_live(vm, &vm->process);
 	}
 	if (vm->end_game != 1)
 		vm->cycles++;
