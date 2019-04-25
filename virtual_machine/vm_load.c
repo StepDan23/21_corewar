@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 14:02:36 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/24 15:48:37 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/25 18:23:51 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	print_help(void)
 	ft_printf("\thelp - help message\n");
 	ft_printf("\t[-n][number] - set player's number to [number]\n");
 	ft_printf("\t[filename.cor] - path to champion.\n");
+	exit(1);
 }
