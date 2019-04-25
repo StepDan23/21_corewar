@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 16:08:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 21:20:57 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:22:06 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_add_code_size(t_asm_data *asm_data, int fd, int *i)
 	while (8 - j - len > 0)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
 	}

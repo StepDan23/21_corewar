@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:07:44 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 17:08:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:21:59 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_write_arg_text(int fd, int size, char *hex, int *i)
 	while (j < 2 * size - len)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:10:16 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 11:40:36 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:22:16 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_add_one_bite(int fd, int *i, int value)
 	hex = ft_base_convert(HEXBASE, value);
 	len = ft_strlen(hex);
 	ft_add_space_or_newline(fd, i);
-	ft_putchar_fd((len <= 1) ? '0' : hex[0], fd);
+	ft_putchar_fd((len <= 1) ? 0 : hex[0], fd);
 	(*i)++;
 	ft_add_space_or_newline(fd, i);
 	ft_putchar_fd((len <= 1) ? hex[0] : hex[1], fd);

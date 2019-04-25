@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_conver_words.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 19:29:58 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:17:44 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:21:53 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_add_name(t_asm_data *asm_data, int fd, int *i, int j)
 	while (j < PROG_NAME_LENGTH * 2)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
 	}
@@ -58,7 +58,7 @@ void	ft_add_null(int *i, int fd)
 	while (j < 8)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
 	}
@@ -72,7 +72,7 @@ void	ft_add_comment(t_asm_data *asm_data, int fd, int *i, int j)
 	while (j < COMMENT_LENGTH * 2)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
 	}
