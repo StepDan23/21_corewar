@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 20:04:23 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 17:17:32 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 12:55:12 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_list *labels, t_syntax_row *row)
 
 	str = &TKN_STR[1];
 	current = labels;
-	ft_printf("list of labels:\n");
 	while (current)
 	{
 		i = 0;
@@ -60,9 +59,13 @@ void	ft_check_syntax_rows(t_asm_data *asm_data, t_list *rows)
 void	ft_fill_row(t_asm_data *asm_data, t_token *token, t_list *labels,\
 t_syntax_row *row)
 {
-	if (token->type == Label_arg && ft_check_label_arg(asm_data, token, labels,\
-	row))
+	if ((TKN_TYPE == Label_arg || TKN_TYPE == Direct_label) &&
+	ft_check_label_arg(asm_data, token, labels, row))
+	{
+		ft_error_token(asm_data, ft_strdup("This label does not exists "),\
+		token, 2);
 		return ;
+	}
 	if (TKN_TYPE == Label_arg || TKN_TYPE == Register || TKN_TYPE ==\
 	Direct_label || TKN_TYPE == Direct_number || TKN_TYPE == Number)
 		ft_row_args_check(asm_data, token, row);

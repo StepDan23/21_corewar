@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 21:02:17 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/21 20:57:23 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 12:09:03 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ char				*ft_strrchr (const char *str, int ch);
 char				*ft_strstr(const char *strb, const char *stra);
 char				*ft_strnstr(const char *hay, const char *needle,\
 size_t len);
-int 				ft_d_strstr(const char *str, const char *needle,\
+int					ft_d_strstr(const char *str, const char *needle,\
 char stop_symbol);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -195,7 +195,6 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_add_chain_in_linked_list(t_list *where, t_list *what);
-
 
 t_btree				*ft_btree_create_node(void *item);
 void				ft_btree_apply_prefix(t_btree *root, void (*appf)(void *));
@@ -232,7 +231,6 @@ int					ft_rbtree_max(t_rbnode *node);
 int					ft_rbtree_min(t_rbnode *node);
 void				ft_rb_freetree(t_rbnode *node);
 t_rbroot			*ft_rbtree_root_init(void);
-
 
 /*
 ** функции принтф
