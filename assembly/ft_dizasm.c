@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 21:20:50 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 18:26:55 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:41:12 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	ft_read_cor_file(int fd_read, int fd_write, int value)
 
 	ft_init_machine(&machine);
 	str_num = 0;
+	ft_putstr_fd("Not this time, guy\n", fd_write);
 	while (get_next_line(fd_read, &line) > 0)
 	{
 		k = 0;
@@ -98,7 +99,6 @@ void	ft_read_cor_file(int fd_read, int fd_write, int value)
 			else if (line[k] == ' ')
 				value = ' ';
 			k++;
-			ft_solve_header(&machine, value, fd_write);
 		}
 		free(line);
 		str_num++;
@@ -113,6 +113,8 @@ void	ft_open_s_file(int fd_read, char *file_name)
 	int		j;
 
 	j = 0;
+	if (ft_strlen(file_name) > 4 && file_name[j] == '.')
+		j++;
 	while (file_name[j] && file_name[j] != '.')
 		j++;
 	str = ft_strsub(file_name, 0, j);
