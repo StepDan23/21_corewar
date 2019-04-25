@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 16:00:23 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/25 13:55:41 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		main(int argc, char *argv[])
 		if (vm->cycles == vm->cycles_to_dump)
 			vm_dump_memory(vm);
 	}
-	ft_printf("Winner is %s!\n", vm->winner->name);
+	ft_printf("Player %d (%s) won\n", vm->winner->id, vm->winner->name);
 	vm_delete(vm);
 	return (0);
 }

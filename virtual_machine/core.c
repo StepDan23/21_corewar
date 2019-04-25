@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 16:12:51 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 20:09:31 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:41:10 by ttreutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_vm	*init_vm_test(int argc, char *argv[])
 	args_read(argc - extra_args + 1, argv + extra_args - 1, vm);
 	if (!vm->champion_count)
 	{
-		ft_printf("Count of champions must be between 2 and %d.\n",
+		ft_printf("Count of champions must be between 1 and %d.\n",
 													MAX_PLAYERS);
 		exit(1);
 	}
