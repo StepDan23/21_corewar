@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:07:26 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 17:34:05 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:36:52 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "vm.h"
 # include <SDL2/SDL.h>
 # include <SDL_image.h>
-# include "SDL_ttf.h"
+# include <SDL_ttf.h>
 # include <SDL_mixer.h>
 
 # define SCREEN_WIDTH	1600
@@ -139,7 +139,9 @@ void				render_carriers_source(t_window *window, t_vm *vm);
 void				render_source_back(t_window *window,
 													t_vm *vm, int id, int pos);
 void				render_lives(t_window *window);
-//tests
+/*
+** visu_tests.c
+*/
 void				render_tests(t_window *window, t_vm *vm);
 void				init_tests(t_vm *vm);
 #endif

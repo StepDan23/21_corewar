@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 20:08:09 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/24 20:42:49 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void		render_status_val(t_window *window, t_vm *vm)
 	int			i;
 
 	i = 0;
-	height = 80;
+	height = 70;
 	FONT_CURR = FONT_STAT;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_nbr(window, WIN_SPEED, 1459, height += 35);

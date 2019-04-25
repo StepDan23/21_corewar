@@ -6,16 +6,14 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:13:50 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 17:33:47 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:10:05 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 
-static void		init_win_consts(t_window *window, t_vm *vm)
+static void		init_win_consts(t_window *window, t_vm *vm, int i)
 {
-	int		i;
-
 	i = -1;
 	while (++i <= MEM_SIZE)
 	{
@@ -39,6 +37,7 @@ static void		init_win_consts(t_window *window, t_vm *vm)
 	WIN_HEIG = SCREEN_HEIGHT;
 	WIN_STATUS = STAT_START;
 	WIN_SPEED = 50;
+	WIN_VOLUME = 0;
 }
 
 t_window		*init_win(t_vm *vm)
@@ -47,8 +46,7 @@ t_window		*init_win(t_vm *vm)
 
 	if (!(window = (t_window*)malloc(sizeof(t_window))))
 		return (NULL);
-	init_win_consts(window, vm);
-	WIN_VOLUME = 128;
+	init_win_consts(window, vm, 0);
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || TTF_Init() < 0)
 	{
 		ft_printf("Init_Error: %s\n", SDL_GetError());

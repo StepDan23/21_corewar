@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 18:05:58 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/24 17:25:27 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 14:01:18 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int					main(int argc, char **argv)
 		exit(0);
 	make_background(window, vm);
 	init_optab(op_tab);
+	Mix_Volume(-1, WIN_VOLUME);
 	Mix_PlayChannel(1, AUDIO_START, 0);
 	while (WIN_STATUS != STAT_QUIT)
 	{

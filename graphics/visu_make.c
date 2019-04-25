@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 10:34:07 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/23 17:29:41 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:56:13 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void		make_text_status(t_window *window)
 {
 	int			height;
 
-	height = 80;
+	height = 70;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Cycles/second limit   [<-|->]:", 1235, height += 35);
 	print_str(window, "Cycle:", 1235, height += 35);
@@ -72,6 +72,7 @@ static void		make_text_status(t_window *window)
 	print_str(window, "CYCLE_DELTA:", 1235, height += 35);
 	print_str(window, "NBR_LIVE:", 1235, height += 35);
 	print_str(window, "MAX_CHECKS:", 1235, height += 35);
+	print_str(window, "sound on/off [ M ]", 1335, height += 35);
 }
 
 void			make_background(t_window *window, t_vm *vm)
