@@ -6,35 +6,20 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 21:10:16 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:30:44 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:56:35 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include <stdlib.h>
 
-void	ft_add_space_or_newline(int fd, int *i)
-{
-	//if (*i != 0 && *i % 32 == 0)
-	//	ft_putchar_fd('\n', fd);
-	//else if (*i != 0 && *i % 4 == 0)
-	//	ft_putchar_fd(' ', fd);
-}
-
 void	ft_add_one_bite(int fd, int *i, int value)
 {
 	char	*hex;
 	int		len;
 
-	hex = ft_base_convert(HEXBASE, value);
-	len = ft_strlen(hex);
-	ft_add_space_or_newline(fd, i);
-	ft_putchar_fd((len <= 1) ? 0 : hex[0], fd);
-	(*i)++;
-	ft_add_space_or_newline(fd, i);
-	ft_putchar_fd((len <= 1) ? hex[0] : hex[1], fd);
-	(*i)++;
-	free(hex);
+	ft_putchar_fd(value, fd);
+	(*i) += 2;
 }
 
 int		ft_get_negative_value(int value, long size)

@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 16:08:15 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:22:06 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:23:14 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,23 @@
 
 void	ft_add_code_size(t_asm_data *asm_data, int fd, int *i)
 {
-	int		j;
-	int		len;
-	char	*hex;
+	int		temp;
 
-	hex = ft_base_convert(HEXBASE, ASM_CODE_SIZE);
-	len = ft_strlen(hex);
-	j = 0;
-	while (8 - j - len > 0)
-	{
-		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd(0, fd);
-		(*i)++;
-		j++;
-	}
-	j = 0;
-	while (hex[j])
-	{
-		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd(hex[j], fd);
-		(*i)++;
-		j++;
-	}
-	free(hex);
+	temp = (ASM_CODE_SIZE & 0xff000000) >> 24;
+	ft_putchar_fd(temp, fd);
+	temp = (ASM_CODE_SIZE & 0xff0000) >> 16;
+	ft_putchar_fd(temp, fd);
+	temp = (ASM_CODE_SIZE & 0xff00) >> 8;
+	ft_putchar_fd(temp, fd);
+	temp = (ASM_CODE_SIZE & 0xff);
+	ft_putchar_fd(temp, fd);
+	(*i) += 8;
 }
 
 void	ft_row_compile(t_asm_data *asm_data, t_syntax_row *row, int fd,\
 int *i)
 {
 	int		j;
-	char	*temp;
 
 	j = 0;
 	ft_add_one_bite(fd, i, ROW_COM_NUM + 1);
@@ -56,10 +43,7 @@ int *i)
 			ft_add_register(row, fd, i, j);
 		else if (ROW_ARG_TYPES[j] == Direct_label ||\
 		ROW_ARG_TYPES[j] == Label_arg)
-		{
-			temp = ft_add_label(asm_data, row, j);
-			ft_write_arg_text(fd, ROW_ARGS_SIZES[j], temp, i);
-		}
+			ft_add_label(asm_data, row, j, fd);
 		else if (ROW_ARG_TYPES[j] == Direct_number)
 			ft_add_direct_number(row, fd, i, j);
 		else if (ROW_ARG_TYPES[j] == Number)

@@ -2,7 +2,7 @@
 #	Compiler variables
 #
 
-CC= gcc -g
+CC= gcc -ggdb
 CC_FLAGS= -Wall -Wextra -Werror
 NAME_ASM = ../asm
 NAME_DEASM = ../dizasm

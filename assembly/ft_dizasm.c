@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 21:20:50 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:27:38 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:26:55 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ft_solve_code(t_machine *machine, int bite, int fd_write)
 	{
 		command_num = bite - 1;
 		ft_putstr_fd(g_comms[command_num], fd_write);
-		//ft_putchar_fd(' ', fd_write);
 		M_TYPE_BITE = g_args_codes[command_num];
 		M_START_ROW = 0;
 		M_TYPE_SET = 1;

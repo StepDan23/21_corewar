@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 20:03:00 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 21:21:18 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:23:26 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,7 @@ void				ft_add_one_bite(int fd, int *i, int value);
 int					ft_get_negative_value(int value, long size);
 int					ft_get_label_value(t_asm_data *asm_data, char *label_arg);
 char				*ft_add_label(t_asm_data *asm_data, t_syntax_row *row,\
-int j);
+int j, int fd);
 void				ft_add_space_or_newline(int fd, int *i);
 void				ft_row_wrapper(t_syntax_row *row);
 void				ft_write_arg_text(int fd, int size, char *hex, int *i);

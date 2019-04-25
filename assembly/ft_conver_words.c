@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 19:29:58 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:21:53 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:08:56 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,17 @@
 
 void	ft_add_magic_header(int fd, int *i)
 {
-	char	*hex_str;
-	int		len;
-	int		j;
+	int		temp;
 
-	j = 0;
-	hex_str = ft_base_convert(HEXBASE, COREWAR_EXEC_MAGIC);
-	len = ft_strlen(hex_str);
-	while (*i + len < 8)
-	{
-		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd(0, fd);
-		(*i)++;
-	}
-	while (hex_str[j])
-	{
-		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd(hex_str[j++], fd);
-		(*i)++;
-	}
+	temp = (COREWAR_EXEC_MAGIC & 0xff000000) >> 24;
+	ft_putchar_fd(temp, fd);
+	temp = (COREWAR_EXEC_MAGIC & 0xff0000) >> 16;
+	ft_putchar_fd(temp, fd);
+	temp = (COREWAR_EXEC_MAGIC & 0xff00) >> 8;
+	ft_putchar_fd(temp, fd);
+	temp = (COREWAR_EXEC_MAGIC & 0xff);
+	ft_putchar_fd(temp, fd);
+	(*i) += 8;
 }
 
 void	ft_add_name(t_asm_data *asm_data, int fd, int *i, int j)
@@ -43,10 +35,9 @@ void	ft_add_name(t_asm_data *asm_data, int fd, int *i, int j)
 	j += j;
 	while (j < PROG_NAME_LENGTH * 2)
 	{
-		ft_add_space_or_newline(fd, i);
 		ft_putchar_fd(0, fd);
-		(*i)++;
-		j++;
+		(*i) += 2;
+		j += 2;
 	}
 }
 
@@ -55,9 +46,8 @@ void	ft_add_null(int *i, int fd)
 	int		j;
 
 	j = 0;
-	while (j < 8)
+	while (j < 4)
 	{
-		ft_add_space_or_newline(fd, i);
 		ft_putchar_fd(0, fd);
 		(*i)++;
 		j++;
@@ -71,9 +61,8 @@ void	ft_add_comment(t_asm_data *asm_data, int fd, int *i, int j)
 	j += j;
 	while (j < COMMENT_LENGTH * 2)
 	{
-		ft_add_space_or_newline(fd, i);
 		ft_putchar_fd(0, fd);
-		(*i)++;
-		j++;
+		(*i) += 2;
+		j += 2;
 	}
 }

@@ -6,14 +6,14 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 20:07:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 16:22:45 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:01:17 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(unsigned char c, int fd)
 {
 	unsigned char q;
 	unsigned char z;
