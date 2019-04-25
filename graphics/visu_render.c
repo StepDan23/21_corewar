@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/25 15:04:55 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/25 16:00:09 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ static void		render_status_val(t_window *window, t_vm *vm)
 	height = 380;
 	while (VM_CHAMPS[i] != NULL)
 	{
-		print_nbr(window, VM_CHAMPS[i]->last_live + 1, 1325, height += 60);
+		if (VM_CHAMPS[i]->last_live == 0)
+			print_nbr(window, 0, 1325, height += 60);
+		else
+			print_nbr(window, VM_CHAMPS[i]->last_live + 1, 1325, height += 60);
 		print_nbr(window, VM_CHAMPS[i]->lives_in_period, 1435, height += 30);
 		height += 30;
 		i++;

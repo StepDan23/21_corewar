@@ -4,8 +4,8 @@
 
 CC= gcc -g
 CC_FLAGS= -Wall -Wextra -Werror
-NAME_ASM = asm
-NAME_DEASM = dizasm
+NAME_ASM = ../asm
+NAME_DEASM = ../dizasm
 LIB_DIR = ../libft/includes
 HEADERDIR = ../
 SRC = main.c ft_asm_structs_init.c ft_error_manager.c ft_champ_name_comment.c \

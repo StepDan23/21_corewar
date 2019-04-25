@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_conver_words.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 19:29:58 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:52:15 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 16:17:44 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_add_magic_header(int fd, int *i)
 	while (*i + len < 8)
 	{
 		ft_add_space_or_newline(fd, i);
-		ft_putchar_fd('0', fd);
+		ft_putchar_fd(0, fd);
 		(*i)++;
 	}
 	while (hex_str[j])

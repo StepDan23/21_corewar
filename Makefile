@@ -6,13 +6,13 @@
 #    By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/01 18:31:12 by mmcclure          #+#    #+#              #
-#    Updated: 2019/04/25 14:15:03 by mmcclure         ###   ########.fr        #
+#    Updated: 2019/04/25 16:05:17 by mmcclure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME_1 = asm
+NAME_1 = corewar
 
-NAME_2 = corewar
+NAME_2 = asm
 
 NAME_3 = visu
 
