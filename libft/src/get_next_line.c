@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 12:49:48 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/22 20:32:09 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:57:55 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,8 @@ int				get_next_line(const int fd, char **line)
 	char				*str;
 	int					flag;
 
-	if (fd < 0 || !line || !(str = malloc(1)) || read(fd, str, 0) < 0)
+	if (fd < 0 || !line)
 		return (-1);
-	free(str);
 	(!root) ? (root = ft_lstnew(NULL, 0)) : (root);
 	temp = root;
 	if (!(temp = ft_search(root, fd)))

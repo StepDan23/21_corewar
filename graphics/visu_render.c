@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu_render.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 18:36:36 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/25 16:00:09 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:56:14 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void			render_step(t_window *window, t_vm *vm, t_op op_tab[17])
 	render_carriers_source(window, vm);
 	recount_tacts(window, vm);
 	update_vm_state(vm);
-// render_tests(window, vm);
 	FONT_CURR = FONT_PAUSE;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Press SPACE to continue or S to step up", 178, 820);

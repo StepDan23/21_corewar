@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:08:18 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 12:08:21 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:56:01 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ t_rbroot	*ft_rbtree_root_init(void)
 	root = (t_rbroot *)malloc(sizeof(t_rbroot));
 	root->count = 0;
 	root->root = 0;
-
 	return (root);
 }

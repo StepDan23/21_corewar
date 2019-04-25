@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/04/25 12:29:08 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 18:55:32 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
-#define MAX_ARGS_NUMBER			4
-#define MAX_PLAYERS				4
-#define MEM_SIZE				(4*1024)
-#define IDX_MOD					(MEM_SIZE / 8)
-#define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+# define MAX_ARGS_NUMBER			4
+# define MAX_PLAYERS				4
+# define MEM_SIZE				(4*1024)
+# define IDX_MOD					(MEM_SIZE / 8)
+# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
-#define COMMENT_CHAR			'#'
-#define ANOTHER_COMMENT_CHAR	';'
-#define LABEL_CHAR				':'
-#define DIRECT_CHAR				'%'
-#define SEPARATOR_CHAR			','
+# define COMMENT_CHAR			'#'
+# define ANOTHER_COMMENT_CHAR	';'
+# define LABEL_CHAR				':'
+# define DIRECT_CHAR				'%'
+# define SEPARATOR_CHAR			','
 
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
 

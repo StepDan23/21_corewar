@@ -1,4 +1,4 @@
-NAME = corewar
+NAME = ../corewar
 LIB = ../libft/libft.a
 FLAGS = -Werror -Wall -Wextra -g
 GCC = gcc
