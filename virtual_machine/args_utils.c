@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 15:08:33 by fkuhn             #+#    #+#             */
-/*   Updated: 2019/04/24 15:48:49 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/25 18:23:05 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		get_extra_args(int argc, char *argv[], t_vm *vm)
 
 	i = 1;
 	if (argc <= 1)
-		return (0);
+		print_help();
 	while (ft_strequ(argv[i], "-s") || ft_strequ(argv[i], "--help"))
 	{
 		if (ft_strequ(argv[i], "-s"))
