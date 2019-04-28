@@ -6,7 +6,7 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 01:39:26 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 17:12:38 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 15:05:03 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ void	ft_fork(t_vm *vm, t_proccess *proccess)
 		i++;
 	}
 	vm->process->carry = P_C;
-	vm->process->last_live = vm->cycles;
+	vm->process->last_live = proccess->last_live;
 	P_POS = (P_POS + 3) % MEM_SIZE;
 	vm->p_total++;
-	vm->p_num[P_PI]++;
 }
 
 /*
@@ -64,10 +63,9 @@ void	lfork(t_vm *vm, t_proccess *proccess)
 		i++;
 	}
 	vm->process->carry = P_C;
-	vm->process->last_live = vm->cycles;
+	vm->process->last_live = proccess->last_live;
 	P_POS = (P_POS + 3) % MEM_SIZE;
 	vm->p_total++;
-	vm->p_num[P_PI]++;
 }
 
 /*
@@ -83,31 +81,20 @@ void	live(t_vm *vm, t_proccess *proccess)
 {
 	int			number;
 	t_champion	**players;
-	int			i;
 
 	number = get_4bytes(vm->memory, (P_POS + 1) % MEM_SIZE);
-	proccess->last_live = vm->cycles + 1;;
+	proccess->last_live = vm->cycles;
 	vm->live_exec++;
 	players = vm->champion;
-	i = 0;
 	if (-number > 0 && -number <= vm->champion_count)
 	{
 		vm->winner = players[-number - 1];
 		players[-number - 1]->lives_in_period++;
-		players[-number - 1]->last_live = vm->cycles + 1;
+		players[-number - 1]->last_live = vm->cycles;
+		if ((vm->bit_flags & 1))
+			ft_printf("A process shows that player %d (%s) is alive\n",
+								-number, players[-number - 1]->name);
 	}
-	// while (i < vm->champion_count)
-	// {
-		// if (players[i]->id == -number)
-		// {
-			// vm->winner = players[i];
-			// players[i]->lives_in_period++;
-			// players[i]->last_live = vm->cycles + 1;
-			// ft_printf("A process shows that player %d (%s) is alive\n",
-						// -number, players[i]->name);
-		// }
-		// i++;
-	// }
 	P_POS = (P_POS + 5) % MEM_SIZE;
 }
 

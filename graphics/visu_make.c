@@ -6,7 +6,7 @@
 /*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 10:34:07 by mmcclure          #+#    #+#             */
-/*   Updated: 2019/04/16 22:36:34 by mmcclure         ###   ########.fr       */
+/*   Updated: 2019/04/25 13:56:13 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		make_back_arena(t_window *window, t_vm *vm)
 			str[0] = hex[VM_MEMORY[j * 64 + i] / 16];
 			str[1] = hex[VM_MEMORY[j * 64 + i] % 16];
 			FONT_COLOR = get_player_color(MEM_CODE[j * 64 + i]);
-			print_str(window, str, 13 + 18.7 * i, 20 + 13.5 * j);
+			print_str(window, str, 14 + 18.7 * i, 20 + 13.5 * j);
 			i++;
 		}
 		j++;
@@ -63,7 +63,7 @@ static void		make_text_status(t_window *window)
 {
 	int			height;
 
-	height = 80;
+	height = 70;
 	FONT_COLOR = (SDL_Color){COL_WHITE};
 	print_str(window, "Cycles/second limit   [<-|->]:", 1235, height += 35);
 	print_str(window, "Cycle:", 1235, height += 35);
@@ -72,6 +72,7 @@ static void		make_text_status(t_window *window)
 	print_str(window, "CYCLE_DELTA:", 1235, height += 35);
 	print_str(window, "NBR_LIVE:", 1235, height += 35);
 	print_str(window, "MAX_CHECKS:", 1235, height += 35);
+	print_str(window, "sound on/off [ M ]", 1335, height += 35);
 }
 
 void			make_background(t_window *window, t_vm *vm)

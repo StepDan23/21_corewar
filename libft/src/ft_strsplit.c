@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 16:56:40 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/03/08 13:59:43 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:34:20 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char			**ft_strsplit(char const *str, char c)
 	i = 0;
 	while (*str == c)
 		str++;
-	new_arr = malloc(8 * ft_word_num((char *)str, c) + 1);
+	new_arr = malloc(8 * (ft_word_num((char *)str, c) + 1));
 	if (!new_arr)
 		return (0);
 	ft_gen_res(&new_arr, (char *)str, c, 0);

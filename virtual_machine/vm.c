@@ -6,14 +6,13 @@
 /*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:36:30 by artemiy           #+#    #+#             */
-/*   Updated: 2019/04/23 15:54:01 by fkuhn            ###   ########.fr       */
+/*   Updated: 2019/04/24 16:57:15 by fkuhn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
-#include "tests.h"
 
 void	vm_init_memory(unsigned char *memory)
 {
@@ -23,18 +22,6 @@ void	vm_init_memory(unsigned char *memory)
 	while (i < MEM_SIZE)
 	{
 		memory[i] = 0;
-		i++;
-	}
-}
-
-void	vm_init_proccess_counter(t_vm *vm)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		vm->p_num[i] = 0;
 		i++;
 	}
 }
@@ -59,20 +46,20 @@ t_vm	*vm_new(void)
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->cycles_to_dump = -1;
 	vm->live_exec = 0;
-	vm->checkups = 0;
+	vm->checkups = 1;
 	vm->p_total = 0;
 	vm->champion_count = 0;
 	vm->end_game = 0;
+	vm->bit_flags = 1;
 	vm_init_memory(vm->memory);
-	vm_init_proccess_counter(vm);
 	return (vm);
 }
 
 void	vm_delete(t_vm *vm)
 {
-	int	i;
-	t_proccess *curr;
-	t_proccess *next;
+	int			i;
+	t_proccess	*curr;
+	t_proccess	*next;
 
 	if (vm == NULL)
 		return ;
@@ -84,7 +71,6 @@ void	vm_delete(t_vm *vm)
 		free(vm->champion[i]);
 		i++;
 	}
-	ft_printf("lol %d", vm->champion_count);
 	curr = vm->process;
 	while (curr)
 	{
@@ -99,18 +85,10 @@ void	vm_dump_memory(t_vm *vm)
 {
 	int	i;
 
-	i = -1;
-	while (++i < 32)
-		ft_printf("%02d ", i + 1);
-	ft_printf("\n");
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		if (vm->memory[i])
-			ft_printf("\e[32m");
 		ft_printf("%02hhx ", vm->memory[i]);
-		if (vm->memory[i])
-			ft_printf("\e[39m");
 		if ((i + 1) % 32 == 0 && i)
 			ft_printf("\n");
 		i++;

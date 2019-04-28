@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 16:12:24 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/12 20:35:08 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/22 17:58:42 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 
 	if (!(new_elem = (t_list *)malloc(sizeof(t_list))))
 		return (NULL);
-	new_elem->content = malloc(content_size);
+	new_elem->content = ft_memalloc(content_size);
 	if (new_elem->content == NULL)
 	{
 		free(new_elem);
@@ -27,6 +27,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	if (content == NULL && content_size == 0)
 	{
+		free(new_elem->content);
 		new_elem->content = NULL;
 		new_elem->content_size = 0;
 	}

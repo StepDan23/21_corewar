@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   champions.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fkuhn <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/24 15:08:53 by fkuhn             #+#    #+#             */
+/*   Updated: 2019/04/25 15:02:19 by fkuhn            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include <stdlib.h>
 #include "libft.h"
@@ -22,13 +34,6 @@ void		champions_add(char *filename, int id, t_champion **head)
 	head[id - 1] = new_champ;
 }
 
-void		champion_free(t_champion *hero)
-{
-	if (hero->code)
-		free(hero->code);
-	free(hero);
-}
-
 int			champion_number(t_champion **arr)
 {
 	t_champion	*hero;
@@ -48,4 +53,15 @@ int			champion_number(t_champion **arr)
 		hero = arr[++i];
 	}
 	return (num);
+}
+
+int			plus_i(int i, char **av)
+{
+	if (ft_strequ(av[i], "-n"))
+		return (3);
+	else if (ft_strequ(av[i], "-dump"))
+		return (2);
+	else if (ft_strequ(av[i], "-s"))
+		return (1);
+	return (0);
 }
