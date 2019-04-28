@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:40:56 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 12:44:06 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/28 15:13:16 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,7 @@ void	ft_fill_token_digits(t_asm_data *asm_data, char *line, t_token *token)
 		if (line[0] == '+')
 			ft_error_add(asm_data, ft_strjoin_orig("Detected plus in number ",\
 			token->str), token->col, 1);
-		else if (ft_atol(line) > MEM_SIZE)
-			ft_error_add(asm_data, ft_strjoin_orig("Value is greater than \
-MEM_SIZE ", token->str), token->col, 2);
-		else if (!ft_string_contain_only_num(line))
+		else if (!ft_string_contain_only_num(line) && ft_atol(line) != 0)
 			ft_error_add(asm_data, ft_strjoin_orig("Detected chars in number ",\
 			token->str), token->col, 1);
 		else

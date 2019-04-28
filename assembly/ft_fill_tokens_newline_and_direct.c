@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_tokens_newline_and_direct.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 18:42:54 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 12:43:34 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:29:41 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,7 @@ t_token *token)
 		token->str), token->col, 1);
 		return ;
 	}
-	temp = ft_atol(line);
-	if (temp < -MEM_SIZE || temp > MEM_SIZE)
-		ft_error_add(asm_data, ft_strjoin_orig("Wrong value in Direct ",\
-		token->str), token->col, 2);
-	else
-		token->type = Direct_number;
+	token->type = Direct_number;
 }
 
 void	ft_clear_label_temp(t_asm_data *asm_data)

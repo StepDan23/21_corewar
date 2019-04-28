@@ -38,11 +38,11 @@ debug: $(NAME)
 #
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 	ranlib $(NAME)
 
 $(OBJ):
-	gcc $(CC_FLAGS) $(FLAGS) ./src/*.c
+	@gcc $(CC_FLAGS) $(FLAGS) ./src/*.c
 
 
 #

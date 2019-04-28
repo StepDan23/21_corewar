@@ -6,7 +6,7 @@
 /*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 13:51:36 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/24 14:10:15 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:01:23 by lshanaha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,7 @@ void	ft_solve_name(t_machine *machine, int bite, int fd_write)
 void	ft_solve_header(t_machine *machine, int value, int fd_write)
 {
 	static int		i = 0;
-	static int		j = 0;
-	static int		bite = 0;
 
-	if (value == ' ')
-		return ;
-	bite += value * ((j == 0) ? 16 : 1);
-	j++;
-	if (j < 2)
-		return ;
-	j = 0;
 	if (M_HEADER)
 	{
 		i++;
@@ -106,10 +97,8 @@ void	ft_solve_header(t_machine *machine, int value, int fd_write)
 		{
 			M_HEADER = 0;
 			M_NAME = 1;
-			bite = 0;
 		}
 		return ;
 	}
-	ft_solve_name(machine, bite, fd_write);
-	bite = 0;
+	ft_solve_name(machine, value, fd_write);
 }

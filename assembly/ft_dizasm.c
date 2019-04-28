@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dizasm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lshanaha <lshanaha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmcclure <mmcclure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 21:20:50 by lshanaha          #+#    #+#             */
-/*   Updated: 2019/04/25 18:41:12 by lshanaha         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:32:13 by mmcclure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_solve_code(t_machine *machine, int bite, int fd_write)
 	{
 		command_num = bite - 1;
 		ft_putstr_fd(g_comms[command_num], fd_write);
+		ft_putchar_fd(' ', fd_write);
 		M_TYPE_BITE = g_args_codes[command_num];
 		M_START_ROW = 0;
 		M_TYPE_SET = 1;
@@ -77,33 +78,23 @@ void	ft_solve_code(t_machine *machine, int bite, int fd_write)
 	ft_solve_arg_types(machine, bite, fd_write, command_num);
 }
 
-void	ft_read_cor_file(int fd_read, int fd_write, int value)
+void	ft_read_cor_file(int fd_read, int fd_write, int i)
 {
-	char		*line;
-	int			str_num;
-	int			k;
-	t_machine	machine;
+	unsigned char	*line;
+	unsigned int	value;
+	int				k;
+	t_machine		machine;
 
 	ft_init_machine(&machine);
-	str_num = 0;
-	ft_putstr_fd("Not this time, guy\n", fd_write);
-	while (get_next_line(fd_read, &line) > 0)
+	line = (unsigned char *)malloc(1000);
+	while ((k = read(fd_read, line, 900)) > 0)
 	{
-		k = 0;
-		while (line[k])
-		{
-			if (line[k] >= 'a' && line[k] <= 'f')
-				value = line[k] - 'a' + 10;
-			else if (line[k] >= '0' && line[k] <= '9')
-				value = line[k] - '0';
-			else if (line[k] == ' ')
-				value = ' ';
-			k++;
-		}
-		free(line);
-		str_num++;
+		line[k] = 0;
+		i = -1;
+		while (++i < k)
+			ft_solve_header(&machine, (int)line[i], fd_write);
 	}
-	(str_num > 0) ? free(line) : 0;
+	free(line);
 }
 
 void	ft_open_s_file(int fd_read, char *file_name)
@@ -122,7 +113,7 @@ void	ft_open_s_file(int fd_read, char *file_name)
 	fd_write = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_write < 3)
 		exit(ft_printf("cant't create file %s.s\n", str));
-	ft_read_cor_file(fd_read, fd_write, 0);
+	ft_read_cor_file(fd_read, fd_write, -1);
 	ft_printf("Data write at %s\n", str);
 	free(str);
 }
