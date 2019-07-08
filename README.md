@@ -28,7 +28,7 @@ To run breathtaking CoreWar game:
 ```
 ## How its look like?
 
-<img src="demos/core3.gif" alt="CoreWar game">
+<img src="demos/core3.gif" alt="CoreWar game" width="1024px">
 
 ## Prerequisites to rebiuld programs
 
