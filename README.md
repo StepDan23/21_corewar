@@ -26,13 +26,9 @@ To run breathtaking CoreWar game:
 	[-n][number] - set player's number to [number]
 	[filename.cor] - path to champion.
 ```
-## What is a map?
+## How its look like?
 
-![CoreWar Game][CoreGif]
-
-[CoreGif]: https://i.imgur.com/MQiNtra.gif "CoreWar Game"
-
-
+<img src="demos/core3.gif" alt="CoreWar game">
 
 ## Prerequisites to rebiuld programs
 
