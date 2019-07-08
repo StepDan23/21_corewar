@@ -8,7 +8,7 @@ To write interpreter for pseudo-assembler language, write virtual machine for th
 To run Assembly language interpreter:
 ```
 ./asm [input files]
-  input files - correct *.s file written in Assembly language
+	input files - correct *.s file written in Assembly language
 ```
 To run CoreWar game without visualisation:
 ```
@@ -28,19 +28,23 @@ To run breathtaking CoreWar game:
 ```
 ## What is a map?
 
-<img width="150" align="middle" alt="corewar game" src="">
+![CoreWar Game][CoreGif]
+
+[CoreGif]: https://i.imgur.com/MQiNtra.gif "CoreWar Game"
+
+
 
 ## Prerequisites to rebiuld programs
-```
-You have to install graphics libraries as in 
-<a href="http://lazyfoo.net/tutorials/SDL/01_hello_SDL/mac/index.php"> this instructions </a> to ~/Library/Frameworks/
 
+You have to install graphics libraries as in <a href="http://lazyfoo.net/tutorials/SDL/01_hello_SDL/mac/index.php"> this instructions </a> to ~/Library/Frameworks/
+
+```
 SDL2        
 SDL2_image  
 SDL2_ttf    
 ```
-```
-You have to upload .c and .h files from <a href="http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/">this source</a> to ~/SDL_gfx/
 
+You have to upload .c and .h files from <a href="http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/">this source</a> to ~/SDL_gfx/
+```
 SDL_gfx
 ```
